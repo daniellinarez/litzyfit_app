@@ -566,19 +566,38 @@
                   last_login: new Date().toISOString()
               }, { onConflict: 'email' });
 
-          if (error) throw error;
+          if (error) {
+              console.error("Error de Supabase:", error.message);
+              alert("Error de base de datos: " + error.message);
+          } else {
+              console.log("¡Guardado con éxito!");
+              
+              // 1. Guardamos los datos en la variable global para que la web los use
+              currentUser = { 
+                  name: data.name, 
+                  email: data.email, 
+                  photo: data.picture 
+              };
 
-          // --- AQUÍ ACTUALIZAS TU WEB (Dashboard, nombre, etc.) ---
-          alert("¡Bienvenido/a " + data.name + "!");
-          
-          // Si tienes el modal de login, aquí lo cerrarías:
-          // closeModal(); 
-          // showPage('dashboard');
+              // 2. Actualizamos el nombre y la foto en la barra de navegación/menú
+              const userNameElem = document.querySelector('.user-name');
+              if (userNameElem) userNameElem.innerText = data.name;
 
-      } catch (err) {
-          console.error("Algo falló al conectar con la base de datos:", err);
-      }
-  }
+              const avatarElem = document.querySelector('.avatar-large');
+              if (avatarElem) {
+                  avatarElem.style.backgroundImage = `url(${data.picture})`;
+                  avatarElem.style.backgroundSize = 'cover';
+                  avatarElem.innerText = ''; // Quitamos la inicial si la había
+              }
+
+              // 3. CERRAMOS EL MODAL Y VAMOS AL DASHBOARD
+              // Asegúrate de que estos nombres de funciones coincidan con los tuyos
+              if (typeof closeModal === 'function') closeModal(); 
+              if (typeof showPage === 'function') showPage('dashboard');
+              
+              // Opcional: quitar el alert para que la entrada sea fluida
+              // alert("¡Conectado con éxito, " + data.name + "!");
+          }
 // ===== TRADUCCIONES MEJORADAS =====
 let lang='pt';
 
