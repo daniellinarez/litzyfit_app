@@ -544,6 +544,41 @@
 </div>
 
 <script>
+// 1. Configuración de Supabase
+  const SU_URL = "https://miwicvoafqaecuqnyvsh.supabase.co";
+  const SU_ANON_KEY = "sb_publishable_XzBwk3MeYkCu4Swe-lVRmg_wOaunHa3";
+  const su = supabase.createClient(SU_URL, SU_ANON_KEY);
+
+  // 2. Función que Google llamará cuando alguien haga login
+  async function handleCredentialResponse(response) {
+      try {
+          // Decodificamos quién es el usuario de Google
+          const data = JSON.parse(atob(response.credential.split('.')[1]));
+          console.log("Conectando a:", data.email);
+
+          // Guardamos o actualizamos al usuario en tu tabla de Supabase
+          const { error } = await su
+              .from('usuarios')
+              .upsert({
+                  email: data.email,
+                  nombre: data.name,
+                  foto_url: data.picture,
+                  last_login: new Date().toISOString()
+              }, { onConflict: 'email' });
+
+          if (error) throw error;
+
+          // --- AQUÍ ACTUALIZAS TU WEB (Dashboard, nombre, etc.) ---
+          alert("¡Bienvenido/a " + data.name + "!");
+          
+          // Si tienes el modal de login, aquí lo cerrarías:
+          // closeModal(); 
+          // showPage('dashboard');
+
+      } catch (err) {
+          console.error("Algo falló al conectar con la base de datos:", err);
+      }
+  }
 // ===== TRADUCCIONES MEJORADAS =====
 let lang='pt';
 
