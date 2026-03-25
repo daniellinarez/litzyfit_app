@@ -547,57 +547,50 @@
   // 1. Configuración de Supabase
   const SU_URL = "https://miwicvoafqaecuqnyvsh.supabase.co";
   const SU_ANON_KEY = "sb_publishable_XzBwk3MeYkCu4Swe-lVRmg_wOaunHa3";
+  
+  // Variable global para la conexión
   const su = supabase.createClient(SU_URL, SU_ANON_KEY);
 
-  // 2. Función que Google llamará cuando alguien haga login
+  // 2. Función de Login
   async function handleCredentialResponse(response) {
+      console.log("Respuesta de Google recibida");
+      
       try {
-          // Decodificamos quién es el usuario de Google
-          const data = JSON.parse(atob(response.credential.split('.')[1]));
-          console.log("Conectando a:", data.email);
+          // Decodificar datos del usuario
+          const payload = JSON.parse(atob(response.credential.split('.')[1]));
+          const { email, name, picture } = payload;
 
-          // Guardamos o actualizamos al usuario en tu tabla de Supabase
+          // Guardar en Supabase
           const { error } = await su
               .from('usuarios')
               .upsert({
-                  email: data.email,
-                  nombre: data.name,
-                  foto_url: data.picture,
+                  email: email,
+                  nombre: name,
+                  foto_url: picture,
                   last_login: new Date().toISOString()
               }, { onConflict: 'email' });
 
-          if (error) {
-              console.error("Error de Supabase:", error.message);
-              alert("Error de base de datos: " + error.message);
-          } else {
-              console.log("¡Guardado con éxito!");
-              
-              // 1. Guardamos los datos en la variable global
-              currentUser = { 
-                  name: data.name, 
-                  email: data.email, 
-                  photo: data.picture 
-              };
+          if (error) throw error;
 
-              // 2. Actualizamos el nombre y la foto en la web
-              const userNameElem = document.querySelector('.user-name');
-              if (userNameElem) userNameElem.innerText = data.name;
+          console.log("Usuario guardado en base de datos");
 
-              const avatarElem = document.querySelector('.avatar-large');
-              if (avatarElem) {
-                  avatarElem.style.backgroundImage = `url(${data.picture})`;
-                  avatarElem.style.backgroundSize = 'cover';
-                  avatarElem.innerText = ''; 
-              }
-
-              // 3. CERRAMOS EL MODAL Y VAMOS AL DASHBOARD
-              if (typeof closeModal === 'function') closeModal(); 
-              if (typeof showPage === 'function') showPage('dashboard');
+          // Actualizar Interfaz
+          if (typeof currentUser !== 'undefined') {
+              currentUser = { name, email, photo: picture };
           }
+
+          const nameTag = document.querySelector('.user-name');
+          if (nameTag) nameTag.innerText = name;
+
+          // Redirigir al perfil
+          if (typeof closeModal === 'function') closeModal();
+          if (typeof showPage === 'function') showPage('dashboard');
+
       } catch (err) {
-          console.error("Error crítico en el login:", err);
+          console.error("Error en proceso de login:", err);
+          alert("Error: " + err.message);
       }
-  } //
+  }
 </script>
 // ===== TRADUCCIONES MEJORADAS =====
 let lang='pt';
