@@ -544,23 +544,17 @@
 </div>
 
 <script>
-  // 1. Configuración de Supabase
+  // 1. CONFIGURACIÓN DE SUPABASE
   const SU_URL = "https://miwicvoafqaecuqnyvsh.supabase.co";
   const SU_ANON_KEY = "sb_publishable_XzBwk3MeYkCu4Swe-lVRmg_wOaunHa3";
-  
-  // Variable global para la conexión (usamos 'su' para evitar conflictos)
   const su = supabase.createClient(SU_URL, SU_ANON_KEY);
 
-  // 2. Función que maneja el Login de Google y guarda en la BD
+  // 2. FUNCIÓN DE LOGIN (GOOGLE)
   async function handleCredentialResponse(response) {
-      console.log("Respuesta de Google recibida");
-      
       try {
-          // Decodificar datos del usuario desde el token de Google
           const payload = JSON.parse(atob(response.credential.split('.')[1]));
           const { email, name, picture } = payload;
 
-          // Guardar o actualizar en la tabla 'usuarios' de Supabase
           const { error } = await su
               .from('usuarios')
               .upsert({
@@ -572,18 +566,15 @@
 
           if (error) throw error;
 
-          console.log("Usuario guardado en base de datos con éxito");
-
-          // Actualizar variables globales si existen
+          // Guardar datos del usuario actual
           if (typeof currentUser !== 'undefined') {
               currentUser = { name, email, photo: picture };
           }
 
-          // Actualizar nombre en la interfaz
+          // Actualizar textos y fotos en la web
           const nameTag = document.querySelector('.user-name');
           if (nameTag) nameTag.innerText = name;
 
-          // Actualizar foto en el avatar si existe
           const avatarElem = document.querySelector('.avatar-large');
           if (avatarElem) {
               avatarElem.style.backgroundImage = `url(${picture})`;
@@ -591,49 +582,52 @@
               avatarElem.innerText = '';
           }
 
-          // CERRAMOS EL MODAL Y VAMOS AL DASHBOARD
-          closeModal();
+          // CERRAR VENTANA Y IR AL DASHBOARD
+          closeLogin(); // Usamos el nombre que tienes en tu HTML
           showPage('dashboard');
 
       } catch (err) {
-          console.error("Error en proceso de login:", err);
+          console.error("Error:", err);
           alert("Error de conexión: " + err.message);
       }
   }
 
-  // 3. Funciones de Control de Interfaz (Las que se habían perdido)
+  // 3. FUNCIONES PARA ABRIR Y CERRAR (AJUSTADAS A TU HTML)
   
+  // Esta función abre el cuadro de login
   function openLogin() {
-      const modal = document.getElementById('loginModal');
+      // Buscamos el ID exacto que me pasaste: "login-modal"
+      const modal = document.getElementById('login-modal');
       if (modal) {
           modal.style.display = 'flex';
       } else {
-          console.error("No se encontró el modal con ID 'loginModal'");
+          // Si falla, intentamos por la clase
+          const overlay = document.querySelector('.modal-overlay');
+          if (overlay) overlay.style.display = 'flex';
       }
   }
 
-  function closeModal() {
-      const modal = document.getElementById('loginModal');
+  // Esta función cierra el cuadro de login
+  function closeLogin() {
+      const modal = document.getElementById('login-modal');
       if (modal) {
           modal.style.display = 'none';
       }
   }
 
+  // Esta función cambia de página
   function showPage(pageId) {
-      // Ocultar todas las secciones con clase 'page'
       document.querySelectorAll('.page').forEach(page => {
           page.classList.remove('active');
+          page.style.display = 'none';
       });
       
-      // Mostrar la página que queremos
       const targetPage = document.getElementById(pageId);
       if (targetPage) {
           targetPage.classList.add('active');
-          window.scrollTo(0, 0); // Volver arriba al cambiar de página
+          targetPage.style.display = 'block';
+          window.scrollTo(0, 0);
       }
-
-      // Si existe un menú móvil, lo cerramos
-      if (typeof closeMenu === 'function') closeMenu();
   }
 </script>
 // ===== TRADUCCIONES MEJORADAS =====
