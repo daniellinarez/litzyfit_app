@@ -544,7 +544,7 @@
 </div>
 
 <script>
-// 1. Configuración de Supabase
+  // 1. Configuración de Supabase
   const SU_URL = "https://miwicvoafqaecuqnyvsh.supabase.co";
   const SU_ANON_KEY = "sb_publishable_XzBwk3MeYkCu4Swe-lVRmg_wOaunHa3";
   const su = supabase.createClient(SU_URL, SU_ANON_KEY);
@@ -572,14 +572,14 @@
           } else {
               console.log("¡Guardado con éxito!");
               
-              // 1. Guardamos los datos en la variable global para que la web los use
+              // 1. Guardamos los datos en la variable global
               currentUser = { 
                   name: data.name, 
                   email: data.email, 
                   photo: data.picture 
               };
 
-              // 2. Actualizamos el nombre y la foto en la barra de navegación/menú
+              // 2. Actualizamos el nombre y la foto en la web
               const userNameElem = document.querySelector('.user-name');
               if (userNameElem) userNameElem.innerText = data.name;
 
@@ -587,18 +587,18 @@
               if (avatarElem) {
                   avatarElem.style.backgroundImage = `url(${data.picture})`;
                   avatarElem.style.backgroundSize = 'cover';
-                  avatarElem.innerText = ''; // Quitamos la inicial si la había
+                  avatarElem.innerText = ''; 
               }
 
               // 3. CERRAMOS EL MODAL Y VAMOS AL DASHBOARD
-              // Asegúrate de que estos nombres de funciones coincidan con los tuyos
               if (typeof closeModal === 'function') closeModal(); 
               if (typeof showPage === 'function') showPage('dashboard');
-              
-              // Opcional: quitar el alert para que la entrada sea fluida
-              // alert("¡Conectado con éxito, " + data.name + "!");
           }
-        }
+      } catch (err) {
+          console.error("Error crítico en el login:", err);
+      }
+  } //
+</script>
 // ===== TRADUCCIONES MEJORADAS =====
 let lang='pt';
 
