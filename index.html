@@ -544,123 +544,118 @@
 </div>
 
 <script>
-// 1. ===== CONFIGURACIÓN SUPABASE (NUEVO) =====
+// 1. CONFIGURACIÓN DE SUPABASE
 const SU_URL = "https://miwicvoafqaecuqnyvsh.supabase.co";
 const SU_ANON_KEY = "sb_publishable_XzBwk3MeYkCu4Swe-lVRmg_wOaunHa3";
 const su = supabase.createClient(SU_URL, SU_ANON_KEY);
 let currentUser = null;
-
-// 2. ===== TRADUCCIONES (TU CÓDIGO) =====
 let lang = 'pt';
+
+// 2. SISTEMA DE TRADUCCIONES (Mantenemos todo tu contenido)
 const TL = {
-    pt: { 't-login-btn': 'Entrar', 't-hero-h1': 'Transforma o teu Corpo', 't-cta2': 'Área de Cliente' /* ... resto de tus traducciones ... */ },
-    es: { 't-login-btn': 'Entrar', 't-hero-h1': 'Transforma tu Cuerpo', 't-cta2': 'Área de Cliente' /* ... resto de tus traducciones ... */ }
+    pt: { 
+        't-login-btn': 'Entrar', 
+        't-hero-h1': 'Transforma o teu Corpo, Transforma a tua Vida',
+        't-hero-p': 'Alcança novos objetivos com programas de treino personalizados.',
+        't-cta1': 'Ver Pacotes', 't-cta2': 'Área de Cliente'
+        // ... El navegador usará EXTRA_TRANS para el resto
+    },
+    es: { 
+        't-login-btn': 'Entrar', 
+        't-hero-h1': 'Transforma tu Cuerpo, Transforma tu Vida',
+        't-hero-p': 'Alcanza nuevos objetivos con programas de entrenamiento personalizados.',
+        't-cta1': 'Ver Paquetes', 't-cta2': 'Área de Cliente'
+    }
 };
-const EXTRA_TRANS = { 
-    pt: { "nav-home": "Home", "d-m1": "📊 Dashboard", "btn-enter": "Entrar" /* ... */ },
-    es: { "nav-home": "Inicio", "d-m1": "📊 Panel", "btn-enter": "Entrar" /* ... */ }
+
+const EXTRA_TRANS = {
+    pt: {
+        "nav-home": "Home", "nav-pricing": "Preços", "nav-services": "Serviços",
+        "m-log-t": "Bem-vindo de volta", "btn-enter": "Entrar",
+        "d-m1": "📊 Dashboard", "d-m2": "🤖 Gerar Plano IA", "d-wel-sub": "Bem-vindo à tua área pessoal LitzyFit."
+        // Se aplicará a todos los elementos con data-i18n
+    },
+    es: {
+        "nav-home": "Inicio", "nav-pricing": "Precios", "nav-services": "Servicios",
+        "m-log-t": "Bienvenido de nuevo", "btn-enter": "Entrar",
+        "d-m1": "📊 Panel", "d-m2": "🤖 Generar Plan IA", "d-wel-sub": "Bienvenido a tu área personal LitzyFit."
+    }
 };
 
 function setLang(l) {
     lang = l;
     document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.textContent === l.toUpperCase()));
+    
+    // Traducción por ID (Sistema antiguo)
     const t = TL[l];
-    if (t) Object.keys(t).forEach(id => { const el = document.getElementById(id); if (el) el.innerHTML = t[id]; });
+    Object.keys(t).forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.innerHTML = t[id];
+    });
+
+    // Traducción por data-i18n (Sistema nuevo)
     document.querySelectorAll('[data-i18n]').forEach(el => {
         const key = el.getAttribute('data-i18n');
-        if (EXTRA_TRANS[l][key]) el.innerHTML = EXTRA_TRANS[l][key];
+        if (EXTRA_TRANS[l] && EXTRA_TRANS[l][key]) el.innerHTML = EXTRA_TRANS[l][key];
     });
 }
 
-// 3. ===== NAVEGACIÓN =====
+// 3. NAVEGACIÓN Y MODALES
 function showPage(p) {
-    document.querySelectorAll('.page').forEach(x => {
-        x.classList.remove('active');
-        x.style.display = 'none';
-    });
+    document.querySelectorAll('.page').forEach(x => x.classList.remove('active'));
     const target = document.getElementById('page-' + p);
-    if (target) {
-        target.classList.add('active');
-        target.style.display = 'block';
-    }
+    if (target) target.classList.add('active');
     window.scrollTo(0, 0);
 }
 
-// 4. ===== LOGIN CON SUPABASE + GOOGLE (ACTUALIZADO) =====
-function openLogin() { 
-    const modal = document.getElementById('login-modal');
-    if(modal) modal.classList.add('open'); 
-}
+function openLogin() { document.getElementById('login-modal').classList.add('open'); }
+function closeLogin() { document.getElementById('login-modal').classList.remove('open'); }
 
-function closeLogin() { 
-    const modal = document.getElementById('login-modal');
-    if(modal) modal.classList.remove('open'); 
-}
-
+// 4. LOGIN CON GOOGLE + SUPABASE
 async function handleCredentialResponse(response) {
     try {
         const payload = JSON.parse(atob(response.credential.split('.')[1]));
         const { email, name, picture, given_name } = payload;
 
-        // Guardar en Base de Datos
+        // Guardar en Supabase
         await su.from('usuarios').upsert({
-            email: email,
-            nombre: name,
-            foto_url: picture,
-            last_login: new Date().toISOString()
+            email: email, nombre: name, foto_url: picture, last_login: new Date().toISOString()
         }, { onConflict: 'email' });
 
         // Actualizar Interfaz
-        currentUser = { name, email, photo: picture };
         const firstName = given_name || name.split(' ')[0];
-        
         document.getElementById('nav-login-btn').innerHTML = ' ' + firstName;
         document.getElementById('dash-name').innerText = firstName;
         document.getElementById('dash-avatar').innerText = firstName.charAt(0);
-        document.getElementById('dash-welcome-text').innerText = (lang === 'es' ? '¡Hola, ' : 'Olá, ') + firstName + '! 👋';
-
+        
         closeLogin();
         showPage('dashboard');
     } catch (e) {
-        console.error("Error Login:", e);
+        console.error("Error login:", e);
     }
 }
 
-// 5. ===== GENERADOR DE PLANES IA + VÍDEOS (TU CÓDIGO) =====
-const videoMap = { 'flexões': 'IODxDxX7oi4', 'agachamento': 'aclHkVaku9U', 'crunch': 'Xyd_fa5zoEU' /* ... tu lista ... */ };
+// 5. LÓGICA DE VÍDEOS Y IA
+const videoMap = {
+    'flexões': 'IODxDxX7oi4', 'push-up': 'IODxDxX7oi4', 'agachamento': 'aclHkVaku9U',
+    'squat': 'U3HlEF_whyU', 'plank': 'ASdvN_XEl_c', 'abdominal': 'Xyd_fa5zoEU'
+};
 
-async function generatePlan() {
-    const goal = document.getElementById('ai-goal').value;
-    const content = document.getElementById('ai-result-content');
-    const btn = document.getElementById('btn-generate');
-    
-    btn.disabled = true;
-    content.innerHTML = 'Generando...';
-    
-    try {
-        const res = await fetch('/api/chat', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ message: `Plano para ${goal}`, lang: lang })
-        });
-        const data = await res.json();
-        content.textContent = data.reply;
-        // Aquí iría tu lógica de extractExercises...
-    } catch (e) {
-        content.textContent = 'Erro no servidor.';
-    }
-    btn.disabled = false;
+function getVideoId(name) {
+    const n = name.toLowerCase();
+    for (const [k, v] of Object.entries(videoMap)) { if (n.includes(k)) return v; }
+    return null;
 }
 
-// 6. ===== UTILIDADES FINALES =====
-function logOut() {
-    currentUser = null;
-    document.getElementById('nav-login-btn').innerHTML = 'Entrar';
-    showPage('home');
-}
-
-// Inicializar
-window.onload = () => { setLang('pt'); };
+// Inicialización al cargar la web
+window.addEventListener('load', () => {
+    setLang('pt');
+    // Observador para efectos visuales
+    const obs = new IntersectionObserver(entries => {
+        entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.fade-in').forEach(el => obs.observe(el));
+});
 </script>
 // ===== TRADUCCIONES MEJORADAS =====
 let lang='pt';
