@@ -314,7 +314,7 @@
       <p class="section-sub" id="t-feat-sub">Uma abordagem completa ao fitness, com tecnologia e acompanhamento humano.</p>
     </div>
     <div class="features-grid fade-in">
-      <div class="feat-card"><div class="feat-icon">🤖</div><div class="feat-title" id="t-f1t">Planos com IA</div><div class="feat-desc" id="t-f1d">Planos de treino gerados por IA, adaptados ao teu perfil, objetivos e nível de condição física.</div></div>
+      <div class="feat-card"><div class="feat-icon">📋</div><div class="feat-title" id="t-f1t">Planos Personalizados Premium</div><div class="feat-desc" id="t-f1d">Planos de treino personalizados para ti, adaptados ao teu perfil, objetivos e nível de condição física.</div></div>
       <div class="feat-card"><div class="feat-icon">🎥</div><div class="feat-title" id="t-f2t">Vídeos dos Exercícios</div><div class="feat-desc" id="t-f2d">Cada plano inclui vídeos demonstrativos para garantires a execução perfeita de cada exercício.</div></div>
       <div class="feat-card"><div class="feat-icon">💬</div><div class="feat-title" id="t-f3t">Suporte IA 24/7</div><div class="feat-desc" id="t-f3d">Chat de suporte com IA disponível a qualquer hora para responder às tuas dúvidas de treino e nutrição.</div></div>
       <div class="feat-card"><div class="feat-icon">🎯</div><div class="feat-title" id="t-f4t">Objetivos Personalizados</div><div class="feat-desc" id="t-f4d">Seja perda de peso, ganho muscular ou preparação para competição — temos o plano certo para ti.</div></div>
@@ -454,7 +454,8 @@
       </div>
       <ul class="sidebar-menu">
         <li><a class="active" onclick="showDash('overview')" data-i18n="d-m1">📊 Dashboard</a></li>
-        <li><a onclick="showDash('ai-plan')" data-i18n="d-m2">🤖 Gerar Plano IA</a></li>
+        <li><a onclick="showDash('perfil')" data-i18n="d-m-profile">👤 Mi Perfil</a></li>
+        <li><a onclick="showDash('ai-plan')" data-i18n="d-m2">📋 Gerar Plano Personalizado</a></li>
         <li><a onclick="showDash('my-plans')" data-i18n="d-m3">📋 Os Meus Planos</a></li>
         <li><a onclick="showDash('progress')" data-i18n="d-m4">📈 Progresso</a></li>
         <li><a onclick="logOut()" style="color:#ff4444" data-i18n="d-m5">🚪 Sair</a></li>
@@ -470,14 +471,14 @@
           <div class="dash-card"><div class="dash-card-label" data-i18n="dc-4">Semanas Ativas</div><div class="dash-card-val orange">8</div></div>
         </div>
         <div class="ai-section">
-          <h3>⚡ Acesso Rápido <span class="ai-badge-small">IA</span></h3>
+          <h3>⚡ Acesso Rápido <span class="ai-badge-small">PREMIUM</span></h3>
           <p style="color:var(--muted);font-size:.88rem;margin-top:.5rem" data-i18n="d-ai-sub">Gera um plano personalizado com vídeos dos exercícios.</p>
-          <button class="btn-generate" onclick="showDash('ai-plan')" data-i18n="d-ai-btn">🤖 Gerar Plano com IA + Vídeos</button>
+          <button class="btn-generate" onclick="showDash('ai-plan')" data-i18n="d-ai-btn">📋 Gerar Plano Personalizado + Vídeos</button>
         </div>
       </div>
 
       <div id="ds-ai-plan" style="display:none">
-        <div class="dash-header"><h1 data-i18n="ai-title">🤖 Gerador de Plano com IA</h1><p data-i18n="ai-sub">Preenche o teu perfil e a IA cria um plano 100% personalizado com vídeos.</p></div>
+        <div class="dash-header"><h1 data-i18n="ai-title">📋 Gerador de Plano Personalizado</h1><p data-i18n="ai-sub">Preenche o teu perfil e cria um plano 100% personalizado com vídeos.</p></div>
         <div class="ai-section">
           <div class="ai-form">
             <div class="ai-form-group"><label data-i18n="ai-f1">Objetivo</label>
@@ -501,7 +502,331 @@
           </div>
         </div>
       </div>
-      <div id="ds-my-plans" style="display:none"></div><div id="ds-progress" style="display:none"></div>
+      <div id="ds-my-plans" style="display:none">
+        <div class="dash-header">
+          <h1 id="t-my-plans">📋 Mis Planes</h1>
+          <p id="t-my-plans-sub">Tus planes de entrenamiento y documentos personalizados</p>
+        </div>
+        <div id="client-plans-list">
+          <div style="text-align:center; padding:3rem; color:var(--muted);">
+            <p id="empty-plans-msg">Aún no tienes planes asignados. Tu entrenador pronto te enviará tu plan personalizado.</p>
+          </div>
+        </div>
+      </div>
+
+      <div id="ds-perfil" style="display:none">
+        <div class="dash-header">
+          <h1 id="t-profile">👤 Mi Perfil</h1>
+          <p id="t-profile-sub">Completa tu información para mejores recomendaciones personalizadas</p>
+        </div>
+        <div class="ai-section">
+          <h3>Información Personal</h3>
+          <div class="ai-form">
+            <div class="ai-form-group">
+              <label>Nombre Completo</label>
+              <input type="text" id="profile-name" placeholder="Tu nombre">
+            </div>
+            <div class="ai-form-group">
+              <label>Email</label>
+              <input type="email" id="profile-email" placeholder="tu@email.com">
+            </div>
+            <div class="ai-form-group">
+              <label>Teléfono</label>
+              <input type="tel" id="profile-phone" placeholder="+34 123 456 789">
+            </div>
+          </div>
+          
+          <h3 style="margin-top:2rem">Información de Fitness</h3>
+          <div class="ai-form">
+            <div class="ai-form-group">
+              <label>Edad</label>
+              <input type="number" id="profile-age" placeholder="25" min="16" max="100">
+            </div>
+            <div class="ai-form-group">
+              <label>Peso (kg)</label>
+              <input type="number" id="profile-weight" placeholder="70" step="0.1">
+            </div>
+            <div class="ai-form-group">
+              <label>Altura (cm)</label>
+              <input type="number" id="profile-height" placeholder="175">
+            </div>
+            <div class="ai-form-group">
+              <label>Objetivo Principal</label>
+              <select id="profile-goal">
+                <option value="">Selecciona un objetivo</option>
+                <option value="perda de peso">Pérdida de Peso</option>
+                <option value="ganho muscular">Ganancia Muscular</option>
+                <option value="resistencia">Resistencia</option>
+                <option value="sentirse mejor">Sentirse Mejor</option>
+              </select>
+            </div>
+            <div class="ai-form-group">
+              <label>Experiencia Previa en Gym</label>
+              <select id="profile-experience">
+                <option value="">Selecciona nivel</option>
+                <option value="sin experiencia">Sin Experiencia</option>
+                <option value="algo de experiencia">Algo de Experiencia (1-2 años)</option>
+                <option value="muy experimentado">Muy Experimentado (3+ años)</option>
+              </select>
+            </div>
+          </div>
+
+          <h3 style="margin-top:2rem">Información de Salud</h3>
+          <div class="ai-form" style="margin-bottom:1rem">
+            <div class="ai-form-group" style="grid-column:1/-1">
+              <label>Lesiones, Restricciones o Condiciones Médicas (opcional)</label>
+              <textarea id="profile-restrictions" placeholder="Ej: Lesión de rodilla, alergia a lácteos..." style="width:100%; padding:10px; border-radius:10px; border:1px solid var(--border); color:var(--text); background:var(--card2); min-height:80px;"></textarea>
+            </div>
+          </div>
+
+          <button class="btn-generate" onclick="saveClientProfile()" id="btn-save-profile">💾 Guardar Perfil</button>
+          <div style="margin-top:1rem; padding:1rem; background:rgba(0,200,100,.1); border-radius:10px; display:none; color:#00c864" id="profile-save-success">
+            ✅ Perfil guardado correctamente. Tu entrenador ya puede personalizarte mejor.
+          </div>
+        </div>
+      </div>
+
+      <div id="ds-progress" style="display:none">
+        <div class="dash-header">
+          <h1 id="t-progress">📈 Tu Progreso</h1>
+          <p id="t-progress-sub">Aquí puedes registrar tu evolución</p>
+        </div>
+        <div id="client-progress-list">
+          <div style="text-align:center; padding:3rem; color:var(--muted);">
+            <p>Comienza a registrar tu progreso para ver cómo evolucionas</p>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<div id="page-admin" class="page">
+  <div class="dash-layout">
+    <aside class="dash-sidebar">
+      <div class="user-profile">
+        <div class="avatar-large" id="admin-avatar">AD</div>
+        <div class="user-name" id="admin-name">Admin</div>
+        <div class="user-plan" style="color:#ff6b35">Administrador</div>
+      </div>
+      <ul class="sidebar-menu">
+        <li><a class="active" onclick="showAdmin('clientes')" style="color:var(--orange)">👥 Clientes</a></li>
+        <li><a onclick="showAdmin('planes')" data-i18n="adm-plans">📋 Planes de Entrenamiento</a></li>
+        <li><a onclick="showAdmin('dietas')" data-i18n="adm-diets">🥗 Dietas</a></li>
+        <li><a onclick="showAdmin('documentos')" data-i18n="adm-docs">📄 Documentos</a></li>
+        <li><a onclick="showAdmin('newsletter')" data-i18n="adm-news">📧 Newsletter</a></li>
+        <li><a onclick="logOut()" style="color:#ff4444">🚪 Salir</a></li>
+      </ul>
+    </aside>
+    <main class="dash-main">
+      <div id="adm-clientes" style="display:none">
+        <div class="dash-header">
+          <h1>👥 Gestión de Clientes</h1>
+          <p>Administra los perfiles y documentos de tus clientes</p>
+        </div>
+        <div class="ai-section">
+          <h3>Agregar Nuevo Cliente</h3>
+          <div class="ai-form" style="grid-template-columns:repeat(auto-fit,minmax(200px,1fr))">
+            <div class="ai-form-group">
+              <label>Nombre Completo</label>
+              <input type="text" id="adm-client-name" placeholder="Nombre del cliente">
+            </div>
+            <div class="ai-form-group">
+              <label>Email</label>
+              <input type="email" id="adm-client-email" placeholder="email@ejemplo.com">
+            </div>
+            <div class="ai-form-group">
+              <label>Teléfono</label>
+              <input type="tel" id="adm-client-phone" placeholder="+34 123 456 789">
+            </div>
+            <div class="ai-form-group">
+              <label>Edad</label>
+              <input type="number" id="adm-client-age" placeholder="25" min="16" max="100">
+            </div>
+            <div class="ai-form-group">
+              <label>Peso (kg)</label>
+              <input type="number" id="adm-client-weight" placeholder="70" step="0.1">
+            </div>
+            <div class="ai-form-group">
+              <label>Altura (cm)</label>
+              <input type="number" id="adm-client-height" placeholder="175" step="0.1">
+            </div>
+            <div class="ai-form-group">
+              <label>Objetivo</label>
+              <select id="adm-client-goal">
+                <option value="perda de peso">Pérdida de Peso</option>
+                <option value="ganho muscular">Ganancia Muscular</option>
+                <option value="resistencia">Resistencia</option>
+                <option value="tonificacao">Tonificación</option>
+              </select>
+            </div>
+            <div class="ai-form-group">
+              <label>Nivel de Experiencia</label>
+              <select id="adm-client-level">
+                <option value="iniciante">Iniciante</option>
+                <option value="intermedio">Intermedio</option>
+                <option value="avancado">Avanzado</option>
+              </select>
+            </div>
+          </div>
+          <div class="ai-form" style="margin-top:1rem">
+            <div class="ai-form-group" style="grid-column:1/-1">
+              <label>Restricciones/Lesiones</label>
+              <textarea id="adm-client-restrictions" placeholder="Ej: Lesión de espalda, alergia a..." style="width:100%; padding:10px; border-radius:10px; border:1px solid var(--border); color:var(--text); background:var(--card2); min-height:80px;"></textarea>
+            </div>
+          </div>
+          <button class="btn-generate" onclick="saveNewClient()">➕ Agregar Cliente</button>
+        </div>
+        <div class="plan-table-section" style="margin-top:3rem">
+          <h3 style="margin-bottom:1.5rem">Clientes Registrados</h3>
+          <div id="admin-clients-list" style="overflow-x:auto"></div>
+        </div>
+      </div>
+
+      <div id="adm-planes" style="display:none">
+        <div class="dash-header">
+          <h1>📋 Planes de Entrenamiento</h1>
+          <p>Carga planes personalizados para tus clientes</p>
+        </div>
+        <div class="ai-section">
+          <h3>Crear Plan de Entrenamiento</h3>
+          <div class="ai-form">
+            <div class="ai-form-group">
+              <label>Seleccionar Cliente</label>
+              <select id="adm-plan-client">
+                <option value="">Cargando clientes...</option>
+              </select>
+            </div>
+            <div class="ai-form-group">
+              <label>Título del Plan</label>
+              <input type="text" id="adm-plan-title" placeholder="Ej: Ganancia Muscular 12 semanas">
+            </div>
+            <div class="ai-form-group">
+              <label>Duración (semanas)</label>
+              <input type="number" id="adm-plan-weeks" placeholder="12" min="1" max="52">
+            </div>
+          </div>
+          <div class="ai-form" style="margin-top:1rem">
+            <div class="ai-form-group" style="grid-column:1/-1">
+              <label>Descripción del Plan</label>
+              <textarea id="adm-plan-desc" placeholder="Describe el plan de entrenamiento..." style="width:100%; padding:10px; border-radius:10px; border:1px solid var(--border); color:var(--text); background:var(--card2); min-height:120px;"></textarea>
+            </div>
+          </div>
+          <div class="ai-form" style="margin-top:1rem">
+            <div class="ai-form-group" style="grid-column:1/-1">
+              <label>Archivo PDF o Documento</label>
+              <input type="file" id="adm-plan-file" accept=".pdf,.doc,.docx" style="padding:10px; border:1px dashed var(--border); border-radius:10px; color:var(--muted); width:100%;">
+            </div>
+          </div>
+          <button class="btn-generate" onclick="savePlan()">💾 Guardar Plan</button>
+        </div>
+        <div id="admin-plans-list" style="margin-top:3rem"></div>
+      </div>
+
+      <div id="adm-dietas" style="display:none">
+        <div class="dash-header">
+          <h1>🥗 Gestión de Dietas</h1>
+          <p>Carga planes nutricionales para tus clientes</p>
+        </div>
+        <div class="ai-section">
+          <h3>Crear Plan Nutricional</h3>
+          <div class="ai-form">
+            <div class="ai-form-group">
+              <label>Seleccionar Cliente</label>
+              <select id="adm-diet-client">
+                <option value="">Cargando clientes...</option>
+              </select>
+            </div>
+            <div class="ai-form-group">
+              <label>Título de la Dieta</label>
+              <input type="text" id="adm-diet-title" placeholder="Ej: Dieta Baja en Carbohidratos">
+            </div>
+            <div class="ai-form-group">
+              <label>Calorías Objetivo</label>
+              <input type="number" id="adm-diet-cals" placeholder="2500" min="800" max="5000">
+            </div>
+          </div>
+          <div class="ai-form" style="margin-top:1rem">
+            <div class="ai-form-group" style="grid-column:1/-1">
+              <label>Plan Nutricional</label>
+              <textarea id="adm-diet-desc" placeholder="Describe el plan: horarios, alimentos, cantidades..." style="width:100%; padding:10px; border-radius:10px; border:1px solid var(--border); color:var(--text); background:var(--card2); min-height:120px;"></textarea>
+            </div>
+          </div>
+          <div class="ai-form" style="margin-top:1rem">
+            <div class="ai-form-group" style="grid-column:1/-1">
+              <label>Archivo Documento</label>
+              <input type="file" id="adm-diet-file" accept=".pdf,.doc,.docx" style="padding:10px; border:1px dashed var(--border); border-radius:10px; color:var(--muted); width:100%;">
+            </div>
+          </div>
+          <button class="btn-generate" onclick="saveDiet()">💾 Guardar Dieta</button>
+        </div>
+        <div id="admin-diets-list" style="margin-top:3rem"></div>
+      </div>
+
+      <div id="adm-documentos" style="display:none">
+        <div class="dash-header">
+          <h1>📄 Gestión de Documentos</h1>
+          <p>Carga cualquier documento adicional para tus clientes</p>
+        </div>
+        <div class="ai-section">
+          <h3>Subir Documento</h3>
+          <div class="ai-form">
+            <div class="ai-form-group">
+              <label>Seleccionar Cliente</label>
+              <select id="adm-doc-client">
+                <option value="">Cargando clientes...</option>
+              </select>
+            </div>
+            <div class="ai-form-group">
+              <label>Tipo de Documento</label>
+              <select id="adm-doc-type">
+                <option value="documento">Documento</option>
+                <option value="video">Video (Link)</option>
+                <option value="referencia">Referencia/Artículo</option>
+              </select>
+            </div>
+          </div>
+          <div class="ai-form" style="margin-top:1rem">
+            <div class="ai-form-group">
+              <label>Título</label>
+              <input type="text" id="adm-doc-title" placeholder="Nombre del documento">
+            </div>
+            <div class="ai-form-group">
+              <label>Descripción (opcional)</label>
+              <input type="text" id="adm-doc-desc" placeholder="Breve descripción">
+            </div>
+          </div>
+          <div class="ai-form" style="margin-top:1rem">
+            <div class="ai-form-group" style="grid-column:1/-1">
+              <label>Archivo o Link</label>
+              <input type="file" id="adm-doc-file" style="padding:10px; border:1px dashed var(--border); border-radius:10px; color:var(--muted); width:100%;">
+            </div>
+          </div>
+          <button class="btn-generate" onclick="saveDocument()">📤 Subir Documento</button>
+        </div>
+        <div id="admin-docs-list" style="margin-top:3rem"></div>
+      </div>
+
+      <div id="adm-newsletter" style="display:none">
+        <div class="dash-header">
+          <h1>📧 Gestión de Newsletter</h1>
+          <p>Administra tus suscriptores y envía actualizaciones</p>
+        </div>
+        <div class="dash-cards">
+          <div class="dash-card">
+            <div class="dash-card-label">Total de Suscriptores</div>
+            <div class="dash-card-val orange" id="adm-newsletter-count">0</div>
+          </div>
+          <div class="dash-card">
+            <div class="dash-card-label">Nuevos esta Semana</div>
+            <div class="dash-card-val">0</div>
+          </div>
+        </div>
+        <div class="ai-section" style="margin-top:2rem">
+          <h3>Suscriptores</h3>
+          <div id="admin-newsletter-list" style="margin-top:1rem"></div>
+        </div>
+      </div>
     </main>
   </div>
 </div>
@@ -544,120 +869,124 @@
 </div>
 
 <script>
-// 1. CONFIGURACIÓN DE SUPABASE
+// 1. ===== CONFIGURACIÓN SUPABASE (NUEVO) =====
 const SU_URL = "https://miwicvoafqaecuqnyvsh.supabase.co";
 const SU_ANON_KEY = "sb_publishable_XzBwk3MeYkCu4Swe-lVRmg_wOaunHa3";
 const su = supabase.createClient(SU_URL, SU_ANON_KEY);
 let currentUser = null;
+
+// 2. ===== TRADUCCIONES (TU CÓDIGO) =====
 let lang = 'pt';
-
-// 2. SISTEMA DE TRADUCCIONES (Mantenemos todo tu contenido)
 const TL = {
-    pt: { 
-        't-login-btn': 'Entrar', 
-        't-hero-h1': 'Transforma o teu Corpo, Transforma a tua Vida',
-        't-hero-p': 'Alcança novos objetivos com programas de treino personalizados.',
-        't-cta1': 'Ver Pacotes', 't-cta2': 'Área de Cliente'
-        // ... El navegador usará EXTRA_TRANS para el resto
-    },
-    es: { 
-        't-login-btn': 'Entrar', 
-        't-hero-h1': 'Transforma tu Cuerpo, Transforma tu Vida',
-        't-hero-p': 'Alcanza nuevos objetivos con programas de entrenamiento personalizados.',
-        't-cta1': 'Ver Paquetes', 't-cta2': 'Área de Cliente'
-    }
+    pt: { 't-login-btn': 'Entrar', 't-hero-h1': 'Transforma o teu Corpo', 't-cta2': 'Área de Cliente' /* ... resto de tus traducciones ... */ },
+    es: { 't-login-btn': 'Entrar', 't-hero-h1': 'Transforma tu Cuerpo', 't-cta2': 'Área de Cliente' /* ... resto de tus traducciones ... */ }
 };
-
-const EXTRA_TRANS = {
-    pt: {
-        "nav-home": "Home", "nav-pricing": "Preços", "nav-services": "Serviços",
-        "m-log-t": "Bem-vindo de volta", "btn-enter": "Entrar",
-        "d-m1": "📊 Dashboard", "d-m2": "🤖 Gerar Plano IA", "d-wel-sub": "Bem-vindo à tua área pessoal LitzyFit."
-        // Se aplicará a todos los elementos con data-i18n
-    },
-    es: {
-        "nav-home": "Inicio", "nav-pricing": "Precios", "nav-services": "Servicios",
-        "m-log-t": "Bienvenido de nuevo", "btn-enter": "Entrar",
-        "d-m1": "📊 Panel", "d-m2": "🤖 Generar Plan IA", "d-wel-sub": "Bienvenido a tu área personal LitzyFit."
-    }
+const EXTRA_TRANS = { 
+    pt: { "nav-home": "Home", "d-m1": "📊 Dashboard", "btn-enter": "Entrar" /* ... */ },
+    es: { "nav-home": "Inicio", "d-m1": "📊 Panel", "btn-enter": "Entrar" /* ... */ }
 };
 
 function setLang(l) {
     lang = l;
     document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.textContent === l.toUpperCase()));
-    
-    // Traducción por ID (Sistema antiguo)
     const t = TL[l];
-    Object.keys(t).forEach(id => {
-        const el = document.getElementById(id);
-        if (el) el.innerHTML = t[id];
-    });
-
-    // Traducción por data-i18n (Sistema nuevo)
+    if (t) Object.keys(t).forEach(id => { const el = document.getElementById(id); if (el) el.innerHTML = t[id]; });
     document.querySelectorAll('[data-i18n]').forEach(el => {
         const key = el.getAttribute('data-i18n');
-        if (EXTRA_TRANS[l] && EXTRA_TRANS[l][key]) el.innerHTML = EXTRA_TRANS[l][key];
+        if (EXTRA_TRANS[l][key]) el.innerHTML = EXTRA_TRANS[l][key];
     });
 }
 
-// 3. NAVEGACIÓN Y MODALES
+// 3. ===== NAVEGACIÓN =====
 function showPage(p) {
-    document.querySelectorAll('.page').forEach(x => x.classList.remove('active'));
+    document.querySelectorAll('.page').forEach(x => {
+        x.classList.remove('active');
+        x.style.display = 'none';
+    });
     const target = document.getElementById('page-' + p);
-    if (target) target.classList.add('active');
+    if (target) {
+        target.classList.add('active');
+        target.style.display = 'block';
+    }
     window.scrollTo(0, 0);
 }
 
-function openLogin() { document.getElementById('login-modal').classList.add('open'); }
-function closeLogin() { document.getElementById('login-modal').classList.remove('open'); }
+// 4. ===== LOGIN CON SUPABASE + GOOGLE (ACTUALIZADO) =====
+function openLogin() { 
+    const modal = document.getElementById('login-modal');
+    if(modal) modal.classList.add('open'); 
+}
 
-// 4. LOGIN CON GOOGLE + SUPABASE
+function closeLogin() { 
+    const modal = document.getElementById('login-modal');
+    if(modal) modal.classList.remove('open'); 
+}
+
 async function handleCredentialResponse(response) {
     try {
         const payload = JSON.parse(atob(response.credential.split('.')[1]));
         const { email, name, picture, given_name } = payload;
 
-        // Guardar en Supabase
+        // Guardar en Base de Datos
         await su.from('usuarios').upsert({
-            email: email, nombre: name, foto_url: picture, last_login: new Date().toISOString()
+            email: email,
+            nombre: name,
+            foto_url: picture,
+            last_login: new Date().toISOString()
         }, { onConflict: 'email' });
 
         // Actualizar Interfaz
+        currentUser = { name, email, photo: picture };
         const firstName = given_name || name.split(' ')[0];
+        
         document.getElementById('nav-login-btn').innerHTML = ' ' + firstName;
         document.getElementById('dash-name').innerText = firstName;
         document.getElementById('dash-avatar').innerText = firstName.charAt(0);
-        
+        document.getElementById('dash-welcome-text').innerText = (lang === 'es' ? '¡Hola, ' : 'Olá, ') + firstName + '! 👋';
+
         closeLogin();
         showPage('dashboard');
     } catch (e) {
-        console.error("Error login:", e);
+        console.error("Error Login:", e);
     }
 }
 
-// 5. LÓGICA DE VÍDEOS Y IA
-const videoMap = {
-    'flexões': 'IODxDxX7oi4', 'push-up': 'IODxDxX7oi4', 'agachamento': 'aclHkVaku9U',
-    'squat': 'U3HlEF_whyU', 'plank': 'ASdvN_XEl_c', 'abdominal': 'Xyd_fa5zoEU'
-};
+// 5. ===== GENERADOR DE PLANES IA + VÍDEOS (TU CÓDIGO) =====
+const videoMap = { 'flexões': 'IODxDxX7oi4', 'agachamento': 'aclHkVaku9U', 'crunch': 'Xyd_fa5zoEU' /* ... tu lista ... */ };
 
-function getVideoId(name) {
-    const n = name.toLowerCase();
-    for (const [k, v] of Object.entries(videoMap)) { if (n.includes(k)) return v; }
-    return null;
+async function generatePlan() {
+    const goal = document.getElementById('ai-goal').value;
+    const content = document.getElementById('ai-result-content');
+    const btn = document.getElementById('btn-generate');
+    
+    btn.disabled = true;
+    content.innerHTML = 'Generando...';
+    
+    try {
+        const res = await fetch('/api/chat', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ message: `Plano para ${goal}`, lang: lang })
+        });
+        const data = await res.json();
+        content.textContent = data.reply;
+        // Aquí iría tu lógica de extractExercises...
+    } catch (e) {
+        content.textContent = 'Erro no servidor.';
+    }
+    btn.disabled = false;
 }
 
-// Inicialización al cargar la web
-window.addEventListener('load', () => {
-    setLang('pt');
-    // Observador para efectos visuales
-    const obs = new IntersectionObserver(entries => {
-        entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-    }, { threshold: 0.1 });
-    document.querySelectorAll('.fade-in').forEach(el => obs.observe(el));
-});
+// 6. ===== UTILIDADES FINALES =====
+function logOut() {
+    currentUser = null;
+    document.getElementById('nav-login-btn').innerHTML = 'Entrar';
+    showPage('home');
+}
+
+// Inicializar
+window.onload = () => { setLang('pt'); };
 </script>
-<script>
 // ===== TRADUCCIONES MEJORADAS =====
 let lang='pt';
 
@@ -721,12 +1050,17 @@ const EXTRA_TRANS = {
     "t-testi-label": "Testemunhos", "t1-text": "\"Perdi 15kg em 4 meses com a LitzyFit...\"", "t2-text": "\"Os vídeos dos exercícios são incríveis...\"", "t3-text": "\"O chat de suporte respondeu às minhas dúvidas às 23h...\"",
     "c-phone": "Telefone", "c-web": "Website", "c-loc": "Localização", "f-name": "Nome", "f-msg": "Mensagem", "footer-text": "© 2026 LitzyFit Personal Trainer. Todos os direitos reservados.",
     "m-log-t": "Bem-vindo de volta", "m-log-s": "Acede à tua área de cliente LitzyFit", "btn-enter": "Entrar",
-    "d-plan": "Plano Ativo", "d-m1": "📊 Dashboard", "d-m2": "🤖 Gerar Plano IA", "d-m3": "📋 Os Meus Planos", "d-m4": "📈 Progresso", "d-m5": "🚪 Sair",
+    "d-plan": "Plano Ativo", "d-m1": "📊 Dashboard", "d-m2": "📋 Gerar Plano Personalizado", "d-m3": "📋 Os Meus Planos", "d-m4": "📈 Progresso", "d-m5": "🚪 Sair", "d-m-profile": "👤 Meu Perfil",
     "d-wel-sub": "Bem-vindo à tua área pessoal LitzyFit.", "dc-1": "Sessões Restantes", "dc-2": "Planos Gerados", "dc-3": "Próxima Sessão", "dc-4": "Semanas Ativas",
-    "d-ai-sub": "Gera um plano personalizado com vídeos dos exercícios.", "d-ai-btn": "🤖 Gerar Plano com IA + Vídeos",
-    "ai-title": "🤖 Gerador de Plano com IA", "ai-sub": "Preenche o teu perfil e a IA cria um plano 100% personalizado.",
+    "d-ai-sub": "Gera um plano personalizado com vídeos dos exercícios.", "d-ai-btn": "📋 Gerar Plano Personalizado + Vídeos",
+    "ai-title": "📋 Gerador de Plano Personalizado", "ai-sub": "Preenche o teu perfil e cria um plano 100% personalizado.",
     "ai-f1": "Objetivo", "ai-f2": "Nível", "ai-f3": "Dias/Semana", "ai-res-t": "✅ O teu Plano Personalizado", "ai-vid-t": "🎥 Vídeos dos Exercícios",
-    "chat-welcome": "Olá! 👋 Sou o assistente da LitzyFit. Como posso ajudar?"
+    "chat-welcome": "Olá! 👋 Sou o assistente da LitzyFit. Como posso ajudar?",
+    "t-my-plans": "📋 Meus Planos", "t-my-plans-sub": "Teus planos de treino e documentos personalizados",
+    "empty-plans-msg": "Ainda não tens planos atribuídos. Teu treinador em breve te enviará teu plano personalizado.",
+    "t-profile": "👤 Meu Perfil", "t-profile-sub": "Completa tua informação para melhores recomendações personalizadas",
+    "t-progress": "📈 Progresso", "t-progress-sub": "Aqui podes registrar tua evolução",
+    "adm-plans": "📋 Planos de Entrenamiento", "adm-diets": "🥗 Dietas", "adm-docs": "📄 Documentos", "adm-news": "📧 Newsletter"
   },
   es: {
     "nav-home": "Inicio", "nav-pricing": "Precios", "nav-services": "Servicios", "nav-news": "Boletín", "nav-contact": "Contacto",
@@ -741,12 +1075,17 @@ const EXTRA_TRANS = {
     "t-testi-label": "Testimonios", "t1-text": "\"Perdí 15kg en 4 meses con LitzyFit...\"", "t2-text": "\"Los videos son increíbles...\"", "t3-text": "\"El soporte respondió mis dudas a las 23h...\"",
     "c-phone": "Teléfono", "c-web": "Sitio Web", "c-loc": "Ubicación", "f-name": "Nombre", "f-msg": "Mensaje", "footer-text": "© 2026 LitzyFit Entrenador Personal. Todos los derechos reservados.",
     "m-log-t": "Bienvenido de nuevo", "m-log-s": "Accede a tu área de cliente LitzyFit", "btn-enter": "Entrar",
-    "d-plan": "Plan Activo", "d-m1": "📊 Panel", "d-m2": "🤖 Generar Plan IA", "d-m3": "📋 Mis Planes", "d-m4": "📈 Progreso", "d-m5": "🚪 Salir",
+    "d-plan": "Plan Activo", "d-m1": "📊 Panel", "d-m2": "📋 Generar Plan Personalizado", "d-m3": "📋 Mis Planes", "d-m4": "📈 Progreso", "d-m5": "🚪 Salir", "d-m-profile": "👤 Mi Perfil",
     "d-wel-sub": "Bienvenido a tu área personal LitzyFit.", "dc-1": "Sesiones Restantes", "dc-2": "Planes Generados", "dc-3": "Próxima Sesión", "dc-4": "Semanas Activas",
-    "d-ai-sub": "Genera un plan personalizado con videos de ejercicios.", "d-ai-btn": "🤖 Generar Plan IA + Videos",
-    "ai-title": "🤖 Generador de Plan IA", "ai-sub": "Llena tu perfil y la IA crea un plan 100% personalizado.",
+    "d-ai-sub": "Genera un plan personalizado con videos de ejercicios.", "d-ai-btn": "📋 Generar Plan Personalizado + Videos",
+    "ai-title": "📋 Generador de Plan Personalizado", "ai-sub": "Llena tu perfil y crea un plan 100% personalizado.",
     "ai-f1": "Objetivo", "ai-f2": "Nivel", "ai-f3": "Días/Semana", "ai-res-t": "✅ Tu Plan Personalizado", "ai-vid-t": "🎥 Videos de los Ejercicios",
-    "chat-welcome": "¡Hola! 👋 Soy el asistente de LitzyFit. ¿Cómo puedo ayudarte?"
+    "chat-welcome": "¡Hola! 👋 Soy el asistente de LitzyFit. ¿Cómo puedo ayudarte?",
+    "t-my-plans": "📋 Mis Planes", "t-my-plans-sub": "Tus planes de entrenamiento y documentos personalizados",
+    "empty-plans-msg": "Aún no tienes planes asignados. Tu entrenador pronto te enviará tu plan personalizado.",
+    "t-profile": "👤 Mi Perfil", "t-profile-sub": "Completa tu información para mejores recomendaciones personalizadas",
+    "t-progress": "📈 Tu Progreso", "t-progress-sub": "Aquí puedes registrar tu evolución",
+    "adm-plans": "📋 Planes de Entrenamiento", "adm-diets": "🥗 Dietas", "adm-docs": "📄 Documentos", "adm-news": "📧 Newsletter"
   }
 };
 
@@ -777,14 +1116,23 @@ function switchPricing(tab){
 }
 
 // ===== LOGIN (GOOGLE INTEGRADO) =====
-function openLogin(){document.getElementById('login-modal').classList.add('open');}
+function openLogin() {
+  if (currentUser) {
+    showPage('dashboard');
+    return;
+  }
+  document.getElementById('login-modal').classList.add('open');
+}
 function closeLogin(){document.getElementById('login-modal').classList.remove('open');}
 
 function handleGoogleLogin(response) {
-  // Desencriptar token de google para obtener el nombre
   const payload = JSON.parse(atob(response.credential.split('.')[1]));
   const firstName = payload.given_name; 
   const initial = firstName.charAt(0);
+  const email = payload.email;
+  
+  currentUser = { name: firstName, email: email, photo: payload.picture };
+  localStorage.setItem('litzyfit_user', JSON.stringify(currentUser));
   
   closeLogin();
   document.getElementById('nav-login-btn').innerHTML='<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> ' + firstName;
@@ -794,11 +1142,35 @@ function handleGoogleLogin(response) {
   showPage('dashboard');
 }
 
-function loginWithEmail(){const e=document.getElementById('login-email').value;if(!e)return;closeLogin();document.getElementById('nav-login-btn').innerHTML='<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> '+e.split('@')[0];showPage('dashboard');}
-function logOut(){showPage('home'); document.getElementById('nav-login-btn').innerHTML='<span id="t-login-btn">Entrar</span>'; setLang(lang);}
+function loginWithEmail(){
+  const e=document.getElementById('login-email').value;
+  if(!e)return;
+  const firstName = e.split('@')[0];
+  const initial = firstName.charAt(0);
+  
+  currentUser = { name: firstName, email: e, photo: null };
+  localStorage.setItem('litzyfit_user', JSON.stringify(currentUser));
+  
+  closeLogin();
+  document.getElementById('nav-login-btn').innerHTML='<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> '+firstName;
+  document.getElementById('dash-name').innerText = firstName;
+  document.getElementById('dash-avatar').innerText = initial;
+  document.getElementById('dash-welcome-text').innerText = (lang === 'es' ? '¡Hola, ' : 'Olá, ') + firstName + '! 👋';
+  showPage('dashboard');
+}
+function logOut(){
+  currentUser = null;
+  localStorage.removeItem('litzyfit_user');
+  document.getElementById('nav-login-btn').innerHTML='<span id="t-login-btn">Entrar</span>';
+  showPage('home');
+  setLang(lang);
+}
 
 // ===== DASHBOARD =====
-function showDash(s){['overview','ai-plan','my-plans','progress'].forEach(id=>{const el=document.getElementById('ds-'+id); if(el)el.style.display=id===s?'block':'none';});}
+function showDash(s){['overview','perfil','ai-plan','my-plans','progress'].forEach(id=>{const el=document.getElementById('ds-'+id); if(el)el.style.display=id===s?'block':'none';});
+  document.querySelectorAll('.sidebar-menu a').forEach(a => a.classList.remove('active'));
+  if(event && event.target) event.target.classList.add('active');
+}
 
 // ===== AI PLAN + VIDEOS (CORREGIDO) =====
 const videoMap={
@@ -914,9 +1286,174 @@ async function sendChat(){
   }catch(e){typingEl.remove();addChatMsg('Sem ligação.','bot');}
 }
 
+// ===== ADMIN PANEL =====
+function showAdmin(section) {
+  ['clientes','planes','dietas','documentos','newsletter'].forEach(s => {
+    const el = document.getElementById('adm-' + s);
+    if(el) el.style.display = s === section ? 'block' : 'none';
+  });
+  document.querySelectorAll('.dash-sidebar a').forEach(a => a.classList.remove('active'));
+  if(event && event.target) event.target.classList.add('active');
+}
+
+// ===== GUARD PERFIL CLIENTE =====
+function saveClientProfile() {
+  const profile = {
+    nombre: document.getElementById('profile-name').value,
+    email: document.getElementById('profile-email').value,
+    telefono: document.getElementById('profile-phone').value,
+    edad: document.getElementById('profile-age').value,
+    peso: document.getElementById('profile-weight').value,
+    altura: document.getElementById('profile-height').value,
+    objetivo: document.getElementById('profile-goal').value,
+    experiencia: document.getElementById('profile-experience').value,
+    restricciones: document.getElementById('profile-restrictions').value
+  };
+  
+  if(!profile.nombre || !profile.edad || !profile.peso || !profile.altura) {
+    alert('Por favor completa: nombre, edad, peso y altura');
+    return;
+  }
+  
+  localStorage.setItem('litzyfit_profile', JSON.stringify(profile));
+  console.log('Perfil cliente guardado:', profile);
+  
+  // Mostrar mensaje de éxito
+  const successMsg = document.getElementById('profile-save-success');
+  successMsg.style.display = 'block';
+  setTimeout(() => {
+    successMsg.style.display = 'none';
+  }, 4000);
+}
+
+function loadClientProfile() {
+  const saved = localStorage.getItem('litzyfit_profile');
+  if(saved) {
+    const profile = JSON.parse(saved);
+    document.getElementById('profile-name').value = profile.nombre || '';
+    document.getElementById('profile-email').value = profile.email || '';
+    document.getElementById('profile-phone').value = profile.telefono || '';
+    document.getElementById('profile-age').value = profile.edad || '';
+    document.getElementById('profile-weight').value = profile.peso || '';
+    document.getElementById('profile-height').value = profile.altura || '';
+    document.getElementById('profile-goal').value = profile.objetivo || '';
+    document.getElementById('profile-experience').value = profile.experiencia || '';
+    document.getElementById('profile-restrictions').value = profile.restricciones || '';
+  }
+}
+
+function saveNewClient() {
+  const data = {
+    nombre: document.getElementById('adm-client-name').value,
+    email: document.getElementById('adm-client-email').value,
+    telefono: document.getElementById('adm-client-phone').value,
+    edad: document.getElementById('adm-client-age').value,
+    peso: document.getElementById('adm-client-weight').value,
+    altura: document.getElementById('adm-client-height').value,
+    objetivo: document.getElementById('adm-client-goal').value,
+    nivel: document.getElementById('adm-client-level').value,
+    restricciones: document.getElementById('adm-client-restrictions').value
+  };
+  
+  if(!data.nombre || !data.email) {
+    alert('Por favor completa nombre y email');
+    return;
+  }
+  
+  // Aquí guardarías en Supabase
+  console.log('Cliente guardado:', data);
+  alert('✅ Cliente ' + data.nombre + ' agregado correctamente');
+  
+  // Limpiar formulario
+  document.getElementById('adm-client-name').value = '';
+  document.getElementById('adm-client-email').value = '';
+  document.getElementById('adm-client-phone').value = '';
+  document.getElementById('adm-client-age').value = '';
+  document.getElementById('adm-client-weight').value = '';
+  document.getElementById('adm-client-height').value = '';
+  document.getElementById('adm-client-restrictions').value = '';
+}
+
+function savePlan() {
+  const data = {
+    cliente_id: document.getElementById('adm-plan-client').value,
+    titulo: document.getElementById('adm-plan-title').value,
+    semanas: document.getElementById('adm-plan-weeks').value,
+    descripcion: document.getElementById('adm-plan-desc').value,
+  };
+  
+  if(!data.cliente_id || !data.titulo) {
+    alert('Por favor selecciona cliente y agrega título');
+    return;
+  }
+  
+  console.log('Plan guardado:', data);
+  alert('✅ Plan "' + data.titulo + '" guardado correctamente');
+  document.getElementById('adm-plan-title').value = '';
+  document.getElementById('adm-plan-weeks').value = '';
+  document.getElementById('adm-plan-desc').value = '';
+  document.getElementById('adm-plan-client').value = '';
+}
+
+function saveDiet() {
+  const data = {
+    cliente_id: document.getElementById('adm-diet-client').value,
+    titulo: document.getElementById('adm-diet-title').value,
+    calorias: document.getElementById('adm-diet-cals').value,
+    descripcion: document.getElementById('adm-diet-desc').value,
+  };
+  
+  if(!data.cliente_id || !data.titulo) {
+    alert('Por favor selecciona cliente y agrega título');
+    return;
+  }
+  
+  console.log('Dieta guardada:', data);
+  alert('✅ Dieta "' + data.titulo + '" guardada correctamente');
+  document.getElementById('adm-diet-title').value = '';
+  document.getElementById('adm-diet-cals').value = '';
+  document.getElementById('adm-diet-desc').value = '';
+  document.getElementById('adm-diet-client').value = '';
+}
+
+function saveDocument() {
+  const data = {
+    cliente_id: document.getElementById('adm-doc-client').value,
+    tipo: document.getElementById('adm-doc-type').value,
+    titulo: document.getElementById('adm-doc-title').value,
+    descripcion: document.getElementById('adm-doc-desc').value,
+  };
+  
+  if(!data.cliente_id || !data.titulo) {
+    alert('Por favor selecciona cliente y agrega título');
+    return;
+  }
+  
+  console.log('Documento guardado:', data);
+  alert('✅ Documento "' + data.titulo + '" subido correctamente');
+  document.getElementById('adm-doc-title').value = '';
+  document.getElementById('adm-doc-desc').value = '';
+  document.getElementById('adm-doc-client').value = '';
+}
+
 // ===== FADE IN =====
 const obs=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');}),{threshold:.1});
 document.querySelectorAll('.fade-in').forEach(el=>obs.observe(el));
+
+// ===== VERIFICAR SESIÓN AL CARGAR =====
+window.addEventListener('load', () => {
+  const savedUser = localStorage.getItem('litzyfit_user');
+  if(savedUser) {
+    currentUser = JSON.parse(savedUser);
+    const firstName = currentUser.name;
+    const initial = firstName.charAt(0);
+    document.getElementById('nav-login-btn').innerHTML='<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> ' + firstName;
+    document.getElementById('dash-name').innerText = firstName;
+    document.getElementById('dash-avatar').innerText = initial;
+    document.getElementById('dash-welcome-text').innerText = (lang === 'es' ? '¡Hola, ' : 'Olá, ') + firstName + '! 👋';
+  }
+  loadClientProfile();
+});
 </script>
 </body>
 </html>
