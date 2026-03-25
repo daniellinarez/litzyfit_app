@@ -6,287 +6,321 @@
 <title>LitzyFit — Personal Trainer</title>
 <script src="https://accounts.google.com/gsi/client" async defer></script>
 <style>
-  :root {
-    --orange:#E8470A;--orange-dark:#C03A07;--orange-light:#FF6B35;
-    --black:#0A0A0A;--dark:#111111;--card:#1A1A1A;--card2:#222222;
-    --text:#F5F5F5;--muted:#999;--border:#2A2A2A;
-  }
-  *{margin:0;padding:0;box-sizing:border-box;}
-  body{background:var(--black);color:var(--text);font-family:'Segoe UI',system-ui,sans-serif;min-height:100vh;}
-  nav{position:fixed;top:0;width:100%;z-index:100;background:rgba(10,10,10,0.92);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 2rem;height:64px;}
-  .logo{display:flex;align-items:center;gap:10px;cursor:pointer;text-decoration:none;}
-  .logo svg{width:36px;height:36px;}
-  .logo-text{font-size:1.4rem;font-weight:800;color:var(--text);letter-spacing:-0.5px;}
-  .logo-text span{color:var(--orange);}
-  .logo-sub{font-size:.65rem;color:var(--muted);letter-spacing:2px;text-transform:uppercase;display:block;margin-top:-4px;}
-  .nav-links{display:flex;gap:2rem;align-items:center;}
-  .nav-links a{color:var(--muted);text-decoration:none;font-size:.9rem;font-weight:500;transition:color .2s;cursor:pointer;}
-  .nav-links a:hover{color:var(--text);}
-  .nav-right{display:flex;align-items:center;gap:1rem;}
-  .lang-toggle{display:flex;gap:4px;background:var(--card);border-radius:20px;padding:4px;}
-  .lang-btn{padding:4px 10px;border-radius:16px;border:none;cursor:pointer;font-size:.75rem;font-weight:600;transition:all .2s;background:transparent;color:var(--muted);}
-  .lang-btn.active{background:var(--orange);color:#fff;}
-  .btn-login{background:var(--orange);color:#fff;border:none;padding:8px 18px;border-radius:20px;font-size:.85rem;font-weight:600;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:6px;}
-  .btn-login:hover{background:var(--orange-light);transform:translateY(-1px);}
-  .page{display:none;padding-top:64px;min-height:100vh;}
-  .page.active{display:block;}
-  
-  /* HERO */
-  .hero{min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;position:relative;overflow:hidden;background:linear-gradient(135deg,#0A0A0A 0%,#1a0800 50%,#0A0A0A 100%);}
-  .hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% 40%,rgba(232,71,10,.18) 0%,transparent 70%);}
-  .hero-grid{position:absolute;inset:0;opacity:.04;background-image:linear-gradient(var(--orange) 1px,transparent 1px),linear-gradient(90deg,var(--orange) 1px,transparent 1px);background-size:50px 50px;}
-  .hero-content{position:relative;z-index:2;max-width:800px;padding:2rem;}
-  .hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(232,71,10,.15);border:1px solid rgba(232,71,10,.3);border-radius:20px;padding:6px 16px;font-size:.8rem;font-weight:600;color:var(--orange-light);margin-bottom:1.5rem;letter-spacing:1px;text-transform:uppercase;}
-  .hero h1{font-size:clamp(2.5rem,6vw,5rem);font-weight:900;line-height:1.05;letter-spacing:-2px;margin-bottom:1.5rem;}
-  .hero h1 em{color:var(--orange);font-style:normal;}
-  .hero p{font-size:1.15rem;color:var(--muted);max-width:500px;margin:0 auto 2.5rem;line-height:1.6;}
-  .hero-cta{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;}
-  .btn-primary{background:linear-gradient(135deg,var(--orange),var(--orange-dark));color:#fff;border:none;padding:14px 32px;border-radius:30px;font-size:1rem;font-weight:700;cursor:pointer;transition:all .3s;box-shadow:0 8px 30px rgba(232,71,10,.4);}
-  .btn-primary:hover{transform:translateY(-3px);box-shadow:0 12px 40px rgba(232,71,10,.5);}
-  .btn-outline{background:transparent;color:var(--text);border:2px solid var(--border);padding:14px 32px;border-radius:30px;font-size:1rem;font-weight:600;cursor:pointer;transition:all .3s;}
-  .btn-outline:hover{border-color:var(--orange);color:var(--orange);}
-  .hero-stats{display:flex;gap:3rem;justify-content:center;margin-top:4rem;flex-wrap:wrap;}
-  .stat{text-align:center;}
-  .stat-num{font-size:2rem;font-weight:900;color:var(--orange);}
-  .stat-label{font-size:.8rem;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-top:2px;}
+:root{--orange:#E8470A;--orange-dark:#C03A07;--orange-light:#FF6B35;--black:#0A0A0A;--dark:#111111;--card:#1A1A1A;--card2:#222222;--text:#F5F5F5;--muted:#999;--border:#2A2A2A;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--black);color:var(--text);font-family:'Segoe UI',system-ui,sans-serif;min-height:100vh;}
+nav{position:fixed;top:0;width:100%;z-index:100;background:rgba(10,10,10,.92);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 2rem;height:64px;}
+.logo{display:flex;align-items:center;gap:10px;cursor:pointer;text-decoration:none;}
+.logo svg{width:36px;height:36px;}
+.logo-text{font-size:1.4rem;font-weight:800;color:var(--text);letter-spacing:-.5px;}
+.logo-text span{color:var(--orange);}
+.logo-sub{font-size:.65rem;color:var(--muted);letter-spacing:2px;text-transform:uppercase;display:block;margin-top:-4px;}
+.nav-links{display:flex;gap:2rem;align-items:center;}
+.nav-links a{color:var(--muted);text-decoration:none;font-size:.9rem;font-weight:500;transition:color .2s;cursor:pointer;}
+.nav-links a:hover{color:var(--text);}
+.nav-right{display:flex;align-items:center;gap:1rem;}
+.lang-toggle{display:flex;gap:4px;background:var(--card);border-radius:20px;padding:4px;}
+.lang-btn{padding:4px 10px;border-radius:16px;border:none;cursor:pointer;font-size:.75rem;font-weight:600;transition:all .2s;background:transparent;color:var(--muted);}
+.lang-btn.active{background:var(--orange);color:#fff;}
+.btn-login{background:var(--orange);color:#fff;border:none;padding:8px 18px;border-radius:20px;font-size:.85rem;font-weight:600;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:6px;}
+.btn-login:hover{background:var(--orange-light);transform:translateY(-1px);}
+.page{display:none;padding-top:64px;min-height:100vh;}
+.page.active{display:block;}
 
-  /* SECTIONS */
-  section{padding:6rem 2rem;max-width:1200px;margin:0 auto;}
-  .section-label{color:var(--orange);font-size:.8rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:.75rem;}
-  .section-title{font-size:clamp(1.8rem,3.5vw,3rem);font-weight:900;line-height:1.1;letter-spacing:-1px;margin-bottom:1rem;}
-  .section-sub{color:var(--muted);font-size:1rem;max-width:500px;line-height:1.6;margin-bottom:3rem;}
+/* HERO */
+.hero{min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;position:relative;overflow:hidden;background:linear-gradient(135deg,#0A0A0A 0%,#1a0800 50%,#0A0A0A 100%);}
+.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% 40%,rgba(232,71,10,.18) 0%,transparent 70%);}
+.hero-grid{position:absolute;inset:0;opacity:.04;background-image:linear-gradient(var(--orange) 1px,transparent 1px),linear-gradient(90deg,var(--orange) 1px,transparent 1px);background-size:50px 50px;}
+.hero-content{position:relative;z-index:2;max-width:800px;padding:2rem;}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(232,71,10,.15);border:1px solid rgba(232,71,10,.3);border-radius:20px;padding:6px 16px;font-size:.8rem;font-weight:600;color:var(--orange-light);margin-bottom:1.5rem;letter-spacing:1px;text-transform:uppercase;}
+.hero h1{font-size:clamp(2.5rem,6vw,5rem);font-weight:900;line-height:1.05;letter-spacing:-2px;margin-bottom:1.5rem;}
+.hero h1 em{color:var(--orange);font-style:normal;}
+.hero p{font-size:1.15rem;color:var(--muted);max-width:500px;margin:0 auto 2.5rem;line-height:1.6;}
+.hero-cta{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;}
+.btn-primary{background:linear-gradient(135deg,var(--orange),var(--orange-dark));color:#fff;border:none;padding:14px 32px;border-radius:30px;font-size:1rem;font-weight:700;cursor:pointer;transition:all .3s;box-shadow:0 8px 30px rgba(232,71,10,.4);}
+.btn-primary:hover{transform:translateY(-3px);box-shadow:0 12px 40px rgba(232,71,10,.5);}
+.btn-outline{background:transparent;color:var(--text);border:2px solid var(--border);padding:14px 32px;border-radius:30px;font-size:1rem;font-weight:600;cursor:pointer;transition:all .3s;}
+.btn-outline:hover{border-color:var(--orange);color:var(--orange);}
+.hero-stats{display:flex;gap:3rem;justify-content:center;margin-top:4rem;flex-wrap:wrap;}
+.stat-num{font-size:2rem;font-weight:900;color:var(--orange);}
+.stat-label{font-size:.8rem;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-top:2px;}
 
-  /* PRICING */
-  .pricing-toggle{display:flex;gap:4px;background:var(--card);border-radius:30px;padding:6px;margin-bottom:3rem;width:fit-content;}
-  .price-tab{padding:8px 24px;border-radius:24px;border:none;cursor:pointer;font-size:.9rem;font-weight:600;transition:all .25s;background:transparent;color:var(--muted);}
-  .price-tab.active{background:var(--orange);color:#fff;}
-  .plans-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem;}
-  .plan-card{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:2rem;transition:all .3s;position:relative;overflow:hidden;}
-  .plan-card:hover{transform:translateY(-6px);border-color:var(--orange);box-shadow:0 20px 60px rgba(232,71,10,.15);}
-  .plan-card.featured{border-color:var(--orange);background:linear-gradient(145deg,#1a0800,var(--card));}
-  .plan-card.featured::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--orange),var(--orange-light));}
-  .plan-badge{position:absolute;top:1.2rem;right:1.2rem;background:var(--orange);color:#fff;font-size:.7rem;font-weight:700;padding:4px 10px;border-radius:10px;text-transform:uppercase;letter-spacing:1px;}
-  .plan-name{font-size:1rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:.5rem;}
-  .plan-price{font-size:3rem;font-weight:900;line-height:1;margin-bottom:.25rem;}
-  .plan-price sup{font-size:1.2rem;vertical-align:top;margin-top:.5rem;color:var(--orange);}
-  .plan-period{font-size:.85rem;color:var(--muted);margin-bottom:1.5rem;}
-  .plan-features{list-style:none;margin-bottom:2rem;}
-  .plan-features li{display:flex;align-items:flex-start;gap:10px;padding:.55rem 0;font-size:.9rem;color:var(--muted);border-bottom:1px solid var(--border);}
-  .plan-features li:last-child{border-bottom:none;}
-  .plan-features li::before{content:'✓';color:var(--orange);font-weight:900;flex-shrink:0;margin-top:1px;}
-  .btn-plan{width:100%;padding:12px;border-radius:14px;font-size:.95rem;font-weight:700;cursor:pointer;transition:all .2s;border:2px solid var(--orange);}
-  .btn-plan-fill{background:var(--orange);color:#fff;}
-  .btn-plan-fill:hover{background:var(--orange-light);}
-  .btn-plan-outline{background:transparent;color:var(--orange);}
-  .btn-plan-outline:hover{background:rgba(232,71,10,.1);}
+/* SECTIONS */
+section{padding:6rem 2rem;max-width:1200px;margin:0 auto;}
+.section-label{color:var(--orange);font-size:.8rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:.75rem;}
+.section-title{font-size:clamp(1.8rem,3.5vw,3rem);font-weight:900;line-height:1.1;letter-spacing:-1px;margin-bottom:1rem;}
+.section-sub{color:var(--muted);font-size:1rem;max-width:500px;line-height:1.6;margin-bottom:3rem;}
 
-  /* FEATURES */
-  .features-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1.5rem;}
-  .feat-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:1.75rem;transition:all .3s;}
-  .feat-card:hover{border-color:var(--orange);transform:translateY(-4px);}
-  .feat-icon{font-size:2rem;margin-bottom:1rem;}
-  .feat-title{font-size:1rem;font-weight:700;margin-bottom:.5rem;}
-  .feat-desc{font-size:.88rem;color:var(--muted);line-height:1.6;}
+/* PRICING */
+.pricing-toggle{display:flex;gap:4px;background:var(--card);border-radius:30px;padding:6px;margin-bottom:3rem;width:fit-content;}
+.price-tab{padding:8px 24px;border-radius:24px;border:none;cursor:pointer;font-size:.9rem;font-weight:600;transition:all .25s;background:transparent;color:var(--muted);}
+.price-tab.active{background:var(--orange);color:#fff;}
+.plans-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.5rem;}
+.plan-card{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:2rem;transition:all .3s;position:relative;overflow:hidden;}
+.plan-card:hover{transform:translateY(-6px);border-color:var(--orange);box-shadow:0 20px 60px rgba(232,71,10,.15);}
+.plan-card.featured{border-color:var(--orange);background:linear-gradient(145deg,#1a0800,var(--card));}
+.plan-card.featured::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--orange),var(--orange-light));}
+.plan-badge{position:absolute;top:1.2rem;right:1.2rem;background:var(--orange);color:#fff;font-size:.7rem;font-weight:700;padding:4px 10px;border-radius:10px;text-transform:uppercase;}
+.plan-name{font-size:1rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:.5rem;}
+.plan-price{font-size:3rem;font-weight:900;line-height:1;margin-bottom:.25rem;}
+.plan-price sup{font-size:1.2rem;vertical-align:top;margin-top:.5rem;color:var(--orange);}
+.plan-period{font-size:.85rem;color:var(--muted);margin-bottom:1.5rem;}
+.plan-features{list-style:none;margin-bottom:2rem;}
+.plan-features li{display:flex;align-items:flex-start;gap:10px;padding:.55rem 0;font-size:.9rem;color:var(--muted);border-bottom:1px solid var(--border);}
+.plan-features li:last-child{border-bottom:none;}
+.plan-features li::before{content:'✓';color:var(--orange);font-weight:900;flex-shrink:0;margin-top:1px;}
+.btn-plan{width:100%;padding:12px;border-radius:14px;font-size:.95rem;font-weight:700;cursor:pointer;transition:all .2s;border:2px solid var(--orange);}
+.btn-plan-fill{background:var(--orange);color:#fff;}
+.btn-plan-fill:hover{background:var(--orange-light);}
+.btn-plan-outline{background:transparent;color:var(--orange);}
+.btn-plan-outline:hover{background:rgba(232,71,10,.1);}
 
-  /* TESTIMONIALS */
-  .testi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem;}
-  .testi-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:1.75rem;}
-  .stars{color:var(--orange);font-size:1rem;margin-bottom:1rem;}
-  .testi-text{font-size:.95rem;color:var(--muted);line-height:1.6;margin-bottom:1.25rem;font-style:italic;}
-  .testi-author{display:flex;align-items:center;gap:10px;}
-  .testi-avatar{width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,var(--orange),var(--orange-dark));display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.9rem;}
-  .testi-name{font-size:.9rem;font-weight:700;}
-  .testi-role{font-size:.78rem;color:var(--muted);}
+/* FEATURES */
+.features-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1.5rem;}
+.feat-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:1.75rem;transition:all .3s;}
+.feat-card:hover{border-color:var(--orange);transform:translateY(-4px);}
+.feat-icon{font-size:2rem;margin-bottom:1rem;}
+.feat-title{font-size:1rem;font-weight:700;margin-bottom:.5rem;}
+.feat-desc{font-size:.88rem;color:var(--muted);line-height:1.6;}
 
-  /* NEWSLETTER SECTION */
-  .newsletter-section{background:linear-gradient(135deg,#1a0800,var(--card));border:1px solid rgba(232,71,10,.3);border-radius:24px;padding:3rem;text-align:center;margin:0 2rem 4rem;max-width:1200px;margin-left:auto;margin-right:auto;}
-  .newsletter-section h2{font-size:2rem;font-weight:900;margin-bottom:.75rem;}
-  .newsletter-section p{color:var(--muted);margin-bottom:2rem;font-size:1rem;}
-  .newsletter-form{display:flex;gap:1rem;max-width:500px;margin:0 auto;flex-wrap:wrap;justify-content:center;}
-  .newsletter-input{flex:1;min-width:220px;padding:14px 20px;background:var(--card2);border:1px solid var(--border);border-radius:30px;color:var(--text);font-size:.95rem;outline:none;transition:border .2s;}
-  .newsletter-input:focus{border-color:var(--orange);}
-  .btn-newsletter{background:linear-gradient(135deg,var(--orange),var(--orange-dark));color:#fff;border:none;padding:14px 28px;border-radius:30px;font-size:.95rem;font-weight:700;cursor:pointer;transition:all .2s;white-space:nowrap;}
-  .btn-newsletter:hover{transform:translateY(-2px);}
-  .newsletter-success{color:#00c864;font-weight:600;font-size:.95rem;margin-top:1rem;display:none;}
-  .newsletter-list{margin-top:2rem;text-align:left;max-width:600px;margin-left:auto;margin-right:auto;}
-  .newsletter-list h4{font-size:.9rem;color:var(--muted);margin-bottom:1rem;text-transform:uppercase;letter-spacing:1px;}
-  .email-item{display:flex;align-items:center;justify-content:space-between;padding:.6rem .75rem;background:var(--card2);border-radius:10px;margin-bottom:.5rem;font-size:.88rem;}
-  .email-item span{color:var(--muted);}
-  .email-delete{background:none;border:none;color:#ff4444;cursor:pointer;font-size:1rem;padding:0 4px;}
+/* TESTIMONIALS */
+.testi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem;}
+.testi-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:1.75rem;}
+.stars{color:var(--orange);margin-bottom:1rem;}
+.testi-text{font-size:.95rem;color:var(--muted);line-height:1.6;margin-bottom:1.25rem;font-style:italic;}
+.testi-author{display:flex;align-items:center;gap:10px;}
+.testi-avatar{width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,var(--orange),var(--orange-dark));display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.9rem;}
+.testi-name{font-size:.9rem;font-weight:700;}
+.testi-role{font-size:.78rem;color:var(--muted);}
 
-  /* MODAL */
-  .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.8);backdrop-filter:blur(8px);z-index:200;align-items:center;justify-content:center;}
-  .modal-overlay.open{display:flex;}
-  .modal{background:var(--card);border:1px solid var(--border);border-radius:24px;padding:2.5rem;width:90%;max-width:420px;position:relative;animation:slideUp .3s ease;}
-  @keyframes slideUp{from{transform:translateY(20px);opacity:0}to{transform:translateY(0);opacity:1}}
-  .modal-close{position:absolute;top:1rem;right:1rem;background:var(--card2);border:none;color:var(--muted);width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:1.1rem;display:flex;align-items:center;justify-content:center;}
-  .modal h2{font-size:1.5rem;font-weight:800;margin-bottom:.5rem;}
-  .modal p{color:var(--muted);font-size:.9rem;margin-bottom:2rem;}
-  .btn-google{width:100%;padding:14px;border-radius:14px;border:2px solid var(--border);background:var(--card2);color:var(--text);font-size:.95rem;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:12px;transition:all .2s;margin-bottom:1rem;}
-  .btn-google:hover{border-color:var(--orange);}
-  .divider{display:flex;align-items:center;gap:1rem;color:var(--muted);font-size:.8rem;margin:1rem 0;}
-  .divider::before,.divider::after{content:'';flex:1;height:1px;background:var(--border);}
-  .form-group{margin-bottom:1rem;}
-  .form-group label{display:block;font-size:.82rem;font-weight:600;color:var(--muted);margin-bottom:.5rem;}
-  .form-group input{width:100%;padding:12px 16px;background:var(--card2);border:1px solid var(--border);border-radius:12px;color:var(--text);font-size:.95rem;outline:none;transition:border .2s;}
-  .form-group input:focus{border-color:var(--orange);}
-  .btn-submit{width:100%;padding:14px;background:linear-gradient(135deg,var(--orange),var(--orange-dark));color:#fff;border:none;border-radius:14px;font-size:.95rem;font-weight:700;cursor:pointer;margin-top:.5rem;transition:all .2s;box-shadow:0 6px 20px rgba(232,71,10,.35);}
-  .btn-submit:hover{transform:translateY(-2px);}
+/* NEWSLETTER */
+.newsletter-section{background:linear-gradient(135deg,#1a0800,var(--card));border:1px solid rgba(232,71,10,.3);border-radius:24px;padding:3rem;text-align:center;max-width:1200px;margin:0 auto 4rem;}
+.newsletter-form{display:flex;gap:1rem;max-width:500px;margin:0 auto;flex-wrap:wrap;justify-content:center;}
+.newsletter-input{flex:1;min-width:220px;padding:14px 20px;background:var(--card2);border:1px solid var(--border);border-radius:30px;color:var(--text);font-size:.95rem;outline:none;transition:border .2s;}
+.newsletter-input:focus{border-color:var(--orange);}
+.btn-newsletter{background:linear-gradient(135deg,var(--orange),var(--orange-dark));color:#fff;border:none;padding:14px 28px;border-radius:30px;font-size:.95rem;font-weight:700;cursor:pointer;transition:all .2s;white-space:nowrap;}
+.nl-success{color:#00c864;font-weight:600;margin-top:1rem;display:none;}
+.nl-list-section{margin-top:2rem;max-width:600px;margin-left:auto;margin-right:auto;display:none;}
+.email-item{display:flex;align-items:center;justify-content:space-between;padding:.6rem .75rem;background:var(--card2);border-radius:10px;margin-bottom:.5rem;font-size:.88rem;color:var(--muted);}
+.email-delete{background:none;border:none;color:#ff4444;cursor:pointer;font-size:1rem;}
 
-  /* DASHBOARD */
-  #page-dashboard{background:var(--black);}
-  .dash-layout{display:grid;grid-template-columns:240px 1fr;min-height:calc(100vh - 64px);}
-  .dash-sidebar{background:var(--card);border-right:1px solid var(--border);padding:2rem 1rem;position:sticky;top:64px;height:calc(100vh - 64px);overflow-y:auto;}
-  .user-profile{text-align:center;margin-bottom:2rem;padding-bottom:1.5rem;border-bottom:1px solid var(--border);}
-  .avatar-large{width:70px;height:70px;border-radius:50%;margin:0 auto .75rem;background:linear-gradient(135deg,var(--orange),var(--orange-dark));display:flex;align-items:center;justify-content:center;font-size:1.6rem;font-weight:800;border:3px solid var(--orange);}
-  .user-name{font-size:1rem;font-weight:700;}
-  .user-plan{font-size:.78rem;color:var(--orange);font-weight:600;margin-top:2px;}
-  .sidebar-menu{list-style:none;}
-  .sidebar-menu li a{display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:12px;color:var(--muted);text-decoration:none;font-size:.9rem;font-weight:500;transition:all .2s;cursor:pointer;}
-  .sidebar-menu li a:hover,.sidebar-menu li a.active{background:rgba(232,71,10,.15);color:var(--orange);}
-  .dash-main{padding:2.5rem;overflow-y:auto;}
-  .dash-header{margin-bottom:2.5rem;}
-  .dash-header h1{font-size:1.8rem;font-weight:800;}
-  .dash-header p{color:var(--muted);margin-top:.25rem;}
-  .dash-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1rem;margin-bottom:2.5rem;}
-  .dash-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:1.5rem;}
-  .dash-card-label{font-size:.78rem;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:.5rem;}
-  .dash-card-val{font-size:2rem;font-weight:900;}
-  .dash-card-val.orange{color:var(--orange);}
-  .dash-card-sub{font-size:.78rem;color:var(--muted);margin-top:.25rem;}
+/* MODAL */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.85);backdrop-filter:blur(8px);z-index:500;align-items:center;justify-content:center;padding:1rem;}
+.modal-overlay.open{display:flex;}
+.modal{background:var(--card);border:1px solid var(--border);border-radius:24px;padding:2.5rem;width:100%;max-width:460px;position:relative;animation:slideUp .3s ease;max-height:90vh;overflow-y:auto;}
+@keyframes slideUp{from{transform:translateY(20px);opacity:0}to{transform:translateY(0);opacity:1}}
+.modal-close{position:absolute;top:1rem;right:1rem;background:var(--card2);border:none;color:var(--muted);width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:1.1rem;display:flex;align-items:center;justify-content:center;}
+.modal h2{font-size:1.4rem;font-weight:800;margin-bottom:.4rem;}
+.modal>.modal-sub{color:var(--muted);font-size:.9rem;margin-bottom:1.5rem;}
+.btn-google{width:100%;padding:14px;border-radius:14px;border:2px solid var(--border);background:var(--card2);color:var(--text);font-size:.95rem;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:12px;transition:all .2s;margin-bottom:1rem;}
+.btn-google:hover{border-color:var(--orange);}
+.divider{display:flex;align-items:center;gap:1rem;color:var(--muted);font-size:.8rem;margin:1rem 0;}
+.divider::before,.divider::after{content:'';flex:1;height:1px;background:var(--border);}
+.form-group{margin-bottom:1rem;}
+.form-group label{display:block;font-size:.82rem;font-weight:600;color:var(--muted);margin-bottom:.4rem;}
+.form-group input,.form-group select,.form-group textarea{width:100%;padding:11px 14px;background:var(--card2);border:1px solid var(--border);border-radius:12px;color:var(--text);font-size:.92rem;outline:none;transition:border .2s;font-family:inherit;}
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--orange);}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+.btn-submit{width:100%;padding:14px;background:linear-gradient(135deg,var(--orange),var(--orange-dark));color:#fff;border:none;border-radius:14px;font-size:.95rem;font-weight:700;cursor:pointer;margin-top:.5rem;transition:all .2s;box-shadow:0 6px 20px rgba(232,71,10,.35);}
+.btn-submit:hover{transform:translateY(-2px);}
+.tabs-row{display:flex;gap:4px;background:var(--card2);border-radius:12px;padding:4px;margin-bottom:1.5rem;}
+.tab-btn{flex:1;padding:8px;border-radius:9px;border:none;cursor:pointer;font-size:.85rem;font-weight:600;background:transparent;color:var(--muted);transition:all .2s;}
+.tab-btn.active{background:var(--orange);color:#fff;}
+.tab-panel{display:none;}
+.tab-panel.active{display:block;}
+.pkg-selected{background:rgba(232,71,10,.1);border:1px solid rgba(232,71,10,.4);border-radius:10px;padding:.75rem 1rem;font-size:.85rem;color:var(--orange-light);margin-bottom:1.25rem;text-align:center;}
 
-  /* AI SECTION */
-  .ai-section{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:2rem;margin-bottom:2rem;}
-  .ai-section h3{font-size:1.2rem;font-weight:800;margin-bottom:.5rem;display:flex;align-items:center;gap:8px;}
-  .ai-badge-small{background:var(--orange);color:#fff;font-size:.65rem;font-weight:700;padding:3px 8px;border-radius:8px;text-transform:uppercase;}
-  .ai-form{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;margin-top:1.5rem;}
-  .ai-form-group label{display:block;font-size:.8rem;color:var(--muted);font-weight:600;margin-bottom:.4rem;}
-  .ai-form-group select,.ai-form-group input{width:100%;padding:10px 14px;background:var(--card2);border:1px solid var(--border);border-radius:10px;color:var(--text);font-size:.9rem;outline:none;transition:border .2s;appearance:none;}
-  .ai-form-group select:focus,.ai-form-group input:focus{border-color:var(--orange);}
-  .btn-generate{background:linear-gradient(135deg,var(--orange),var(--orange-dark));color:#fff;border:none;padding:12px 28px;border-radius:12px;font-size:.95rem;font-weight:700;cursor:pointer;transition:all .25s;display:inline-flex;align-items:center;gap:8px;margin-top:1rem;box-shadow:0 4px 20px rgba(232,71,10,.3);}
-  .btn-generate:hover{transform:translateY(-2px);}
-  .btn-generate:disabled{opacity:.6;cursor:not-allowed;transform:none;}
-  .ai-result{margin-top:1.5rem;background:var(--card2);border:1px solid var(--border);border-radius:14px;padding:1.5rem;display:none;}
-  .ai-result.visible{display:block;}
-  .ai-result h4{color:var(--orange);font-size:1rem;margin-bottom:1rem;}
-  .ai-result-content{font-size:.9rem;color:var(--muted);line-height:1.8;white-space:pre-wrap;}
+/* DASHBOARD */
+#page-dashboard{background:var(--black);}
+.dash-layout{display:grid;grid-template-columns:240px 1fr;min-height:calc(100vh - 64px);}
+.dash-sidebar{background:var(--card);border-right:1px solid var(--border);padding:2rem 1rem;position:sticky;top:64px;height:calc(100vh - 64px);overflow-y:auto;}
+.user-profile{text-align:center;margin-bottom:2rem;padding-bottom:1.5rem;border-bottom:1px solid var(--border);}
+.avatar-large{width:70px;height:70px;border-radius:50%;margin:0 auto .75rem;background:linear-gradient(135deg,var(--orange),var(--orange-dark));display:flex;align-items:center;justify-content:center;font-size:1.6rem;font-weight:800;border:3px solid var(--orange);}
+.user-name{font-size:1rem;font-weight:700;}
+.user-plan{font-size:.78rem;color:var(--orange);font-weight:600;margin-top:2px;}
+.sidebar-menu{list-style:none;}
+.sidebar-menu li a{display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:12px;color:var(--muted);text-decoration:none;font-size:.9rem;font-weight:500;transition:all .2s;cursor:pointer;}
+.sidebar-menu li a:hover,.sidebar-menu li a.active{background:rgba(232,71,10,.15);color:var(--orange);}
+.dash-main{padding:2.5rem;overflow-y:auto;}
+.dash-header{margin-bottom:2rem;}
+.dash-header h1{font-size:1.8rem;font-weight:800;}
+.dash-header p{color:var(--muted);margin-top:.25rem;}
+.dash-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:1rem;margin-bottom:2rem;}
+.dash-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:1.5rem;}
+.dash-card-label{font-size:.75rem;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:.5rem;}
+.dash-card-val{font-size:1.9rem;font-weight:900;}
+.dash-card-val.orange{color:var(--orange);}
+.dash-card-sub{font-size:.75rem;color:var(--muted);margin-top:.2rem;}
+.ai-section{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:2rem;margin-bottom:1.5rem;}
+.ai-section h3{font-size:1.1rem;font-weight:800;margin-bottom:.5rem;display:flex;align-items:center;gap:8px;}
+.badge-sm{background:var(--orange);color:#fff;font-size:.62rem;font-weight:700;padding:3px 8px;border-radius:8px;text-transform:uppercase;}
+.empty-state{text-align:center;padding:3rem 1rem;color:var(--muted);}
+.empty-state .empty-icon{font-size:3rem;margin-bottom:1rem;opacity:.4;}
+.empty-state p{font-size:.95rem;line-height:1.6;}
 
-  /* VIDEO GRID */
-  .video-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;margin-top:1.5rem;}
-  .video-card{background:var(--card2);border-radius:12px;overflow:hidden;border:1px solid var(--border);transition:all .2s;}
-  .video-card:hover{border-color:var(--orange);}
-  .video-thumb{position:relative;padding-bottom:56.25%;background:#111;}
-  .video-thumb iframe{position:absolute;inset:0;width:100%;height:100%;border:none;}
-  .video-label{padding:.75rem 1rem;font-size:.85rem;font-weight:600;}
+/* CONTENT CARDS */
+.content-card{background:var(--card2);border:1px solid var(--border);border-radius:14px;padding:1.5rem;margin-bottom:1rem;}
+.content-card-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:.75rem;}
+.content-card-title{font-size:1rem;font-weight:700;}
+.content-card-date{font-size:.75rem;color:var(--muted);}
+.content-card-body{font-size:.88rem;color:var(--muted);line-height:1.7;white-space:pre-wrap;}
+.content-card-type{display:inline-block;padding:3px 10px;border-radius:8px;font-size:.72rem;font-weight:700;margin-bottom:.5rem;}
+.type-workout{background:rgba(232,71,10,.15);color:var(--orange);}
+.type-diet{background:rgba(0,200,100,.12);color:#00c864;}
+.type-doc{background:rgba(59,130,246,.12);color:#60a5fa;}
+.type-msg{background:rgba(168,85,247,.12);color:#c084fc;}
 
-  /* PLAN TABLE */
-  .plan-table{width:100%;border-collapse:collapse;}
-  .plan-table th,.plan-table td{padding:.85rem 1rem;text-align:left;font-size:.88rem;border-bottom:1px solid var(--border);}
-  .plan-table th{color:var(--muted);font-weight:600;text-transform:uppercase;font-size:.75rem;letter-spacing:1px;}
-  .plan-table tr:hover td{background:rgba(232,71,10,.05);}
-  .badge{display:inline-block;padding:3px 10px;border-radius:8px;font-size:.75rem;font-weight:700;}
-  .badge-green{background:rgba(0,200,100,.15);color:#00c864;}
-  .badge-orange{background:rgba(232,71,10,.15);color:var(--orange);}
+/* MESSAGES */
+.msg-thread{display:flex;flex-direction:column;gap:.75rem;}
+.msg-bubble{max-width:85%;padding:.85rem 1.1rem;border-radius:14px;font-size:.9rem;line-height:1.5;}
+.msg-from-admin{background:var(--card2);border-radius:4px 14px 14px 14px;align-self:flex-start;}
+.msg-from-me{background:linear-gradient(135deg,var(--orange),var(--orange-dark));color:#fff;border-radius:14px 4px 14px 14px;align-self:flex-end;}
+.msg-meta{font-size:.72rem;color:var(--muted);margin-top:.25rem;}
 
-  /* LOADING DOTS */
-  .loading-dots{display:inline-flex;gap:4px;align-items:center;}
-  .loading-dots span{width:6px;height:6px;background:var(--orange);border-radius:50%;animation:bounce 1.2s infinite;}
-  .loading-dots span:nth-child(2){animation-delay:.2s;}
-  .loading-dots span:nth-child(3){animation-delay:.4s;}
-  @keyframes bounce{0%,80%,100%{transform:scale(.8);opacity:.5}40%{transform:scale(1);opacity:1}}
+/* PLAN TABLE */
+.plan-table{width:100%;border-collapse:collapse;}
+.plan-table th,.plan-table td{padding:.75rem 1rem;text-align:left;font-size:.85rem;border-bottom:1px solid var(--border);}
+.plan-table th{color:var(--muted);font-weight:600;text-transform:uppercase;font-size:.72rem;letter-spacing:1px;}
+.plan-table tr:hover td{background:rgba(232,71,10,.04);}
+.badge{display:inline-block;padding:3px 10px;border-radius:8px;font-size:.72rem;font-weight:700;}
+.badge-green{background:rgba(0,200,100,.15);color:#00c864;}
+.badge-orange{background:rgba(232,71,10,.15);color:var(--orange);}
 
-  /* CONTACT */
-  .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:start;}
-  .contact-info h3{font-size:1.5rem;font-weight:800;margin-bottom:1rem;}
-  .contact-info p{color:var(--muted);line-height:1.7;margin-bottom:1.5rem;}
-  .contact-item{display:flex;align-items:center;gap:12px;margin-bottom:1rem;}
-  .contact-icon{width:40px;height:40px;background:rgba(232,71,10,.15);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;}
-  .contact-text{font-size:.9rem;}
-  .contact-text strong{display:block;font-weight:700;}
-  .contact-text span{color:var(--muted);font-size:.85rem;}
-  .contact-form{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:2rem;}
-  .contact-form h3{font-size:1.1rem;font-weight:700;margin-bottom:1.5rem;}
+/* CONTACT */
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:start;}
+.contact-info h3{font-size:1.5rem;font-weight:800;margin-bottom:1rem;}
+.contact-info p{color:var(--muted);line-height:1.7;margin-bottom:1.5rem;}
+.contact-item{display:flex;align-items:center;gap:12px;margin-bottom:1rem;}
+.contact-icon{width:40px;height:40px;background:rgba(232,71,10,.15);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;}
+.contact-text{font-size:.9rem;}
+.contact-text strong{display:block;font-weight:700;}
+.contact-text span{color:var(--muted);font-size:.85rem;}
+.contact-form{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:2rem;}
 
-  /* FOOTER */
-  footer{background:var(--card);border-top:1px solid var(--border);padding:3rem 2rem 2rem;text-align:center;}
-  footer .footer-logo{font-size:1.5rem;font-weight:900;margin-bottom:.5rem;}
-  footer .footer-logo span{color:var(--orange);}
-  footer p{color:var(--muted);font-size:.85rem;margin-bottom:1.5rem;}
-  footer .footer-links{display:flex;gap:2rem;justify-content:center;flex-wrap:wrap;}
-  footer .footer-links a{color:var(--muted);text-decoration:none;font-size:.85rem;transition:color .2s;cursor:pointer;}
-  footer .footer-links a:hover{color:var(--orange);}
+/* FOOTER */
+footer{background:var(--card);border-top:1px solid var(--border);padding:3rem 2rem 2rem;text-align:center;}
+.footer-logo{font-size:1.5rem;font-weight:900;margin-bottom:.5rem;}
+.footer-logo span{color:var(--orange);}
+footer p{color:var(--muted);font-size:.85rem;margin-bottom:1.5rem;}
+.footer-links{display:flex;gap:2rem;justify-content:center;flex-wrap:wrap;}
+.footer-links a{color:var(--muted);text-decoration:none;font-size:.85rem;transition:color .2s;cursor:pointer;}
+.footer-links a:hover{color:var(--orange);}
 
-  /* CHAT WIDGET */
-  #chat-btn{position:fixed;bottom:2rem;right:2rem;z-index:300;width:58px;height:58px;border-radius:50%;background:linear-gradient(135deg,var(--orange),var(--orange-dark));border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 30px rgba(232,71,10,.5);transition:all .3s;}
-  #chat-btn:hover{transform:scale(1.1);}
-  #chat-btn svg{width:26px;height:26px;fill:white;}
-  .chat-notif{position:absolute;top:-4px;right:-4px;width:18px;height:18px;background:#ff4444;border-radius:50%;font-size:.65rem;font-weight:700;color:#fff;display:flex;align-items:center;justify-content:center;border:2px solid var(--black);}
-  #chat-window{position:fixed;bottom:6rem;right:2rem;z-index:300;width:360px;max-height:520px;background:var(--card);border:1px solid var(--border);border-radius:20px;display:none;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,.5);animation:slideUp .25s ease;}
-  #chat-window.open{display:flex;}
-  .chat-header{padding:1rem 1.25rem;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
-  .chat-header-info{display:flex;align-items:center;gap:10px;}
-  .chat-avatar{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--orange),var(--orange-dark));display:flex;align-items:center;justify-content:center;font-size:1rem;}
-  .chat-header-text .name{font-size:.95rem;font-weight:700;}
-  .chat-header-text .status{font-size:.75rem;color:#00c864;display:flex;align-items:center;gap:4px;}
-  .chat-header-text .status::before{content:'';width:6px;height:6px;background:#00c864;border-radius:50%;display:inline-block;}
-  .chat-close-btn{background:var(--card2);border:none;color:var(--muted);width:28px;height:28px;border-radius:50%;cursor:pointer;font-size:1rem;}
-  .chat-messages{flex:1;overflow-y:auto;padding:1rem;display:flex;flex-direction:column;gap:.75rem;min-height:200px;max-height:320px;}
-  .chat-msg{max-width:85%;padding:.75rem 1rem;border-radius:14px;font-size:.88rem;line-height:1.5;}
-  .chat-msg.bot{background:var(--card2);border-radius:4px 14px 14px 14px;color:var(--text);align-self:flex-start;}
-  .chat-msg.user{background:linear-gradient(135deg,var(--orange),var(--orange-dark));color:#fff;border-radius:14px 4px 14px 14px;align-self:flex-end;}
-  .chat-msg.typing{background:var(--card2);align-self:flex-start;padding:.75rem 1.25rem;}
-  .chat-input-row{padding:.75rem 1rem;border-top:1px solid var(--border);display:flex;gap:.5rem;}
-  .chat-input{flex:1;padding:.65rem 1rem;background:var(--card2);border:1px solid var(--border);border-radius:20px;color:var(--text);font-size:.88rem;outline:none;}
-  .chat-input:focus{border-color:var(--orange);}
-  .chat-send{background:var(--orange);border:none;width:36px;height:36px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
-  .chat-send svg{width:16px;height:16px;fill:white;}
+/* CHAT */
+#chat-btn{position:fixed;bottom:2rem;right:2rem;z-index:300;width:58px;height:58px;border-radius:50%;background:linear-gradient(135deg,var(--orange),var(--orange-dark));border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 30px rgba(232,71,10,.5);transition:all .3s;}
+#chat-btn:hover{transform:scale(1.1);}
+#chat-btn svg{width:26px;height:26px;fill:white;}
+.chat-notif{position:absolute;top:-4px;right:-4px;width:18px;height:18px;background:#ff4444;border-radius:50%;font-size:.62rem;font-weight:700;color:#fff;display:flex;align-items:center;justify-content:center;border:2px solid var(--black);}
+#chat-window{position:fixed;bottom:6rem;right:2rem;z-index:300;width:360px;max-height:520px;background:var(--card);border:1px solid var(--border);border-radius:20px;display:none;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,.5);animation:slideUp .25s ease;}
+#chat-window.open{display:flex;}
+.chat-header{padding:1rem 1.25rem;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
+.chat-header-info{display:flex;align-items:center;gap:10px;}
+.chat-avatar-sm{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--orange),var(--orange-dark));display:flex;align-items:center;justify-content:center;font-size:1rem;}
+.chat-hname{font-size:.95rem;font-weight:700;}
+.chat-hstatus{font-size:.72rem;color:#00c864;display:flex;align-items:center;gap:4px;}
+.chat-hstatus::before{content:'';width:6px;height:6px;background:#00c864;border-radius:50%;display:inline-block;}
+.chat-close-x{background:var(--card2);border:none;color:var(--muted);width:28px;height:28px;border-radius:50%;cursor:pointer;}
+.chat-msgs{flex:1;overflow-y:auto;padding:1rem;display:flex;flex-direction:column;gap:.75rem;min-height:200px;max-height:320px;}
+.cmsg{max-width:85%;padding:.75rem 1rem;border-radius:14px;font-size:.88rem;line-height:1.5;}
+.cmsg.bot{background:var(--card2);border-radius:4px 14px 14px 14px;align-self:flex-start;}
+.cmsg.user{background:linear-gradient(135deg,var(--orange),var(--orange-dark));color:#fff;border-radius:14px 4px 14px 14px;align-self:flex-end;}
+.cmsg.typing{background:var(--card2);align-self:flex-start;padding:.75rem 1.25rem;}
+.chat-input-row{padding:.75rem 1rem;border-top:1px solid var(--border);display:flex;gap:.5rem;}
+.chat-input{flex:1;padding:.65rem 1rem;background:var(--card2);border:1px solid var(--border);border-radius:20px;color:var(--text);font-size:.88rem;outline:none;}
+.chat-input:focus{border-color:var(--orange);}
+.chat-send-btn{background:var(--orange);border:none;width:36px;height:36px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.chat-send-btn svg{width:16px;height:16px;fill:white;}
 
-  .fade-in{opacity:0;transform:translateY(24px);transition:all .6s ease;}
-  .fade-in.visible{opacity:1;transform:translateY(0);}
+/* ADMIN */
+#page-admin{background:var(--black);}
+.admin-layout{display:grid;grid-template-columns:220px 1fr;min-height:calc(100vh - 64px);}
+.admin-sidebar{background:#0d0d0d;border-right:1px solid #1f1f1f;padding:2rem 1rem;}
+.admin-logo{font-size:1rem;font-weight:800;color:var(--orange);margin-bottom:2rem;text-align:center;letter-spacing:2px;text-transform:uppercase;}
+.admin-menu{list-style:none;}
+.admin-menu li a{display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:10px;color:var(--muted);font-size:.88rem;font-weight:500;transition:all .2s;cursor:pointer;}
+.admin-menu li a:hover,.admin-menu li a.active{background:rgba(232,71,10,.15);color:var(--orange);}
+.admin-main{padding:2.5rem;overflow-y:auto;}
+.admin-section{display:none;}
+.admin-section.active{display:block;}
+.admin-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:1.5rem;margin-bottom:1.5rem;}
+.admin-card h3{font-size:1rem;font-weight:700;margin-bottom:1rem;color:var(--orange);}
+.client-row{display:flex;align-items:center;justify-content:space-between;padding:.85rem 1rem;background:var(--card2);border-radius:12px;margin-bottom:.75rem;gap:1rem;}
+.client-info{display:flex;align-items:center;gap:12px;}
+.client-avatar{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--orange),var(--orange-dark));display:flex;align-items:center;justify-content:center;font-size:.85rem;font-weight:700;flex-shrink:0;}
+.client-name{font-size:.9rem;font-weight:600;}
+.client-email{font-size:.75rem;color:var(--muted);}
+.client-actions{display:flex;gap:.5rem;flex-wrap:wrap;}
+.btn-action{padding:6px 14px;border-radius:8px;border:none;font-size:.78rem;font-weight:600;cursor:pointer;transition:all .2s;}
+.btn-action-orange{background:rgba(232,71,10,.15);color:var(--orange);}
+.btn-action-orange:hover{background:var(--orange);color:#fff;}
+.btn-action-green{background:rgba(0,200,100,.12);color:#00c864;}
+.btn-action-green:hover{background:#00c864;color:#000;}
+.btn-action-blue{background:rgba(59,130,246,.12);color:#60a5fa;}
+.btn-action-blue:hover{background:#3b82f6;color:#fff;}
+.sessions-ctrl{display:flex;align-items:center;gap:.75rem;}
+.sessions-ctrl button{width:28px;height:28px;border-radius:50%;border:1px solid var(--border);background:var(--card2);color:var(--text);cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center;}
+.sessions-ctrl button:hover{background:var(--orange);border-color:var(--orange);}
+.sessions-val{font-size:1.1rem;font-weight:700;color:var(--orange);min-width:24px;text-align:center;}
+.stat-box{background:var(--card2);border-radius:12px;padding:1.25rem;text-align:center;}
+.stat-box-val{font-size:2rem;font-weight:900;color:var(--orange);}
+.stat-box-label{font-size:.75rem;color:var(--muted);margin-top:.25rem;}
+.admin-stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:1rem;margin-bottom:2rem;}
+.nl-export-row{display:flex;align-items:center;gap:1rem;margin-bottom:.5rem;padding:.6rem .75rem;background:var(--card2);border-radius:10px;}
+.nl-export-email{flex:1;font-size:.88rem;color:var(--muted);}
+.btn-export{background:linear-gradient(135deg,var(--orange),var(--orange-dark));color:#fff;border:none;padding:8px 16px;border-radius:8px;font-size:.82rem;font-weight:700;cursor:pointer;}
+.tag-pkg{display:inline-block;background:rgba(232,71,10,.15);color:var(--orange);font-size:.7rem;font-weight:700;padding:2px 8px;border-radius:6px;margin-left:6px;}
+.imc-card{background:var(--card2);border-radius:14px;padding:1.5rem;}
+.imc-val{font-size:2.5rem;font-weight:900;margin:1rem 0;}
+.imc-label{font-size:.85rem;padding:4px 12px;border-radius:8px;display:inline-block;font-weight:700;}
 
-  @media(max-width:768px){
-    .nav-links{display:none;}
-    .contact-grid{grid-template-columns:1fr;}
-    .dash-layout{grid-template-columns:1fr;}
-    .dash-sidebar{display:none;}
-    #chat-window{width:calc(100vw - 2rem);right:1rem;}
-  }
+.loading-dots{display:inline-flex;gap:4px;align-items:center;}
+.loading-dots span{width:6px;height:6px;background:var(--orange);border-radius:50%;animation:bounce 1.2s infinite;}
+.loading-dots span:nth-child(2){animation-delay:.2s;}
+.loading-dots span:nth-child(3){animation-delay:.4s;}
+@keyframes bounce{0%,80%,100%{transform:scale(.8);opacity:.5}40%{transform:scale(1);opacity:1}}
+.fade-in{opacity:0;transform:translateY(24px);transition:all .6s ease;}
+.fade-in.visible{opacity:1;transform:translateY(0);}
+@media(max-width:768px){
+  .nav-links{display:none;}
+  .contact-grid,.dash-layout,.admin-layout{grid-template-columns:1fr;}
+  .dash-sidebar,.admin-sidebar{display:none;}
+  #chat-window{width:calc(100vw - 2rem);right:1rem;}
+  .form-row{grid-template-columns:1fr;}
+}
 </style>
 </head>
 <body>
 
 <nav>
-  <a class="logo" onclick="showPage('home')">
-    <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <a class="logo" onclick="goHome()">
+    <svg viewBox="0 0 40 40" fill="none">
       <polygon points="20,2 36,12 36,28 20,38 4,28 4,12" fill="none" stroke="#E8470A" stroke-width="2"/>
       <polygon points="20,8 30,14 30,26 20,32 10,26 10,14" fill="rgba(232,71,10,0.15)" stroke="#E8470A" stroke-width="1.5"/>
       <path d="M14 20 L18 16 L22 22 L26 17" stroke="#E8470A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
       <circle cx="26" cy="17" r="2" fill="#E8470A"/>
     </svg>
-    <div>
-      <span class="logo-text">Litzy<span>Fit</span></span>
-      <span class="logo-sub">Personal Trainer</span>
-    </div>
+    <div><span class="logo-text">Litzy<span>Fit</span></span><span class="logo-sub">Personal Trainer</span></div>
   </a>
   <div class="nav-links">
-    <a onclick="showPage('home')" data-i18n="nav-home">Home</a>
-    <a onclick="scrollToSection('pricing')" data-i18n="nav-pricing">Preços</a>
-    <a onclick="scrollToSection('features')" data-i18n="nav-services">Serviços</a>
-    <a onclick="scrollToSection('newsletter-sec')" data-i18n="nav-news">Newsletter</a>
-    <a onclick="scrollToSection('contact')" data-i18n="nav-contact">Contacto</a>
+    <a onclick="goHome()" id="nl-home">Home</a>
+    <a onclick="scrollTo('pricing')" id="nl-pricing">Preços</a>
+    <a onclick="scrollTo('features')" id="nl-services">Serviços</a>
+    <a onclick="scrollTo('newsletter-sec')" id="nl-news">Newsletter</a>
+    <a onclick="scrollTo('contact')" id="nl-contact">Contacto</a>
   </div>
   <div class="nav-right">
     <div class="lang-toggle">
       <button class="lang-btn active" onclick="setLang('pt')">PT</button>
       <button class="lang-btn" onclick="setLang('es')">ES</button>
     </div>
-    <button class="btn-login" id="nav-login-btn" onclick="openLogin()">
+    <button class="btn-login" id="nav-login-btn" onclick="navLoginClick()">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
       <span id="t-login-btn">Entrar</span>
     </button>
   </div>
 </nav>
 
+<!-- ===== HOME ===== -->
 <div id="page-home" class="page active">
   <div class="hero">
     <div class="hero-bg"></div><div class="hero-grid"></div>
@@ -295,8 +329,8 @@
       <h1 id="t-hero-h1">Transforma o teu <em>Corpo</em>,<br>Transforma a tua <em>Vida</em></h1>
       <p id="t-hero-p">Alcança novos objetivos com programas de treino personalizados e acompanhamento contínuo.</p>
       <div class="hero-cta">
-        <button class="btn-primary" onclick="scrollToSection('pricing')" id="t-cta1">Ver Pacotes</button>
-        <button class="btn-outline" onclick="openLogin()" id="t-cta2">Área de Cliente</button>
+        <button class="btn-primary" onclick="scrollTo('pricing')" id="t-cta1">Ver Pacotes</button>
+        <button class="btn-outline" onclick="navLoginClick()" id="t-cta2">Área de Cliente</button>
       </div>
       <div class="hero-stats">
         <div class="stat"><div class="stat-num">200+</div><div class="stat-label" id="t-stat1">Clientes</div></div>
@@ -308,23 +342,23 @@
 
   <section id="features">
     <div class="fade-in">
-      <div class="section-label" data-i18n="nav-services">Serviços</div>
+      <div class="section-label" id="t-feat-label">Serviços</div>
       <h2 class="section-title" id="t-feat-title">Por que escolher a LitzyFit?</h2>
       <p class="section-sub" id="t-feat-sub">Uma abordagem completa ao fitness, com tecnologia e acompanhamento humano.</p>
     </div>
     <div class="features-grid fade-in">
-      <div class="feat-card"><div class="feat-icon">🤖</div><div class="feat-title" id="t-f1t">Planos com IA</div><div class="feat-desc" id="t-f1d">Planos de treino gerados por IA, adaptados ao teu perfil, objetivos e nível de condição física.</div></div>
-      <div class="feat-card"><div class="feat-icon">🎥</div><div class="feat-title" id="t-f2t">Vídeos dos Exercícios</div><div class="feat-desc" id="t-f2d">Cada plano inclui vídeos demonstrativos para garantires a execução perfeita de cada exercício.</div></div>
-      <div class="feat-card"><div class="feat-icon">💬</div><div class="feat-title" id="t-f3t">Suporte IA 24/7</div><div class="feat-desc" id="t-f3d">Chat de suporte com IA disponível a qualquer hora para responder às tuas dúvidas de treino e nutrição.</div></div>
-      <div class="feat-card"><div class="feat-icon">🎯</div><div class="feat-title" id="t-f4t">Objetivos Personalizados</div><div class="feat-desc" id="t-f4d">Seja perda de peso, ganho muscular ou preparação para competição — temos o plano certo para ti.</div></div>
-      <div class="feat-card"><div class="feat-icon">📱</div><div class="feat-title" id="t-f5t">Acesso Digital</div><div class="feat-desc" id="t-f5d">Acede aos teus planos de treino em qualquer dispositivo, a qualquer hora.</div></div>
+      <div class="feat-card"><div class="feat-icon">📋</div><div class="feat-title" id="t-f1t">Programas Dedicados</div><div class="feat-desc" id="t-f1d">Programas de treino criados especificamente para o teu perfil, objetivos e condição física atual.</div></div>
+      <div class="feat-card"><div class="feat-icon">🎥</div><div class="feat-title" id="t-f2t">Vídeos dos Exercícios</div><div class="feat-desc" id="t-f2d">Cada programa inclui vídeos demonstrativos para garantires a execução perfeita de cada exercício.</div></div>
+      <div class="feat-card"><div class="feat-icon">💬</div><div class="feat-title" id="t-f3t">Suporte 24/7</div><div class="feat-desc" id="t-f3d">Chat de suporte disponível a qualquer hora para responder às tuas dúvidas de treino e nutrição.</div></div>
+      <div class="feat-card"><div class="feat-icon">🥗</div><div class="feat-title" id="t-f4t">Planos Nutricionais</div><div class="feat-desc" id="t-f4d">Orientação nutricional personalizada para complementar o teu programa de treino.</div></div>
+      <div class="feat-card"><div class="feat-icon">📱</div><div class="feat-title" id="t-f5t">Acesso Digital</div><div class="feat-desc" id="t-f5d">Acede aos teus programas em qualquer dispositivo, a qualquer hora.</div></div>
       <div class="feat-card"><div class="feat-icon">🏆</div><div class="feat-title" id="t-f6t">Resultados Garantidos</div><div class="feat-desc" id="t-f6d">Compromisso total com os teus resultados, com metodologias comprovadas e suporte contínuo.</div></div>
     </div>
   </section>
 
   <section id="pricing">
     <div class="fade-in">
-      <div class="section-label" data-i18n="nav-pricing">Preços</div>
+      <div class="section-label" id="t-price-label">Preços</div>
       <h2 class="section-title" id="t-price-title">Escolhe o teu Pacote</h2>
       <p class="section-sub" id="t-price-sub">Planos flexíveis para cada ritmo de vida e objetivo.</p>
     </div>
@@ -336,83 +370,63 @@
     <div id="pricing-sessions" class="plans-grid fade-in">
       <div class="plan-card">
         <div class="plan-name">Starter</div><div class="plan-price"><sup>€</sup>100</div>
-        <div class="plan-period" data-i18n="p-start-sub">5 sessões • Pagamento único</div>
-        <ul class="plan-features">
-          <li data-i18n="p-f1">5 sessões de 1h personalizado</li>
-          <li data-i18n="p-f2">Plano de treino personalizado</li>
-          <li data-i18n="p-f3">Consultoria em fitness e bem-estar</li>
-        </ul>
-        <button class="btn-plan btn-plan-outline" onclick="openLogin()" data-i18n="btn-start">Começar Agora</button>
+        <div class="plan-period" id="t-pp1">5 sessões • Pagamento único</div>
+        <ul class="plan-features"><li id="t-sf1">5 sessões de 1h personalizado</li><li id="t-sf2">Programa de treino dedicado</li><li id="t-sf3">Consultoria em fitness e bem-estar</li></ul>
+        <button class="btn-plan btn-plan-outline" onclick="openLoginWithPkg('Starter — €100')">Começar Agora</button>
       </div>
       <div class="plan-card featured">
-        <div class="plan-badge">Popular</div>
+        <div class="plan-badge" id="t-popular">Popular</div>
         <div class="plan-name">Silver</div><div class="plan-price"><sup>€</sup>180</div>
-        <div class="plan-period" data-i18n="p-silv-sub">10 sessões • Pagamento único</div>
-        <ul class="plan-features">
-          <li data-i18n="p-f4">10 sessões de 1h personalizado</li>
-          <li data-i18n="p-f2">Plano de treino personalizado</li>
-          <li data-i18n="p-f3">Consultoria em fitness e bem-estar</li>
-        </ul>
-        <button class="btn-plan btn-plan-fill" onclick="openLogin()" data-i18n="btn-silv">Escolher Silver</button>
+        <div class="plan-period" id="t-pp2">10 sessões • Pagamento único</div>
+        <ul class="plan-features"><li id="t-slv1">10 sessões de 1h personalizado</li><li id="t-sf2b">Programa de treino dedicado</li><li id="t-sf3b">Consultoria em fitness e bem-estar</li></ul>
+        <button class="btn-plan btn-plan-fill" onclick="openLoginWithPkg('Silver — €180')">Escolher Silver</button>
       </div>
       <div class="plan-card">
         <div class="plan-name">Gold</div><div class="plan-price"><sup>€</sup>360</div>
-        <div class="plan-period" data-i18n="p-gold-sub">20 sessões • Pagamento único</div>
-        <ul class="plan-features">
-          <li data-i18n="p-f5">20 sessões de 1h personalizado</li>
-          <li data-i18n="p-f2">Plano de treino personalizado</li>
-          <li data-i18n="p-f3">Consultoria em fitness e bem-estar</li>
-        </ul>
-        <button class="btn-plan btn-plan-outline" onclick="openLogin()" data-i18n="btn-gold">Escolher Gold</button>
+        <div class="plan-period" id="t-pp3">20 sessões • Pagamento único</div>
+        <ul class="plan-features"><li id="t-gld1">20 sessões de 1h personalizado</li><li id="t-sf2c">Programa de treino dedicado</li><li id="t-sf3c">Consultoria em fitness e bem-estar</li></ul>
+        <button class="btn-plan btn-plan-outline" onclick="openLoginWithPkg('Gold — €360')">Escolher Gold</button>
       </div>
       <div class="plan-card">
-        <div class="plan-name" data-i18n="p-plan-name">Plano de Treino</div><div class="plan-price"><sup>€</sup>50</div>
-        <div class="plan-period" data-i18n="p-plan-sub">Documento personalizado</div>
-        <ul class="plan-features">
-          <li data-i18n="p-f6">Plano 100% personalizado</li>
-          <li data-i18n="p-f7">Explicação de cada exercício</li>
-        </ul>
-        <button class="btn-plan btn-plan-outline" onclick="openLogin()" data-i18n="btn-plan">Obter Plano</button>
+        <div class="plan-name" id="t-planname">Programa de Treino</div><div class="plan-price"><sup>€</sup>50</div>
+        <div class="plan-period" id="t-pp4">Documento personalizado</div>
+        <ul class="plan-features"><li id="t-tr1">Programa 100% personalizado</li><li id="t-tr2">Explicação de cada exercício</li></ul>
+        <button class="btn-plan btn-plan-outline" onclick="openLoginWithPkg('Programa de Treino — €50')">Obter Programa</button>
       </div>
     </div>
-    
     <div id="pricing-monthly" class="plans-grid fade-in" style="display:none">
-      <div class="plan-card"><div class="plan-name">Once/Week</div><div class="plan-price"><sup>€</sup>90</div><div class="plan-period" data-i18n="p-mo-sub">por mês</div><ul class="plan-features"><li data-i18n="p-m1">1h de treino/semana</li><li data-i18n="p-f2">Plano personalizado</li><li data-i18n="p-f3">Consultoria bem-estar</li></ul><button class="btn-plan btn-plan-outline" onclick="openLogin()" data-i18n="btn-choose">Escolher</button></div>
-      <div class="plan-card featured"><div class="plan-badge">Popular</div><div class="plan-name">Twice/Week</div><div class="plan-price"><sup>€</sup>170</div><div class="plan-period" data-i18n="p-mo-sub">por mês</div><ul class="plan-features"><li data-i18n="p-m2">2h de treino/semana</li><li data-i18n="p-f2">Plano personalizado</li><li data-i18n="p-f3">Consultoria bem-estar</li></ul><button class="btn-plan btn-plan-fill" onclick="openLogin()" data-i18n="btn-choose">Escolher</button></div>
-      <div class="plan-card"><div class="plan-name">3x/Week</div><div class="plan-price"><sup>€</sup>320</div><div class="plan-period" data-i18n="p-mo-sub">por mês</div><ul class="plan-features"><li data-i18n="p-m3">3h de treino/semana</li><li data-i18n="p-f2">Plano personalizado</li><li data-i18n="p-f3">Consultoria bem-estar</li></ul><button class="btn-plan btn-plan-outline" onclick="openLogin()" data-i18n="btn-choose">Escolher</button></div>
-      <div class="plan-card"><div class="plan-name">4x/Week</div><div class="plan-price"><sup>€</sup>400</div><div class="plan-period" data-i18n="p-mo-sub">por mês</div><ul class="plan-features"><li data-i18n="p-m4">4h de treino/semana</li><li data-i18n="p-f2">Plano personalizado</li><li data-i18n="p-f3">Consultoria bem-estar</li></ul><button class="btn-plan btn-plan-outline" onclick="openLogin()" data-i18n="btn-choose">Escolher</button></div>
+      <div class="plan-card"><div class="plan-name">Once/Week</div><div class="plan-price"><sup>€</sup>90</div><div class="plan-period" id="t-mpp1">por mês</div><ul class="plan-features"><li id="t-m1f1">1h de treino/semana</li><li id="t-m1f2">Programa personalizado</li><li id="t-m1f3">Consultoria bem-estar</li></ul><button class="btn-plan btn-plan-outline" onclick="openLoginWithPkg('Once/Week — €90/mês')">Escolher</button></div>
+      <div class="plan-card featured"><div class="plan-badge" id="t-popular2">Popular</div><div class="plan-name">Twice/Week</div><div class="plan-price"><sup>€</sup>170</div><div class="plan-period" id="t-mpp2">por mês</div><ul class="plan-features"><li id="t-m2f1">2h de treino/semana</li><li>Programa personalizado</li><li>Consultoria bem-estar</li></ul><button class="btn-plan btn-plan-fill" onclick="openLoginWithPkg('Twice/Week — €170/mês')">Escolher</button></div>
+      <div class="plan-card"><div class="plan-name">3x/Week</div><div class="plan-price"><sup>€</sup>320</div><div class="plan-period">por mês</div><ul class="plan-features"><li>3h de treino/semana</li><li>Programa personalizado</li><li>Consultoria bem-estar</li></ul><button class="btn-plan btn-plan-outline" onclick="openLoginWithPkg('3x/Week — €320/mês')">Escolher</button></div>
+      <div class="plan-card"><div class="plan-name">4x/Week</div><div class="plan-price"><sup>€</sup>400</div><div class="plan-period">por mês</div><ul class="plan-features"><li>4h de treino/semana</li><li>Programa personalizado</li><li>Consultoria bem-estar</li></ul><button class="btn-plan btn-plan-outline" onclick="openLoginWithPkg('4x/Week — €400/mês')">Escolher</button></div>
     </div>
-    
     <div id="pricing-duo" class="plans-grid fade-in" style="display:none">
-      <div class="plan-card"><div class="plan-name">Duo 5</div><div class="plan-price"><sup>€</sup>180</div><div class="plan-period" data-i18n="p-d1-sub">5 sessões para 2 pessoas</div><ul class="plan-features"><li data-i18n="p-d1-f1">5 sessões partilhadas</li><li data-i18n="p-d-f2">Plano para cada um</li></ul><button class="btn-plan btn-plan-outline" onclick="openLogin()" data-i18n="btn-choose">Escolher</button></div>
-      <div class="plan-card featured"><div class="plan-badge">Popular</div><div class="plan-name">Duo 10</div><div class="plan-price"><sup>€</sup>300</div><div class="plan-period" data-i18n="p-d2-sub">10 sessões para 2 pessoas</div><ul class="plan-features"><li data-i18n="p-d2-f1">10 sessões partilhadas</li><li data-i18n="p-d-f2">Plano para cada um</li></ul><button class="btn-plan btn-plan-fill" onclick="openLogin()" data-i18n="btn-choose">Escolher</button></div>
-      <div class="plan-card"><div class="plan-name">Duo 20</div><div class="plan-price"><sup>€</sup>600</div><div class="plan-period" data-i18n="p-d3-sub">20 sessões para 2 pessoas</div><ul class="plan-features"><li data-i18n="p-d3-f1">20 sessões partilhadas</li><li data-i18n="p-d-f2">Plano para cada um</li></ul><button class="btn-plan btn-plan-outline" onclick="openLogin()" data-i18n="btn-choose">Escolher</button></div>
+      <div class="plan-card"><div class="plan-name">Duo 5</div><div class="plan-price"><sup>€</sup>180</div><div class="plan-period">5 sessões para 2 pessoas</div><ul class="plan-features"><li>5 sessões partilhadas</li><li>Programa para cada um</li></ul><button class="btn-plan btn-plan-outline" onclick="openLoginWithPkg('Duo 5 — €180')">Escolher</button></div>
+      <div class="plan-card featured"><div class="plan-badge">Popular</div><div class="plan-name">Duo 10</div><div class="plan-price"><sup>€</sup>300</div><div class="plan-period">10 sessões para 2 pessoas</div><ul class="plan-features"><li>10 sessões partilhadas</li><li>Programa para cada um</li></ul><button class="btn-plan btn-plan-fill" onclick="openLoginWithPkg('Duo 10 — €300')">Escolher</button></div>
+      <div class="plan-card"><div class="plan-name">Duo 20</div><div class="plan-price"><sup>€</sup>600</div><div class="plan-period">20 sessões para 2 pessoas</div><ul class="plan-features"><li>20 sessões partilhadas</li><li>Programa para cada um</li></ul><button class="btn-plan btn-plan-outline" onclick="openLoginWithPkg('Duo 20 — €600')">Escolher</button></div>
     </div>
   </section>
 
   <section style="background:linear-gradient(180deg,transparent,rgba(232,71,10,.04),transparent);padding:5rem 2rem;max-width:1200px;margin:0 auto;">
-    <div class="fade-in">
-      <div class="section-label" data-i18n="t-testi-label">Testemunhos</div>
-      <h2 class="section-title" id="t-testi-title">O que dizem os nossos clientes</h2>
-    </div>
+    <div class="fade-in"><div class="section-label" id="t-testi-label">Testemunhos</div><h2 class="section-title" id="t-testi-title">O que dizem os nossos clientes</h2></div>
     <div class="testi-grid fade-in">
-      <div class="testi-card"><div class="stars">★★★★★</div><div class="testi-text" data-i18n="t1-text">"Perdi 15kg em 4 meses com a LitzyFit. Os planos são completamente personalizados e os resultados aparecem!"</div><div class="testi-author"><div class="testi-avatar">AM</div><div><div class="testi-name">Ana M.</div><div class="testi-role">Gold Package • Porto</div></div></div></div>
-      <div class="testi-card"><div class="stars">★★★★★</div><div class="testi-text" data-i18n="t2-text">"Os vídeos dos exercícios são incríveis — executo tudo na perfeição e nunca me lesionei."</div><div class="testi-author"><div class="testi-avatar">JP</div><div><div class="testi-name">João P.</div><div class="testi-role">Silver Package • Gaia</div></div></div></div>
-      <div class="testi-card"><div class="stars">★★★★★</div><div class="testi-text" data-i18n="t3-text">"O chat de suporte respondeu às minhas dúvidas às 23h. Serviço premium a todos os níveis!"</div><div class="testi-author"><div class="testi-avatar">CR</div><div><div class="testi-name">Carla R.</div><div class="testi-role">Duo Package • Porto</div></div></div></div>
+      <div class="testi-card"><div class="stars">★★★★★</div><div class="testi-text" id="t-t1">"Perdi 15kg em 4 meses com a LitzyFit. O programa foi feito especificamente para mim e os resultados aparecem!"</div><div class="testi-author"><div class="testi-avatar">AM</div><div><div class="testi-name">Ana M.</div><div class="testi-role">Gold • Porto</div></div></div></div>
+      <div class="testi-card"><div class="stars">★★★★★</div><div class="testi-text" id="t-t2">"Os vídeos dos exercícios são incríveis — executo tudo na perfeição e nunca me lesionei."</div><div class="testi-author"><div class="testi-avatar">JP</div><div><div class="testi-name">João P.</div><div class="testi-role">Silver • Gaia</div></div></div></div>
+      <div class="testi-card"><div class="stars">★★★★★</div><div class="testi-text" id="t-t3">"O suporte respondeu às minhas dúvidas às 23h. Serviço premium a todos os níveis!"</div><div class="testi-author"><div class="testi-avatar">CR</div><div><div class="testi-name">Carla R.</div><div class="testi-role">Duo • Porto</div></div></div></div>
     </div>
   </section>
 
-  <div id="newsletter-sec" class="newsletter-section fade-in">
+  <div id="newsletter-sec" class="newsletter-section fade-in" style="padding:3rem 2rem;">
     <div class="section-label" style="text-align:center" id="t-nl-label">Newsletter</div>
-    <h2 id="t-nl-title">Dicas de treino gratuitas<br>diretamente no teu email</h2>
-    <p id="t-nl-sub">Recebe semanalmente planos, receitas e motivação da LitzyFit. Sem spam, cancelares quando quiseres.</p>
+    <h2 style="font-size:2rem;font-weight:900;margin-bottom:.75rem" id="t-nl-title">Dicas de treino gratuitas<br>diretamente no teu email</h2>
+    <p style="color:var(--muted);margin-bottom:2rem" id="t-nl-sub">Recebe semanalmente programas, receitas e motivação da LitzyFit. Sem spam.</p>
     <div class="newsletter-form">
       <input class="newsletter-input" id="nl-email" type="email" placeholder="O teu email...">
-      <button class="btn-newsletter" onclick="subscribeNewsletter()" id="t-nl-btn">Subscrever</button>
+      <button class="btn-newsletter" onclick="subscribeNL()" id="t-nl-btn">Subscrever</button>
     </div>
-    <div class="newsletter-success" id="nl-success">✅ <span id="t-nl-success">Subscrito com sucesso! Bem-vindo à família LitzyFit.</span></div>
-    <div class="newsletter-list" id="nl-list-section" style="display:none">
-      <h4 id="t-nl-list">Subscritores guardados (<span id="nl-count">0</span>)</h4>
+    <div class="nl-success" id="nl-success">✅ <span id="t-nl-ok">Subscrito com sucesso!</span></div>
+    <div class="nl-list-section" id="nl-list-wrap">
+      <p style="font-size:.8rem;color:var(--muted);margin:1rem 0 .5rem;text-align:left" id="t-nl-list">Lista de subscritores (<span id="nl-count">0</span>)</p>
       <div id="nl-list"></div>
     </div>
   </div>
@@ -420,388 +434,816 @@
   <section id="contact">
     <div class="contact-grid fade-in">
       <div class="contact-info">
-        <div class="section-label" data-i18n="nav-contact">Contacto</div>
+        <div class="section-label" id="t-cont-label">Contacto</div>
         <h3 id="t-cont-title">Fala connosco</h3>
-        <p id="t-cont-p">Tens dúvidas sobre os pacotes ou queres saber mais? Entra em contacto.</p>
-        <div class="contact-item"><div class="contact-icon">📞</div><div class="contact-text"><strong data-i18n="c-phone">Telefone</strong><span>939 213 517</span></div></div>
-        <div class="contact-item"><div class="contact-icon">🌐</div><div class="contact-text"><strong data-i18n="c-web">Website</strong><span>www.litzyfit.com</span></div></div>
-        <div class="contact-item"><div class="contact-icon">📍</div><div class="contact-text"><strong data-i18n="c-loc">Localização</strong><span>Porto / Vila Nova de Gaia</span></div></div>
+        <p id="t-cont-p">Tens dúvidas sobre os pacotes ou queres saber mais? Entra em contacto connosco.</p>
+        <div class="contact-item"><div class="contact-icon">📞</div><div class="contact-text"><strong id="t-c1">Telefone</strong><span>939 213 517</span></div></div>
+        <div class="contact-item"><div class="contact-icon">🌐</div><div class="contact-text"><strong>Website</strong><span>www.litzyfit.com</span></div></div>
+        <div class="contact-item"><div class="contact-icon">📍</div><div class="contact-text"><strong id="t-c3">Localização</strong><span>Porto / Vila Nova de Gaia</span></div></div>
       </div>
       <div class="contact-form">
         <h3 id="t-form-title">Enviar Mensagem</h3>
-        <div class="form-group"><label data-i18n="f-name">Nome</label><input type="text" placeholder="O teu nome"></div>
-        <div class="form-group"><label>Email</label><input type="email" placeholder="email@exemplo.com"></div>
-        <div class="form-group"><label data-i18n="f-msg">Mensagem</label><input type="text" placeholder="Como podemos ajudar?"></div>
-        <button class="btn-submit" id="t-form-send">Enviar Mensagem</button>
+        <div class="form-group"><label id="t-fn">Nome</label><input type="text" id="cf-name" placeholder="O teu nome"></div>
+        <div class="form-group"><label>Email</label><input type="email" id="cf-email" placeholder="email@exemplo.com"></div>
+        <div class="form-group"><label id="t-fm">Mensagem</label><textarea id="cf-msg" rows="3" placeholder="Como podemos ajudar?"></textarea></div>
+        <button class="btn-submit" onclick="sendContact()" id="t-form-send">Enviar Mensagem</button>
       </div>
     </div>
   </section>
-
   <footer>
     <div class="footer-logo">Litzy<span>Fit</span></div>
-    <p data-i18n="footer-text">© 2026 LitzyFit Personal Trainer. Todos os direitos reservados.</p>
+    <p id="t-footer">© 2026 LitzyFit Personal Trainer. Todos os direitos reservados.</p>
+    <div class="footer-links">
+      <a onclick="scrollTo('pricing')" id="tf-pricing">Preços</a>
+      <a onclick="scrollTo('features')" id="tf-services">Serviços</a>
+      <a onclick="scrollTo('newsletter-sec')" id="tf-news">Newsletter</a>
+      <a onclick="scrollTo('contact')" id="tf-contact">Contacto</a>
+      <a onclick="navLoginClick()" id="tf-area">Área de Cliente</a>
+    </div>
   </footer>
 </div>
 
+<!-- ===== DASHBOARD ===== -->
 <div id="page-dashboard" class="page">
   <div class="dash-layout">
     <aside class="dash-sidebar">
       <div class="user-profile">
-        <div class="avatar-large" id="dash-avatar">JD</div>
-        <div class="user-name" id="dash-name">João Demo</div>
-        <div class="user-plan" data-i18n="d-plan">Plano Ativo</div>
+        <div class="avatar-large" id="d-avatar">?</div>
+        <div class="user-name" id="d-name">—</div>
+        <div class="user-plan" id="d-pkg" style="color:var(--orange);font-size:.78rem;margin-top:2px">—</div>
       </div>
       <ul class="sidebar-menu">
-        <li><a class="active" onclick="showDash('overview')" data-i18n="d-m1">📊 Dashboard</a></li>
-        <li><a onclick="showDash('ai-plan')" data-i18n="d-m2">🤖 Gerar Plano IA</a></li>
-        <li><a onclick="showDash('my-plans')" data-i18n="d-m3">📋 Os Meus Planos</a></li>
-        <li><a onclick="showDash('progress')" data-i18n="d-m4">📈 Progresso</a></li>
-        <li><a onclick="logOut()" style="color:#ff4444" data-i18n="d-m5">🚪 Sair</a></li>
+        <li><a class="active" onclick="showDash('overview')">📊 <span id="ds1">Dashboard</span></a></li>
+        <li><a onclick="showDash('programs')">📋 <span id="ds2">Os Meus Programas</span></a></li>
+        <li><a onclick="showDash('diet')">🥗 <span id="ds3">Nutrição</span></a></li>
+        <li><a onclick="showDash('messages')">💬 <span id="ds4">Mensagens</span></a></li>
+        <li><a onclick="showDash('sessions')">📅 <span id="ds5">Sessões</span></a></li>
+        <li><a onclick="showDash('imc')">⚖️ <span id="ds6">IMC & Objetivos</span></a></li>
+        <li><a onclick="logOut()" style="color:#ff4444">🚪 <span id="ds7">Sair</span></a></li>
       </ul>
     </aside>
     <main class="dash-main">
       <div id="ds-overview">
-        <div class="dash-header"><h1 id="dash-welcome-text">Olá! 👋</h1><p data-i18n="d-wel-sub">Bem-vindo à tua área pessoal LitzyFit.</p></div>
+        <div class="dash-header"><h1 id="d-welcome">Olá! 👋</h1><p id="d-welcome-sub">Bem-vindo à tua área pessoal LitzyFit.</p></div>
         <div class="dash-cards">
-          <div class="dash-card"><div class="dash-card-label" data-i18n="dc-1">Sessões Restantes</div><div class="dash-card-val orange">7</div></div>
-          <div class="dash-card"><div class="dash-card-label" data-i18n="dc-2">Planos Gerados</div><div class="dash-card-val">3</div></div>
-          <div class="dash-card"><div class="dash-card-label" data-i18n="dc-3">Próxima Sessão</div><div class="dash-card-val" style="font-size:1.3rem">26 Mar</div></div>
-          <div class="dash-card"><div class="dash-card-label" data-i18n="dc-4">Semanas Ativas</div><div class="dash-card-val orange">8</div></div>
+          <div class="dash-card"><div class="dash-card-label" id="dc1">Sessões Restantes</div><div class="dash-card-val orange" id="dc1-val">—</div></div>
+          <div class="dash-card"><div class="dash-card-label" id="dc2">Programas</div><div class="dash-card-val" id="dc2-val">0</div></div>
+          <div class="dash-card"><div class="dash-card-label" id="dc3">Mensagens</div><div class="dash-card-val" id="dc3-val">0</div></div>
+          <div class="dash-card"><div class="dash-card-label" id="dc4">Pacote</div><div class="dash-card-val" style="font-size:1rem;margin-top:.3rem" id="dc4-val">—</div></div>
         </div>
         <div class="ai-section">
-          <h3>⚡ Acesso Rápido <span class="ai-badge-small">IA</span></h3>
-          <p style="color:var(--muted);font-size:.88rem;margin-top:.5rem" data-i18n="d-ai-sub">Gera um plano personalizado com vídeos dos exercícios.</p>
-          <button class="btn-generate" onclick="showDash('ai-plan')" data-i18n="d-ai-btn">🤖 Gerar Plano com IA + Vídeos</button>
+          <h3 id="d-ov-t">📣 Avisos & Próximas Sessões</h3>
+          <div id="d-ov-content"></div>
         </div>
       </div>
 
-      <div id="ds-ai-plan" style="display:none">
-        <div class="dash-header"><h1 data-i18n="ai-title">🤖 Gerador de Plano com IA</h1><p data-i18n="ai-sub">Preenche o teu perfil e a IA cria um plano 100% personalizado com vídeos.</p></div>
+      <div id="ds-programs" style="display:none">
+        <div class="dash-header"><h1 id="dp-title">📋 Os Meus Programas</h1><p id="dp-sub">Programas de treino criados pela Litzy especialmente para ti.</p></div>
+        <div id="dp-content"></div>
+      </div>
+
+      <div id="ds-diet" style="display:none">
+        <div class="dash-header"><h1 id="dd-title">🥗 Nutrição</h1><p id="dd-sub">Planos nutricionais e dicas personalizadas.</p></div>
+        <div id="dd-content"></div>
+      </div>
+
+      <div id="ds-messages" style="display:none">
+        <div class="dash-header"><h1 id="dm-title">💬 Mensagens</h1><p id="dm-sub">Comunicação direta com a Litzy.</p></div>
         <div class="ai-section">
-          <div class="ai-form">
-            <div class="ai-form-group"><label data-i18n="ai-f1">Objetivo</label>
-              <select id="ai-goal"><option value="perda de peso">Perda de Peso</option><option value="ganho muscular">Ganho Muscular</option></select>
-            </div>
-            <div class="ai-form-group"><label data-i18n="ai-f2">Nível</label>
-              <select id="ai-level"><option value="iniciante">Iniciante</option><option value="intermédio">Intermédio</option></select>
-            </div>
-            <div class="ai-form-group"><label data-i18n="ai-f3">Dias/Semana</label>
-              <select id="ai-days"><option value="3" selected>3 dias</option><option value="4">4 dias</option></select>
-            </div>
-          </div>
-          <button class="btn-generate" id="btn-generate" onclick="generatePlan()" data-i18n="d-ai-btn">🤖 Gerar Plano + Vídeos</button>
-          <div class="ai-result" id="ai-result">
-            <h4 data-i18n="ai-res-t">✅ O teu Plano Personalizado</h4>
-            <div class="ai-result-content" id="ai-result-content"></div>
-            <div id="video-section" style="display:none;margin-top:2rem">
-              <h4 style="color:var(--orange);margin-bottom:.5rem" data-i18n="ai-vid-t">🎥 Vídeos dos Exercícios</h4>
-              <div class="video-grid" id="video-grid"></div>
-            </div>
-          </div>
+          <div class="msg-thread" id="msg-thread"></div>
         </div>
       </div>
-      <div id="ds-my-plans" style="display:none"></div><div id="ds-progress" style="display:none"></div>
+
+      <div id="ds-sessions" style="display:none">
+        <div class="dash-header"><h1 id="dsess-title">📅 Sessões</h1><p id="dsess-sub">As tuas sessões agendadas e histórico.</p></div>
+        <div id="dsess-content"></div>
+      </div>
+
+      <div id="ds-imc" style="display:none">
+        <div class="dash-header"><h1 id="dimc-title">⚖️ IMC & Objetivos</h1><p id="dimc-sub">Calcula o teu IMC e acompanha os teus objetivos.</p></div>
+        <div class="ai-section">
+          <h3 id="imc-h">Calculadora de IMC</h3>
+          <div class="form-row" style="margin-top:1rem">
+            <div class="form-group"><label id="imc-l1">Peso (kg)</label><input type="number" id="imc-weight" placeholder="70"></div>
+            <div class="form-group"><label id="imc-l2">Altura (cm)</label><input type="number" id="imc-height" placeholder="170"></div>
+          </div>
+          <button class="btn-submit" style="margin-top:.5rem" onclick="calcIMC()" id="imc-btn">Calcular</button>
+          <div class="imc-card" id="imc-result" style="display:none;margin-top:1.5rem">
+            <div id="imc-val" class="imc-val">—</div>
+            <span class="imc-label" id="imc-cat"></span>
+            <p style="font-size:.85rem;color:var(--muted);margin-top:.75rem" id="imc-msg"></p>
+          </div>
+        </div>
+        <div class="ai-section" style="margin-top:1rem">
+          <h3 id="ob-h">O teu Perfil</h3>
+          <div id="ob-display" style="color:var(--muted);font-size:.9rem;line-height:1.8;margin-top:.75rem"></div>
+        </div>
+      </div>
     </main>
   </div>
 </div>
 
-<div class="modal-overlay" id="login-modal">
-  <div class="modal">
-    <button class="modal-close" onclick="closeLogin()">✕</button>
-    <h2 id="t-login-title" data-i18n="m-log-t">Bem-vindo de volta</h2>
-    <p id="t-login-sub" data-i18n="m-log-s">Acede à tua área de cliente LitzyFit</p>
-    
-    <div id="g_id_onload"
-         data-client_id="561128831296-ugu75115cvjt4g1hviqn112k00t22rr3.apps.googleusercontent.com"
-         data-context="signin"
-         data-ux_mode="popup"
-         data-callback="handleGoogleLogin"
-         data-auto_prompt="false">
-    </div>
-    <div class="g_id_signin" data-type="standard" data-shape="rectangular" data-theme="outline" data-text="signin_with" data-size="large" data-logo_alignment="center" style="margin-bottom: 1rem; display: flex; justify-content: center;"></div>
-    
-    <div class="divider">ou</div>
-    <div class="form-group"><label>Email</label><input type="email" id="login-email" placeholder="email@exemplo.com"></div>
-    <div class="form-group"><label>Password</label><input type="password" id="login-pass" placeholder="••••••••"></div>
-    <button class="btn-submit" onclick="loginWithEmail()" data-i18n="btn-enter">Entrar</button>
+<!-- ===== ADMIN ===== -->
+<div id="page-admin" class="page">
+  <div class="admin-layout">
+    <aside class="admin-sidebar">
+      <div class="admin-logo">⚙️ Admin</div>
+      <ul class="admin-menu">
+        <li><a class="active" onclick="showAdmin('overview')">📊 Dashboard</a></li>
+        <li><a onclick="showAdmin('clients')">👥 Clientes</a></li>
+        <li><a onclick="showAdmin('newsletter')">📧 Newsletter</a></li>
+        <li><a onclick="showAdmin('contact-msgs')">📨 Contactos</a></li>
+        <li><a onclick="logOutAdmin()" style="color:#ff4444">🚪 Sair</a></li>
+      </ul>
+    </aside>
+    <main class="admin-main">
+      <div id="as-overview" class="admin-section active">
+        <div class="dash-header"><h1>Painel LitzyFit</h1><p>Visão geral da plataforma.</p></div>
+        <div class="admin-stats-grid" id="admin-stats"></div>
+        <div class="admin-card"><h3>Clientes Recentes</h3><div id="admin-recent-clients"></div></div>
+      </div>
+      <div id="as-clients" class="admin-section">
+        <div class="dash-header"><h1>👥 Gestão de Clientes</h1><p>Adiciona programas, dietas e gere sessões de cada cliente.</p></div>
+        <div id="admin-clients-list"></div>
+      </div>
+      <div id="as-newsletter" class="admin-section">
+        <div class="dash-header"><h1>📧 Newsletter</h1><p>Lista de subscritores para envio de campanhas.</p></div>
+        <div class="admin-card"><h3>Subscritores</h3><div id="admin-nl-list"></div><button class="btn-export" style="margin-top:1rem" onclick="exportCSV()" id="t-export">Exportar CSV</button></div>
+      </div>
+      <div id="as-contact-msgs" class="admin-section">
+        <div class="dash-header"><h1>📨 Mensagens de Contacto</h1></div>
+        <div id="admin-contact-list"></div>
+      </div>
+    </main>
   </div>
 </div>
 
-<button id="chat-btn" onclick="toggleChat()"><div class="chat-notif" id="chat-notif">1</div><svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg></button>
+<!-- LOGIN/REGISTER MODAL -->
+<div class="modal-overlay" id="login-modal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeLogin()">✕</button>
+    <div id="pkg-badge" class="pkg-selected" style="display:none"></div>
+    <h2 id="t-modal-title">Bem-vindo de volta</h2>
+    <p class="modal-sub" id="t-modal-sub">Acede à tua área de cliente LitzyFit</p>
+    <div class="tabs-row">
+      <button class="tab-btn active" onclick="switchAuthTab('login')" id="tab-login">Entrar</button>
+      <button class="tab-btn" onclick="switchAuthTab('register')" id="tab-register">Registar</button>
+    </div>
+
+    <!-- LOGIN TAB -->
+    <div class="tab-panel active" id="tp-login">
+      <div id="g_id_onload" data-client_id="561128831296-ugu75115cvjt4g1hviqn112k00t22rr3.apps.googleusercontent.com" data-context="signin" data-ux_mode="popup" data-callback="handleGoogleLogin" data-auto_prompt="false"></div>
+      <div class="g_id_signin" data-type="standard" data-shape="rectangular" data-theme="outline" data-text="signin_with" data-size="large" data-logo_alignment="center" style="margin-bottom:1rem;display:flex;justify-content:center;"></div>
+      <div class="divider" id="t-or">ou</div>
+      <div class="form-group"><label id="t-email-l">Email</label><input type="email" id="login-email" placeholder="email@exemplo.com"></div>
+      <div class="form-group"><label id="t-pass-l">Password</label><input type="password" id="login-pass" placeholder="••••••••"></div>
+      <button class="btn-submit" onclick="loginWithEmail()" id="t-login-submit">Entrar</button>
+    </div>
+
+    <!-- REGISTER TAB -->
+    <div class="tab-panel" id="tp-register">
+      <div class="form-group"><label id="t-rname">Nome completo</label><input type="text" id="reg-name" placeholder="O teu nome"></div>
+      <div class="form-group"><label>Email</label><input type="email" id="reg-email" placeholder="email@exemplo.com"></div>
+      <div class="form-group"><label id="t-rpass">Password</label><input type="password" id="reg-pass" placeholder="Cria uma password"></div>
+      <div class="form-row">
+        <div class="form-group"><label id="t-rage">Idade</label><input type="number" id="reg-age" placeholder="30" min="16" max="80"></div>
+        <div class="form-group"><label id="t-rweight">Peso (kg)</label><input type="number" id="reg-weight" placeholder="70"></div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label id="t-rheight">Altura (cm)</label><input type="number" id="reg-height" placeholder="170"></div>
+        <div class="form-group"><label id="t-rgoal">Objetivo</label>
+          <select id="reg-goal">
+            <option value="">Selecionar...</option>
+            <option id="rg1" value="Perda de peso">Perda de peso</option>
+            <option id="rg2" value="Ganho muscular">Ganho muscular</option>
+            <option id="rg3" value="Tonificação">Tonificação</option>
+            <option id="rg4" value="Resistência">Resistência</option>
+            <option id="rg5" value="Saúde geral">Saúde geral</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group"><label id="t-rlevel">Nível de treino</label>
+        <select id="reg-level">
+          <option value="">Selecionar...</option>
+          <option id="rl1" value="Iniciante">Iniciante</option>
+          <option id="rl2" value="Intermédio">Intermédio</option>
+          <option id="rl3" value="Avançado">Avançado</option>
+        </select>
+      </div>
+      <button class="btn-submit" onclick="registerUser()" id="t-reg-submit">Criar Conta</button>
+    </div>
+  </div>
+</div>
+
+<!-- ADMIN ADD CONTENT MODAL -->
+<div class="modal-overlay" id="admin-modal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeAdminModal()">✕</button>
+    <h2 id="am-title">Adicionar Conteúdo</h2>
+    <p class="modal-sub" id="am-sub">Para: <strong id="am-client-name">—</strong></p>
+    <div class="form-group"><label>Tipo</label>
+      <select id="am-type">
+        <option value="workout">📋 Programa de Treino</option>
+        <option value="diet">🥗 Plano Nutricional</option>
+        <option value="doc">📄 Documento</option>
+        <option value="msg">💬 Mensagem Privada</option>
+        <option value="session">📅 Marcar Sessão</option>
+      </select>
+    </div>
+    <div class="form-group"><label>Título</label><input type="text" id="am-title-input" placeholder="Ex: Programa Semana 1"></div>
+    <div class="form-group"><label>Conteúdo / Detalhes</label><textarea id="am-content" rows="6" placeholder="Escreve o conteúdo aqui..."></textarea></div>
+    <div class="form-group" id="am-date-group"><label>Data (para sessões)</label><input type="datetime-local" id="am-date"></div>
+    <button class="btn-submit" onclick="saveAdminContent()">Guardar</button>
+  </div>
+</div>
+
+<!-- ADMIN LOGIN MODAL -->
+<div class="modal-overlay" id="admin-login-modal">
+  <div class="modal" style="max-width:360px">
+    <button class="modal-close" onclick="closeAdminLogin()">✕</button>
+    <h2>⚙️ Acesso Admin</h2>
+    <p class="modal-sub">LitzyFit — Painel de Gestão</p>
+    <div class="form-group"><label>Password</label><input type="password" id="admin-pass" placeholder="Password de administrador"></div>
+    <button class="btn-submit" onclick="checkAdminPass()">Entrar</button>
+  </div>
+</div>
+
+<!-- CHAT -->
+<button id="chat-btn" onclick="toggleChat()">
+  <div class="chat-notif" id="chat-notif">1</div>
+  <svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg>
+</button>
 <div id="chat-window">
   <div class="chat-header">
-    <div class="chat-header-info"><div class="chat-avatar">💪</div><div class="chat-header-text"><div class="name">LitzyFit Assistente</div><div class="status">Online agora</div></div></div>
-    <button class="chat-close-btn" onclick="toggleChat()">✕</button>
+    <div class="chat-header-info"><div class="chat-avatar-sm">💪</div><div class="chat-header-text"><div class="chat-hname">LitzyFit</div><div class="chat-hstatus" id="t-online">Online agora</div></div></div>
+    <button class="chat-close-x" onclick="toggleChat()">✕</button>
   </div>
-  <div class="chat-messages" id="chat-messages">
-    <div class="chat-msg bot" data-i18n="chat-welcome">Olá! 👋 Sou o assistente da LitzyFit. Posso ajudar com dúvidas sobre treino, nutrição ou os nossos pacotes. Como posso ajudar?</div>
+  <div class="chat-msgs" id="chat-msgs">
+    <div class="cmsg bot" id="t-chat-welcome">Olá! 👋 Sou o assistente da LitzyFit. Posso ajudar com dúvidas sobre treino, nutrição ou os nossos pacotes. Como posso ajudar?</div>
   </div>
   <div class="chat-input-row">
     <input class="chat-input" id="chat-input" placeholder="Escreve a tua dúvida..." onkeydown="if(event.key==='Enter')sendChat()">
-    <button class="chat-send" onclick="sendChat()"><svg viewBox="0 0 24 24"><path d="M2 21l21-9L2 3v7l15 2-15 2v7z"/></svg></button>
+    <button class="chat-send-btn" onclick="sendChat()"><svg viewBox="0 0 24 24"><path d="M2 21l21-9L2 3v7l15 2-15 2v7z"/></svg></button>
   </div>
 </div>
 
 <script>
-// ===== TRADUCCIONES MEJORADAS =====
-let lang='pt';
+// ============================================================
+// CONFIG — substitui pela tua URL Supabase quando estiver pronto
+// SUPABASE: const SB_URL = 'https://xxxx.supabase.co'; const SB_KEY = 'eyJ...';
+// ============================================================
+const ADMIN_SECRET = 'litzyfit2026admin'; // muda esta password
 
-// He unificado tu sistema (t- IDs) con un nuevo sistema (data-i18n) para cubrir toda tu web sin romper nada de lo tuyo.
-const TL={
-  pt:{
-    't-login-btn':'Entrar', 't-badge':'Personal Trainer Premium', 't-hero-h1':'Transforma o teu <em>Corpo</em>,<br>Transforma a tua <em>Vida</em>',
-    't-hero-p':'Alcança novos objetivos com programas de treino personalizados.', 't-cta1':'Ver Pacotes', 't-cta2':'Área de Cliente',
-    't-stat1':'Clientes', 't-stat2':'Avaliação', 't-stat3':'Anos de Experiência', 't-feat-title':'Por que escolher a LitzyFit?',
-    't-feat-sub':'Uma abordagem completa ao fitness, com tecnologia e acompanhamento humano.',
-    't-f1t':'Planos com IA', 't-f1d':'Planos de treino gerados por IA, adaptados ao teu perfil.',
-    't-f2t':'Vídeos dos Exercícios', 't-f2d':'Cada plano inclui vídeos demonstrativos.',
-    't-f3t':'Suporte IA 24/7', 't-f3d':'Chat de suporte com IA disponível a qualquer hora.',
-    't-f4t':'Objetivos Personalizados', 't-f4d':'Seja perda de peso, ganho muscular ou preparação.',
-    't-f5t':'Acesso Digital', 't-f5d':'Acede aos teus planos de treino em qualquer dispositivo.',
-    't-f6t':'Resultados Garantidos', 't-f6d':'Compromisso total com os teus resultados.',
-    't-price-title':'Escolhe o teu Pacote', 't-price-sub':'Planos flexíveis para cada ritmo de vida e objetivo.',
-    't-tab1':'Sessões', 't-tab2':'Mensal', 't-tab3':'Duo',
-    't-testi-title':'O que dizem os nossos clientes', 't-nl-label':'Newsletter',
-    't-nl-title':'Dicas de treino gratuitas<br>diretamente no teu email',
-    't-nl-sub':'Recebe semanalmente planos, receitas e motivação da LitzyFit.',
-    't-nl-btn':'Subscrever', 't-nl-success':'Subscrito com sucesso! Bem-vindo à família LitzyFit.',
-    't-nl-list':'Subscritores guardados', 't-cont-title':'Fala connosco',
-    't-cont-p':'Tens dúvidas sobre os pacotes ou queres saber mais? Entra em contacto.',
-    't-form-title':'Enviar Mensagem', 't-form-send':'Enviar Mensagem'
-  },
-  es:{
-    't-login-btn':'Entrar', 't-badge':'Entrenador Personal Premium', 't-hero-h1':'Transforma tu <em>Cuerpo</em>,<br>Transforma tu <em>Vida</em>',
-    't-hero-p':'Alcanza nuevos objetivos con programas de entrenamiento personalizados.', 't-cta1':'Ver Paquetes', 't-cta2':'Área de Cliente',
-    't-stat1':'Clientes', 't-stat2':'Valoración', 't-stat3':'Años de Experiencia', 't-feat-title':'¿Por qué elegir LitzyFit?',
-    't-feat-sub':'Un enfoque completo del fitness, con tecnología y acompañamiento humano.',
-    't-f1t':'Planes con IA', 't-f1d':'Planes de entrenamiento generados por IA, adaptados a tu perfil.',
-    't-f2t':'Videos de Ejercicios', 't-f2d':'Cada plan incluye videos demostrativos.',
-    't-f3t':'Soporte IA 24/7', 't-f3d':'Chat de soporte con IA disponible a cualquier hora.',
-    't-f4t':'Objetivos Personalizados', 't-f4d':'Ya sea pérdida de peso, ganancia muscular o preparación.',
-    't-f5t':'Acceso Digital', 't-f5d':'Accede a tus planes en cualquier dispositivo.',
-    't-f6t':'Resultados Garantizados', 't-f6d':'Compromiso total con tus resultados.',
-    't-price-title':'Elige tu Paquete', 't-price-sub':'Planes flexibles para cada ritmo de vida y objetivo.',
-    't-tab1':'Sesiones', 't-tab2':'Mensual', 't-tab3':'Dúo',
-    't-testi-title':'Qué dicen nuestros clientes', 't-nl-label':'Boletín',
-    't-nl-title':'Consejos de entrenamiento gratis<br>directamente en tu email',
-    't-nl-sub':'Recibe semanalmente planes, recetas y motivación. Sin spam.',
-    't-nl-btn':'Suscribirse', 't-nl-success':'¡Suscrito con éxito! Bienvenido a la familia LitzyFit.',
-    't-nl-list':'Suscriptores guardados', 't-cont-title':'Habla con nosotros',
-    't-cont-p':'¿Tienes dudas sobre los paquetes? Contáctanos.',
-    't-form-title':'Enviar Mensaje', 't-form-send':'Enviar Mensaje'
-  }
-};
+// ============ STATE ============
+let lang = 'pt';
+let currentUser = null; // { email, name, pkg, age, weight, height, goal, level, isAdmin }
+let pendingPkg = '';
+let chatHistory = [];
+let adminTargetEmail = '';
 
-const EXTRA_TRANS = {
+// ============ TRANSLATIONS ============
+const T = {
   pt: {
-    "nav-home": "Home", "nav-pricing": "Preços", "nav-services": "Serviços", "nav-news": "Newsletter", "nav-contact": "Contacto",
-    "p-start-sub": "5 sessões • Pagamento único", "p-silv-sub": "10 sessões • Pagamento único", "p-gold-sub": "20 sessões • Pagamento único",
-    "p-f1": "5 sessões de 1h personalizado", "p-f2": "Plano de treino personalizado", "p-f3": "Consultoria em fitness e bem-estar",
-    "p-f4": "10 sessões de 1h personalizado", "p-f5": "20 sessões de 1h personalizado", "btn-start": "Começar Agora", 
-    "btn-silv": "Escolher Silver", "btn-gold": "Escolher Gold", "p-plan-name": "Plano de Treino", "p-plan-sub": "Documento personalizado",
-    "p-f6": "Plano 100% personalizado", "p-f7": "Explicação de cada exercício", "btn-plan": "Obter Plano",
-    "p-mo-sub": "por mês", "p-m1": "1h de treino/semana", "p-m2": "2h de treino/semana", "p-m3": "3h de treino/semana", "p-m4": "4h de treino/semana",
-    "btn-choose": "Escolher", "p-d1-sub": "5 sessões para 2 pessoas", "p-d1-f1": "5 sessões partilhadas", "p-d-f2": "Plano para cada um",
-    "p-d2-sub": "10 sessões para 2 pessoas", "p-d2-f1": "10 sessões partilhadas", "p-d3-sub": "20 sessões para 2 pessoas", "p-d3-f1": "20 sessões partilhadas",
-    "t-testi-label": "Testemunhos", "t1-text": "\"Perdi 15kg em 4 meses com a LitzyFit...\"", "t2-text": "\"Os vídeos dos exercícios são incríveis...\"", "t3-text": "\"O chat de suporte respondeu às minhas dúvidas às 23h...\"",
-    "c-phone": "Telefone", "c-web": "Website", "c-loc": "Localização", "f-name": "Nome", "f-msg": "Mensagem", "footer-text": "© 2026 LitzyFit Personal Trainer. Todos os direitos reservados.",
-    "m-log-t": "Bem-vindo de volta", "m-log-s": "Acede à tua área de cliente LitzyFit", "btn-enter": "Entrar",
-    "d-plan": "Plano Ativo", "d-m1": "📊 Dashboard", "d-m2": "🤖 Gerar Plano IA", "d-m3": "📋 Os Meus Planos", "d-m4": "📈 Progresso", "d-m5": "🚪 Sair",
-    "d-wel-sub": "Bem-vindo à tua área pessoal LitzyFit.", "dc-1": "Sessões Restantes", "dc-2": "Planos Gerados", "dc-3": "Próxima Sessão", "dc-4": "Semanas Ativas",
-    "d-ai-sub": "Gera um plano personalizado com vídeos dos exercícios.", "d-ai-btn": "🤖 Gerar Plano com IA + Vídeos",
-    "ai-title": "🤖 Gerador de Plano com IA", "ai-sub": "Preenche o teu perfil e a IA cria um plano 100% personalizado.",
-    "ai-f1": "Objetivo", "ai-f2": "Nível", "ai-f3": "Dias/Semana", "ai-res-t": "✅ O teu Plano Personalizado", "ai-vid-t": "🎥 Vídeos dos Exercícios",
-    "chat-welcome": "Olá! 👋 Sou o assistente da LitzyFit. Como posso ajudar?"
+    'nl-home':'Home','nl-pricing':'Preços','nl-services':'Serviços','nl-news':'Newsletter','nl-contact':'Contacto',
+    't-login-btn':'Entrar','t-badge':'Personal Trainer Premium',
+    't-hero-h1':'Transforma o teu <em>Corpo</em>,<br>Transforma a tua <em>Vida</em>',
+    't-hero-p':'Alcança novos objetivos com programas de treino personalizados e acompanhamento contínuo.',
+    't-cta1':'Ver Pacotes','t-cta2':'Área de Cliente',
+    't-stat1':'Clientes','t-stat2':'Avaliação','t-stat3':'Anos de Experiência',
+    't-feat-label':'Serviços','t-feat-title':'Por que escolher a LitzyFit?','t-feat-sub':'Uma abordagem completa ao fitness.',
+    't-f1t':'Programas Dedicados','t-f1d':'Programas criados especificamente para o teu perfil e objetivos.',
+    't-f2t':'Vídeos dos Exercícios','t-f2d':'Cada programa inclui vídeos demonstrativos.',
+    't-f3t':'Suporte 24/7','t-f3d':'Chat de suporte disponível a qualquer hora.',
+    't-f4t':'Planos Nutricionais','t-f4d':'Orientação nutricional personalizada.',
+    't-f5t':'Acesso Digital','t-f5d':'Acede em qualquer dispositivo, a qualquer hora.',
+    't-f6t':'Resultados Garantidos','t-f6d':'Compromisso total com os teus resultados.',
+    't-price-label':'Preços','t-price-title':'Escolhe o teu Pacote','t-price-sub':'Planos flexíveis para cada objetivo.',
+    't-tab1':'Sessões','t-tab2':'Mensal','t-tab3':'Duo','t-popular':'Popular','t-popular2':'Popular',
+    't-pp1':'5 sessões • Pagamento único','t-pp2':'10 sessões • Pagamento único','t-pp3':'20 sessões • Pagamento único','t-pp4':'Documento personalizado',
+    't-sf1':'5 sessões de 1h personalizado','t-sf2':'Programa de treino dedicado','t-sf3':'Consultoria em fitness e bem-estar',
+    't-sf2b':'Programa de treino dedicado','t-sf3b':'Consultoria em fitness e bem-estar',
+    't-sf2c':'Programa de treino dedicado','t-sf3c':'Consultoria em fitness e bem-estar',
+    't-slv1':'10 sessões de 1h personalizado','t-gld1':'20 sessões de 1h personalizado',
+    't-planname':'Programa de Treino','t-tr1':'Programa 100% personalizado','t-tr2':'Explicação de cada exercício',
+    't-m1f1':'1h de treino/semana','t-m1f2':'Programa personalizado','t-m1f3':'Consultoria bem-estar',
+    't-m2f1':'2h de treino/semana','t-mpp1':'por mês','t-mpp2':'por mês',
+    't-testi-label':'Testemunhos','t-testi-title':'O que dizem os nossos clientes',
+    't-t1':'"Perdi 15kg em 4 meses com a LitzyFit. O programa foi feito especificamente para mim!"',
+    't-t2':'"Os vídeos dos exercícios são incríveis — executo tudo na perfeição e nunca me lesionei."',
+    't-t3':'"O suporte respondeu às minhas dúvidas às 23h. Serviço premium a todos os níveis!"',
+    't-nl-label':'Newsletter','t-nl-title':'Dicas de treino gratuitas<br>diretamente no teu email',
+    't-nl-sub':'Recebe semanalmente programas, receitas e motivação. Sem spam.',
+    't-nl-btn':'Subscrever','t-nl-ok':'Subscrito com sucesso! Bem-vindo à família LitzyFit.',
+    't-nl-list':'Lista de subscritores',
+    't-cont-label':'Contacto','t-cont-title':'Fala connosco','t-cont-p':'Tens dúvidas? Entra em contacto.',
+    't-c1':'Telefone','t-c3':'Localização','t-fn':'Nome','t-fm':'Mensagem','t-form-title':'Enviar Mensagem','t-form-send':'Enviar Mensagem',
+    't-footer':'© 2026 LitzyFit Personal Trainer. Todos os direitos reservados.',
+    'tf-pricing':'Preços','tf-services':'Serviços','tf-news':'Newsletter','tf-contact':'Contacto','tf-area':'Área de Cliente',
+    't-modal-title':'Bem-vindo de volta','t-modal-sub':'Acede à tua área de cliente LitzyFit',
+    'tab-login':'Entrar','tab-register':'Registar','t-or':'ou',
+    't-email-l':'Email','t-pass-l':'Password','t-login-submit':'Entrar',
+    't-rname':'Nome completo','t-rpass':'Password','t-rage':'Idade','t-rweight':'Peso (kg)','t-rheight':'Altura (cm)',
+    't-rgoal':'Objetivo','t-rlevel':'Nível de treino','t-reg-submit':'Criar Conta',
+    'rg1':'Perda de peso','rg2':'Ganho muscular','rg3':'Tonificação','rg4':'Resistência','rg5':'Saúde geral',
+    'rl1':'Iniciante','rl2':'Intermédio','rl3':'Avançado',
+    't-online':'Online agora','t-chat-welcome':'Olá! 👋 Sou o assistente da LitzyFit. Como posso ajudar?',
+    't-export':'Exportar CSV',
+    'ds1':'Dashboard','ds2':'Os Meus Programas','ds3':'Nutrição','ds4':'Mensagens','ds5':'Sessões','ds6':'IMC & Objetivos','ds7':'Sair',
+    'dc1':'Sessões Restantes','dc2':'Programas','dc3':'Mensagens','dc4':'Pacote',
+    'd-welcome-sub':'Bem-vindo à tua área pessoal LitzyFit.',
+    'd-ov-t':'📣 Avisos & Próximas Sessões',
+    'dp-title':'📋 Os Meus Programas','dp-sub':'Programas de treino criados pela Litzy especialmente para ti.',
+    'dd-title':'🥗 Nutrição','dd-sub':'Planos nutricionais e dicas personalizadas.',
+    'dm-title':'💬 Mensagens','dm-sub':'Comunicação direta com a Litzy.',
+    'dsess-title':'📅 Sessões','dsess-sub':'As tuas sessões agendadas.',
+    'dimc-title':'⚖️ IMC & Objetivos','dimc-sub':'Calcula o teu IMC e acompanha os teus objetivos.',
+    'imc-h':'Calculadora de IMC','imc-l1':'Peso (kg)','imc-l2':'Altura (cm)','imc-btn':'Calcular','ob-h':'O teu Perfil',
+    'empty-programs':'Ainda não tens programas de treino.\nA Litzy vai criar o teu programa personalizado em breve!',
+    'empty-diet':'Ainda não tens planos nutricionais.\nEm breve receberás orientações personalizadas!',
+    'empty-messages':'Ainda não tens mensagens.\nQuando a Litzy te enviar uma mensagem, aparecerá aqui.',
+    'empty-sessions':'Ainda não tens sessões agendadas.\nContacta a Litzy para marcar a tua próxima sessão!',
+    'empty-overview':'Tudo tranquilo! Sem avisos pendentes.',
   },
   es: {
-    "nav-home": "Inicio", "nav-pricing": "Precios", "nav-services": "Servicios", "nav-news": "Boletín", "nav-contact": "Contacto",
-    "p-start-sub": "5 sesiones • Pago único", "p-silv-sub": "10 sesiones • Pago único", "p-gold-sub": "20 sesiones • Pago único",
-    "p-f1": "5 sesiones de 1h personalizado", "p-f2": "Plan de entrenamiento personalizado", "p-f3": "Consultoría en fitness y bienestar",
-    "p-f4": "10 sesiones de 1h personalizado", "p-f5": "20 sesiones de 1h personalizado", "btn-start": "Empezar Ahora", 
-    "btn-silv": "Elegir Silver", "btn-gold": "Elegir Gold", "p-plan-name": "Plan de Entrenamiento", "p-plan-sub": "Documento personalizado",
-    "p-f6": "Plan 100% personalizado", "p-f7": "Explicación de cada ejercicio", "btn-plan": "Obtener Plan",
-    "p-mo-sub": "por mes", "p-m1": "1h de entreno/semana", "p-m2": "2h de entreno/semana", "p-m3": "3h de entreno/semana", "p-m4": "4h de entreno/semana",
-    "btn-choose": "Elegir", "p-d1-sub": "5 sesiones para 2 personas", "p-d1-f1": "5 sesiones compartidas", "p-d-f2": "Plan para cada uno",
-    "p-d2-sub": "10 sesiones para 2 personas", "p-d2-f1": "10 sesiones compartidas", "p-d3-sub": "20 sesiones para 2 personas", "p-d3-f1": "20 sesiones compartidas",
-    "t-testi-label": "Testimonios", "t1-text": "\"Perdí 15kg en 4 meses con LitzyFit...\"", "t2-text": "\"Los videos son increíbles...\"", "t3-text": "\"El soporte respondió mis dudas a las 23h...\"",
-    "c-phone": "Teléfono", "c-web": "Sitio Web", "c-loc": "Ubicación", "f-name": "Nombre", "f-msg": "Mensaje", "footer-text": "© 2026 LitzyFit Entrenador Personal. Todos los derechos reservados.",
-    "m-log-t": "Bienvenido de nuevo", "m-log-s": "Accede a tu área de cliente LitzyFit", "btn-enter": "Entrar",
-    "d-plan": "Plan Activo", "d-m1": "📊 Panel", "d-m2": "🤖 Generar Plan IA", "d-m3": "📋 Mis Planes", "d-m4": "📈 Progreso", "d-m5": "🚪 Salir",
-    "d-wel-sub": "Bienvenido a tu área personal LitzyFit.", "dc-1": "Sesiones Restantes", "dc-2": "Planes Generados", "dc-3": "Próxima Sesión", "dc-4": "Semanas Activas",
-    "d-ai-sub": "Genera un plan personalizado con videos de ejercicios.", "d-ai-btn": "🤖 Generar Plan IA + Videos",
-    "ai-title": "🤖 Generador de Plan IA", "ai-sub": "Llena tu perfil y la IA crea un plan 100% personalizado.",
-    "ai-f1": "Objetivo", "ai-f2": "Nivel", "ai-f3": "Días/Semana", "ai-res-t": "✅ Tu Plan Personalizado", "ai-vid-t": "🎥 Videos de los Ejercicios",
-    "chat-welcome": "¡Hola! 👋 Soy el asistente de LitzyFit. ¿Cómo puedo ayudarte?"
+    'nl-home':'Inicio','nl-pricing':'Precios','nl-services':'Servicios','nl-news':'Boletín','nl-contact':'Contacto',
+    't-login-btn':'Entrar','t-badge':'Entrenador Personal Premium',
+    't-hero-h1':'Transforma tu <em>Cuerpo</em>,<br>Transforma tu <em>Vida</em>',
+    't-hero-p':'Alcanza nuevos objetivos con programas de entrenamiento personalizados y seguimiento continuo.',
+    't-cta1':'Ver Paquetes','t-cta2':'Área de Cliente',
+    't-stat1':'Clientes','t-stat2':'Valoración','t-stat3':'Años de Experiencia',
+    't-feat-label':'Servicios','t-feat-title':'¿Por qué elegir LitzyFit?','t-feat-sub':'Un enfoque completo del fitness.',
+    't-f1t':'Programas Dedicados','t-f1d':'Programas creados específicamente para tu perfil y objetivos.',
+    't-f2t':'Videos de Ejercicios','t-f2d':'Cada programa incluye videos demostrativos.',
+    't-f3t':'Soporte 24/7','t-f3d':'Chat de soporte disponible en cualquier momento.',
+    't-f4t':'Planes Nutricionales','t-f4d':'Orientación nutricional personalizada.',
+    't-f5t':'Acceso Digital','t-f5d':'Accede desde cualquier dispositivo, en cualquier momento.',
+    't-f6t':'Resultados Garantizados','t-f6d':'Compromiso total con tus resultados.',
+    't-price-label':'Precios','t-price-title':'Elige tu Paquete','t-price-sub':'Planes flexibles para cada objetivo.',
+    't-tab1':'Sesiones','t-tab2':'Mensual','t-tab3':'Dúo','t-popular':'Popular','t-popular2':'Popular',
+    't-pp1':'5 sesiones • Pago único','t-pp2':'10 sesiones • Pago único','t-pp3':'20 sesiones • Pago único','t-pp4':'Documento personalizado',
+    't-sf1':'5 sesiones de 1h personalizado','t-sf2':'Programa de entrenamiento dedicado','t-sf3':'Consultoría en fitness y bienestar',
+    't-sf2b':'Programa de entrenamiento dedicado','t-sf3b':'Consultoría en fitness y bienestar',
+    't-sf2c':'Programa de entrenamiento dedicado','t-sf3c':'Consultoría en fitness y bienestar',
+    't-slv1':'10 sesiones de 1h personalizado','t-gld1':'20 sesiones de 1h personalizado',
+    't-planname':'Programa de Entrenamiento','t-tr1':'Programa 100% personalizado','t-tr2':'Explicación de cada ejercicio',
+    't-m1f1':'1h de entreno/semana','t-m1f2':'Programa personalizado','t-m1f3':'Consultoría bienestar',
+    't-m2f1':'2h de entreno/semana','t-mpp1':'por mes','t-mpp2':'por mes',
+    't-testi-label':'Testimonios','t-testi-title':'Qué dicen nuestros clientes',
+    't-t1':'"Perdí 15kg en 4 meses con LitzyFit. ¡El programa fue hecho específicamente para mí!"',
+    't-t2':'"Los videos de ejercicios son increíbles — ejecuto todo a la perfección y nunca me he lesionado."',
+    't-t3':'"El soporte respondió mis dudas a las 23h. ¡Servicio premium en todos los niveles!"',
+    't-nl-label':'Boletín','t-nl-title':'Consejos de entrenamiento gratis<br>directamente en tu email',
+    't-nl-sub':'Recibe semanalmente programas, recetas y motivación. Sin spam.',
+    't-nl-btn':'Suscribirse','t-nl-ok':'¡Suscrito con éxito! Bienvenido a la familia LitzyFit.',
+    't-nl-list':'Lista de suscriptores',
+    't-cont-label':'Contacto','t-cont-title':'Habla con nosotros','t-cont-p':'¿Tienes dudas? Contáctanos.',
+    't-c1':'Teléfono','t-c3':'Ubicación','t-fn':'Nombre','t-fm':'Mensaje','t-form-title':'Enviar Mensaje','t-form-send':'Enviar Mensaje',
+    't-footer':'© 2026 LitzyFit Entrenador Personal. Todos los derechos reservados.',
+    'tf-pricing':'Precios','tf-services':'Servicios','tf-news':'Boletín','tf-contact':'Contacto','tf-area':'Área de Cliente',
+    't-modal-title':'Bienvenido de nuevo','t-modal-sub':'Accede a tu área de cliente LitzyFit',
+    'tab-login':'Entrar','tab-register':'Registrarse','t-or':'o',
+    't-email-l':'Email','t-pass-l':'Contraseña','t-login-submit':'Entrar',
+    't-rname':'Nombre completo','t-rpass':'Contraseña','t-rage':'Edad','t-rweight':'Peso (kg)','t-rheight':'Altura (cm)',
+    't-rgoal':'Objetivo','t-rlevel':'Nivel de entrenamiento','t-reg-submit':'Crear Cuenta',
+    'rg1':'Pérdida de peso','rg2':'Ganancia muscular','rg3':'Tonificación','rg4':'Resistencia','rg5':'Salud general',
+    'rl1':'Principiante','rl2':'Intermedio','rl3':'Avanzado',
+    't-online':'En línea ahora','t-chat-welcome':'¡Hola! 👋 Soy el asistente de LitzyFit. ¿Cómo puedo ayudarte?',
+    't-export':'Exportar CSV',
+    'ds1':'Panel','ds2':'Mis Programas','ds3':'Nutrición','ds4':'Mensajes','ds5':'Sesiones','ds6':'IMC & Objetivos','ds7':'Salir',
+    'dc1':'Sesiones Restantes','dc2':'Programas','dc3':'Mensajes','dc4':'Paquete',
+    'd-welcome-sub':'Bienvenido a tu área personal LitzyFit.',
+    'd-ov-t':'📣 Avisos & Próximas Sesiones',
+    'dp-title':'📋 Mis Programas','dp-sub':'Programas de entrenamiento creados por Litzy especialmente para ti.',
+    'dd-title':'🥗 Nutrición','dd-sub':'Planes nutricionales y consejos personalizados.',
+    'dm-title':'💬 Mensajes','dm-sub':'Comunicación directa con Litzy.',
+    'dsess-title':'📅 Sesiones','dsess-sub':'Tus sesiones programadas.',
+    'dimc-title':'⚖️ IMC & Objetivos','dimc-sub':'Calcula tu IMC y sigue tus objetivos.',
+    'imc-h':'Calculadora de IMC','imc-l1':'Peso (kg)','imc-l2':'Altura (cm)','imc-btn':'Calcular','ob-h':'Tu Perfil',
+    'empty-programs':'Aún no tienes programas de entrenamiento.\n¡Litzy creará tu programa personalizado pronto!',
+    'empty-diet':'Aún no tienes planes nutricionales.\n¡Pronto recibirás orientaciones personalizadas!',
+    'empty-messages':'Aún no tienes mensajes.\nCuando Litzy te envíe un mensaje, aparecerá aquí.',
+    'empty-sessions':'Aún no tienes sesiones programadas.\n¡Contacta a Litzy para programar tu próxima sesión!',
+    'empty-overview':'¡Todo tranquilo! Sin avisos pendientes.',
   }
 };
 
-function setLang(l){
-  lang=l;
-  document.querySelectorAll('.lang-btn').forEach(b=>b.classList.toggle('active',b.textContent===l.toUpperCase()));
-  
-  // Tu sistema original
-  const t=TL[l];
-  Object.keys(t).forEach(id=>{const el=document.getElementById(id);if(el)el.innerHTML=t[id];});
-  
-  // Nuevo sistema para lo que faltaba
-  document.querySelectorAll('[data-i18n]').forEach(el => {
-    const key = el.getAttribute('data-i18n');
-    if (EXTRA_TRANS[l][key]) el.innerHTML = EXTRA_TRANS[l][key];
-  });
+function setLang(l) {
+  lang = l;
+  document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.textContent === l.toUpperCase()));
+  const t = T[l];
+  Object.keys(t).forEach(id => { const el = document.getElementById(id); if (el) el.innerHTML = t[id]; });
 }
 
-// ===== NAV =====
-function showPage(p){document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));document.getElementById('page-'+p).classList.add('active');window.scrollTo(0,0);}
-function scrollToSection(id){showPage('home');setTimeout(()=>{const el=document.getElementById(id);if(el)el.scrollIntoView({behavior:'smooth'});},60);}
-function switchPricing(tab){
-  document.querySelectorAll('.price-tab').forEach(b=>b.classList.remove('active'));
-  document.querySelectorAll('.plans-grid').forEach(g=>g.style.display='none');
-  const tabs=['sessions','monthly','duo'];
-  document.querySelectorAll('.price-tab')[tabs.indexOf(tab)].classList.add('active');
-  document.getElementById('pricing-'+tab).style.display='grid';
+// ============ STORAGE HELPERS (SUPABASE: replace these) ============
+async function dbGet(key) {
+  try { const r = await window.storage.get(key, true); return r ? JSON.parse(r.value) : null; } catch { return null; }
+}
+async function dbSet(key, val) {
+  try { await window.storage.set(key, JSON.stringify(val), true); } catch {}
 }
 
-// ===== LOGIN (GOOGLE INTEGRADO) =====
-function openLogin(){document.getElementById('login-modal').classList.add('open');}
-function closeLogin(){document.getElementById('login-modal').classList.remove('open');}
+async function getClients() { return (await dbGet('lf-clients')) || []; }
+async function saveClients(c) { await dbSet('lf-clients', c); }
+async function getClientData(email) { return (await dbGet('lf-data-' + btoa(email))) || { programs:[], diet:[], docs:[], messages:[], sessions:[], sessions_count: 0 }; }
+async function saveClientData(email, d) { await dbSet('lf-data-' + btoa(email), d); }
+async function getSubscribers() { return (await dbGet('lf-nl')) || []; }
+async function saveSubscribers(s) { await dbSet('lf-nl', s); }
+async function getContactMsgs() { return (await dbGet('lf-contacts')) || []; }
+async function saveContactMsgs(m) { await dbSet('lf-contacts', m); }
+
+// ============ AUTH ============
+function navLoginClick() {
+  if (currentUser) { showPage('dashboard'); }
+  else { openLogin(); }
+}
+
+function openLogin() { document.getElementById('login-modal').classList.add('open'); }
+function closeLogin() { document.getElementById('login-modal').classList.remove('open'); pendingPkg = ''; document.getElementById('pkg-badge').style.display = 'none'; }
+function openLoginWithPkg(pkg) { pendingPkg = pkg; const b = document.getElementById('pkg-badge'); b.style.display = 'block'; b.textContent = '📦 ' + pkg; openLogin(); }
+function switchAuthTab(t) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('tp-' + t).classList.add('active');
+  document.getElementById('tab-' + t).classList.add('active');
+}
 
 function handleGoogleLogin(response) {
-  // Desencriptar token de google para obtener el nombre
-  const payload = JSON.parse(atob(response.credential.split('.')[1]));
-  const firstName = payload.given_name; 
-  const initial = firstName.charAt(0);
-  
+  const p = JSON.parse(atob(response.credential.split('.')[1]));
+  finishLogin({ email: p.email, name: p.given_name + ' ' + (p.family_name || ''), pkg: pendingPkg || '—' });
+}
+
+function loginWithEmail() {
+  const e = document.getElementById('login-email').value.trim();
+  const p = document.getElementById('login-pass').value;
+  if (!e || !p) return alert(lang === 'es' ? 'Rellena todos los campos.' : 'Preenche todos os campos.');
+  // SUPABASE: substituir por supabase.auth.signInWithPassword({ email: e, password: p })
+  finishLogin({ email: e, name: e.split('@')[0], pkg: pendingPkg || '—' });
+}
+
+async function registerUser() {
+  const name = document.getElementById('reg-name').value.trim();
+  const email = document.getElementById('reg-email').value.trim();
+  const pass = document.getElementById('reg-pass').value;
+  const age = document.getElementById('reg-age').value;
+  const weight = document.getElementById('reg-weight').value;
+  const height = document.getElementById('reg-height').value;
+  const goal = document.getElementById('reg-goal').value;
+  const level = document.getElementById('reg-level').value;
+  if (!name || !email || !pass) return alert(lang === 'es' ? 'Nombre, email y contraseña son obligatorios.' : 'Nome, email e password são obrigatórios.');
+  // SUPABASE: supabase.auth.signUp + insert into profiles table
+  const clients = await getClients();
+  if (!clients.find(c => c.email === email)) {
+    clients.push({ email, name, pkg: pendingPkg || '—', age, weight, height, goal, level, joinedAt: new Date().toLocaleDateString('pt-PT') });
+    await saveClients(clients);
+  }
+  finishLogin({ email, name, pkg: pendingPkg || '—', age, weight, height, goal, level });
+}
+
+async function finishLogin(user) {
+  // save to clients list if not there
+  const clients = await getClients();
+  if (!clients.find(c => c.email === user.email)) {
+    clients.push({ ...user, joinedAt: new Date().toLocaleDateString('pt-PT') });
+    await saveClients(clients);
+  } else {
+    // update pkg if a new one was selected
+    const idx = clients.findIndex(c => c.email === user.email);
+    if (pendingPkg) { clients[idx].pkg = pendingPkg; user.pkg = pendingPkg; }
+    Object.assign(user, clients[idx]);
+  }
+  await saveClients(clients);
+  currentUser = user;
   closeLogin();
-  document.getElementById('nav-login-btn').innerHTML='<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> ' + firstName;
-  document.getElementById('dash-name').innerText = firstName;
-  document.getElementById('dash-avatar').innerText = initial;
-  document.getElementById('dash-welcome-text').innerText = (lang === 'es' ? '¡Hola, ' : 'Olá, ') + firstName + '! 👋';
+  updateNavUser();
+  await renderDashboard();
   showPage('dashboard');
 }
 
-function loginWithEmail(){const e=document.getElementById('login-email').value;if(!e)return;closeLogin();document.getElementById('nav-login-btn').innerHTML='<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> '+e.split('@')[0];showPage('dashboard');}
-function logOut(){showPage('home'); document.getElementById('nav-login-btn').innerHTML='<span id="t-login-btn">Entrar</span>'; setLang(lang);}
-
-// ===== DASHBOARD =====
-function showDash(s){['overview','ai-plan','my-plans','progress'].forEach(id=>{const el=document.getElementById('ds-'+id); if(el)el.style.display=id===s?'block':'none';});}
-
-// ===== AI PLAN + VIDEOS (CORREGIDO) =====
-const videoMap={
-  'flexões':'IODxDxX7oi4','push-up':'IODxDxX7oi4','supino':'SCVCLChPQFY',
-  'agachamento':'aclHkVaku9U','squat':'U3HlEF_whyU','leg press':'u9lCMThvTF0',
-  'prancha':'pSHjTRCQxIw','plank':'ASdvN_XEl_c','burpee':'auBLPXO8Nwk',
-  'remada':'kBWAon7ItDw','pull-up':'eGo4IYlbE5g','bíceps':'ykJmrZ5v0Oo',
-  'tríceps':'kiuVA0x3iog','ombros':'qEwKCR5JCog','corrida':'_kGqkxQo-nE',
-  'abdominal':'Xyd_fa5zoEU','crunch':'Xyd_fa5zoEU','lunge':'QOVaHwm-Q6U',
-  'deadlift':'ytGaGstolgg','peso morto':'ytGaGstolgg'
-};
-function getVideoId(exerciseName){
-  const name=exerciseName.toLowerCase();
-  for(const[k,v] of Object.entries(videoMap)){if(name.includes(k))return v;}
-  return null;
-}
-function extractExercises(text){
-  const lines=text.split('\n');
-  const exercises=[]; const seen=new Set();
-  lines.forEach(line=>{
-    const clean=line.replace(/[*•\-–#0-9\.]/g,'').trim();
-    if(clean.length>3&&clean.length<50){
-      const vid=getVideoId(clean);
-      if(vid&&!seen.has(vid)){seen.add(vid);exercises.push({name:clean,vid});}
-    }
-  });
-  return exercises.slice(0,4);
+function updateNavUser() {
+  if (!currentUser) return;
+  const initials = currentUser.name.split(' ').map(w => w[0]).join('').substring(0, 2).toUpperCase();
+  document.getElementById('nav-login-btn').innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> ${currentUser.name.split(' ')[0]}`;
+  document.getElementById('d-avatar').textContent = initials;
+  document.getElementById('d-name').textContent = currentUser.name;
+  document.getElementById('d-pkg').textContent = currentUser.pkg || '—';
+  document.getElementById('d-welcome').textContent = (lang === 'es' ? '¡Hola, ' : 'Olá, ') + currentUser.name.split(' ')[0] + '! 👋';
 }
 
-// LLAMADA A TU SERVIDOR VERCEL (SEGURO)
-async function generatePlan(){
-  const goal=document.getElementById('ai-goal').value;
-  const level=document.getElementById('ai-level').value;
-  const days=document.getElementById('ai-days').value;
-  const btn=document.getElementById('btn-generate');
-  const result=document.getElementById('ai-result');
-  const content=document.getElementById('ai-result-content');
-  const videoSec=document.getElementById('video-section');
-  const videoGrid=document.getElementById('video-grid');
+function logOut() { currentUser = null; document.getElementById('nav-login-btn').innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> <span id="t-login-btn">Entrar</span>`; setLang(lang); goHome(); }
 
-  btn.disabled=true;
-  btn.innerHTML='<div class="loading-dots"><span></span><span></span><span></span></div>';
-  result.classList.add('visible');
-  videoSec.style.display='none';
-  content.innerHTML='<div class="loading-dots"><span></span><span></span><span></span></div> A gerar...';
-
-  try{
-    const res=await fetch('/api/chat',{
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({
-        message:`Cria um plano para: Objetivo: ${goal}, Nível: ${level}, Dias: ${days}. Usa exercícios básicos.`,
-        lang: lang
-      })
-    });
-    const data=await res.json();
-    const text=data.reply||'Erro.';
-    content.textContent=text;
-
-    const exs=extractExercises(text);
-    if(exs.length>0){
-      videoSec.style.display='block';
-      videoGrid.innerHTML=exs.map(e=>`
-        <div class="video-card">
-          <div class="video-thumb"><iframe src="https://www.youtube.com/embed/${e.vid}?rel=0&modestbranding=1" allowfullscreen loading="lazy"></iframe></div>
-          <div class="video-label">${e.name}</div>
-        </div>`).join('');
-    }
-  }catch(e){content.textContent='❌ Erro. Verifica o teu servidor Vercel.';}
-
-  btn.disabled=false;
-  btn.innerHTML='🤖 Gerar Plano + Vídeos';
+// ============ DASHBOARD RENDER ============
+async function renderDashboard() {
+  if (!currentUser) return;
+  const d = await getClientData(currentUser.email);
+  document.getElementById('dc1-val').textContent = d.sessions_count !== undefined ? d.sessions_count : '—';
+  document.getElementById('dc2-val').textContent = (d.programs || []).length + (d.docs || []).length;
+  document.getElementById('dc3-val').textContent = (d.messages || []).length;
+  document.getElementById('dc4-val').textContent = currentUser.pkg || '—';
+  // overview
+  const overviewEl = document.getElementById('d-ov-content');
+  const upcoming = (d.sessions || []).filter(s => new Date(s.date) >= new Date()).slice(0, 3);
+  if (upcoming.length) {
+    overviewEl.innerHTML = upcoming.map(s => `<div class="content-card"><div class="content-card-header"><span class="content-card-title">📅 ${s.title}</span><span class="content-card-date">${new Date(s.date).toLocaleString(lang === 'es' ? 'es-ES' : 'pt-PT')}</span></div></div>`).join('');
+  } else {
+    overviewEl.innerHTML = `<div class="empty-state"><div class="empty-icon">✅</div><p>${T[lang]['empty-overview']}</p></div>`;
+  }
+  // programs
+  renderContentSection('dp-content', [...(d.programs||[]),...(d.docs||[])], 'empty-programs');
+  // diet
+  renderContentSection('dd-content', d.diet||[], 'empty-diet');
+  // messages
+  renderMessages(d.messages || []);
+  // sessions
+  renderSessions(d.sessions || []);
+  // imc / onboarding
+  renderProfile();
 }
 
-// ===== CHAT IA (SEGURO EN VERCEL) =====
-let chatOpen=false;
-function toggleChat(){
-  chatOpen=!chatOpen;
-  document.getElementById('chat-window').classList.toggle('open',chatOpen);
-  if(chatOpen){document.getElementById('chat-notif').style.display='none';document.getElementById('chat-input').focus();}
+function renderContentSection(elId, items, emptyKey) {
+  const el = document.getElementById(elId);
+  if (!items.length) { el.innerHTML = `<div class="empty-state"><div class="empty-icon">📭</div><p>${T[lang][emptyKey]}</p></div>`; return; }
+  el.innerHTML = items.map(i => `
+    <div class="content-card">
+      <div class="content-card-header">
+        <span class="content-card-title">${i.title}</span>
+        <span class="content-card-date">${i.date || ''}</span>
+      </div>
+      <span class="content-card-type ${i.type === 'workout' ? 'type-workout' : i.type === 'diet' ? 'type-diet' : 'type-doc'}">${i.type === 'workout' ? '📋 Programa' : i.type === 'diet' ? '🥗 Nutrição' : '📄 Documento'}</span>
+      <div class="content-card-body">${i.content}</div>
+    </div>`).join('');
 }
 
-function addChatMsg(text,role){
-  const el=document.createElement('div');
-  el.className='chat-msg '+role; el.textContent=text;
-  const msgs=document.getElementById('chat-messages');
-  msgs.appendChild(el); msgs.scrollTop=msgs.scrollHeight;
+function renderMessages(msgs) {
+  const el = document.getElementById('msg-thread');
+  if (!msgs.length) { el.innerHTML = `<div class="empty-state"><div class="empty-icon">💬</div><p>${T[lang]['empty-messages']}</p></div>`; return; }
+  el.innerHTML = msgs.map(m => `
+    <div>
+      <div class="msg-bubble ${m.from === 'admin' ? 'msg-from-admin' : 'msg-from-me'}">${m.content}</div>
+      <div class="msg-meta" style="text-align:${m.from === 'admin' ? 'left' : 'right'};padding:0 .5rem">${m.date}</div>
+    </div>`).join('');
+}
+
+function renderSessions(sessions) {
+  const el = document.getElementById('dsess-content');
+  if (!sessions.length) { el.innerHTML = `<div class="empty-state"><div class="empty-icon">📅</div><p>${T[lang]['empty-sessions']}</p></div>`; return; }
+  const sorted = [...sessions].sort((a, b) => new Date(b.date) - new Date(a.date));
+  el.innerHTML = `<div class="ai-section"><table class="plan-table"><thead><tr><th>${lang === 'es' ? 'Sesión' : 'Sessão'}</th><th>Data</th><th>${lang === 'es' ? 'Estado' : 'Estado'}</th></tr></thead><tbody>${sorted.map(s => `<tr><td>${s.title}</td><td>${new Date(s.date).toLocaleString(lang === 'es' ? 'es-ES' : 'pt-PT')}</td><td><span class="badge ${new Date(s.date) >= new Date() ? 'badge-green' : 'badge-orange'}">${new Date(s.date) >= new Date() ? (lang === 'es' ? 'Próxima' : 'Próxima') : (lang === 'es' ? 'Realizada' : 'Realizada')}</span></td></tr>`).join('')}</tbody></table></div>`;
+}
+
+function renderProfile() {
+  const u = currentUser;
+  if (!u) return;
+  const el = document.getElementById('ob-display');
+  const lines = [
+    `📧 Email: ${u.email}`,
+    u.age ? `🎂 ${lang === 'es' ? 'Edad' : 'Idade'}: ${u.age} ${lang === 'es' ? 'años' : 'anos'}` : '',
+    u.weight ? `⚖️ ${lang === 'es' ? 'Peso' : 'Peso'}: ${u.weight} kg` : '',
+    u.height ? `📏 ${lang === 'es' ? 'Altura' : 'Altura'}: ${u.height} cm` : '',
+    u.goal ? `🎯 ${lang === 'es' ? 'Objetivo' : 'Objetivo'}: ${u.goal}` : '',
+    u.level ? `💪 ${lang === 'es' ? 'Nivel' : 'Nível'}: ${u.level}` : '',
+    u.pkg ? `📦 ${lang === 'es' ? 'Paquete' : 'Pacote'}: ${u.pkg}` : '',
+  ].filter(Boolean);
+  el.innerHTML = lines.join('<br>');
+}
+
+function calcIMC() {
+  const w = parseFloat(document.getElementById('imc-weight').value);
+  const h = parseFloat(document.getElementById('imc-height').value) / 100;
+  if (!w || !h) return;
+  const imc = (w / (h * h)).toFixed(1);
+  const el = document.getElementById('imc-result'); el.style.display = 'block';
+  document.getElementById('imc-val').textContent = imc;
+  let cat, color, msg;
+  if (imc < 18.5) { cat = lang === 'es' ? 'Bajo peso' : 'Abaixo do peso'; color = '#60a5fa'; msg = lang === 'es' ? 'Considera hablar con Litzy sobre un plan de ganancia de masa.' : 'Considera falar com a Litzy sobre um plano de ganho de massa.'; }
+  else if (imc < 25) { cat = lang === 'es' ? 'Peso normal' : 'Peso normal'; color = '#00c864'; msg = lang === 'es' ? '¡Excelente! Mantén tus hábitos saludables.' : 'Excelente! Mantém os teus hábitos saudáveis.'; }
+  else if (imc < 30) { cat = lang === 'es' ? 'Sobrepeso' : 'Excesso de peso'; color = '#fbbf24'; msg = lang === 'es' ? 'Un programa de entrenamiento puede ayudarte a alcanzar el peso ideal.' : 'Um programa de treino pode ajudar-te a atingir o peso ideal.'; }
+  else { cat = lang === 'es' ? 'Obesidad' : 'Obesidade'; color = '#ef4444'; msg = lang === 'es' ? 'Habla con Litzy para un plan adaptado a tus necesidades.' : 'Fala com a Litzy para um plano adaptado às tuas necessidades.'; }
+  const catEl = document.getElementById('imc-cat'); catEl.textContent = cat; catEl.style.background = color + '22'; catEl.style.color = color;
+  document.getElementById('imc-msg').textContent = msg;
+}
+
+// ============ ADMIN ============
+function checkAdminPass() {
+  const p = document.getElementById('admin-pass').value;
+  if (p === ADMIN_SECRET) { document.getElementById('admin-login-modal').classList.remove('open'); showPage('admin'); renderAdmin(); }
+  else { alert('Password incorreta!'); }
+}
+function closeAdminLogin() { document.getElementById('admin-login-modal').classList.remove('open'); }
+function logOutAdmin() { goHome(); }
+
+async function renderAdmin() {
+  const clients = await getClients();
+  const nl = await getSubscribers();
+  const contacts = await getContactMsgs();
+  // stats
+  document.getElementById('admin-stats').innerHTML = `
+    <div class="stat-box"><div class="stat-box-val">${clients.length}</div><div class="stat-box-label">${lang === 'es' ? 'Clientes' : 'Clientes'}</div></div>
+    <div class="stat-box"><div class="stat-box-val">${nl.length}</div><div class="stat-box-label">Newsletter</div></div>
+    <div class="stat-box"><div class="stat-box-val">${contacts.length}</div><div class="stat-box-label">${lang === 'es' ? 'Contactos' : 'Contactos'}</div></div>`;
+  // recent clients
+  document.getElementById('admin-recent-clients').innerHTML = clients.slice(-5).reverse().map(c => `
+    <div class="client-row">
+      <div class="client-info"><div class="client-avatar">${c.name.charAt(0)}</div><div><div class="client-name">${c.name}<span class="tag-pkg">${c.pkg || '—'}</span></div><div class="client-email">${c.email}</div></div></div>
+    </div>`).join('') || `<p style="color:var(--muted);font-size:.9rem">${lang === 'es' ? 'Sin clientes aún.' : 'Sem clientes ainda.'}</p>`;
+  // full client list
+  document.getElementById('admin-clients-list').innerHTML = clients.map(async c => '').join('');
+  renderAdminClients(clients);
+  // newsletter
+  document.getElementById('admin-nl-list').innerHTML = nl.map(e => `<div class="nl-export-row"><span class="nl-export-email">📧 ${e}</span></div>`).join('') || `<p style="color:var(--muted);font-size:.9rem">${lang === 'es' ? 'Sin suscriptores aún.' : 'Sem subscritores ainda.'}</p>`;
+  // contacts
+  document.getElementById('admin-contact-list').innerHTML = contacts.map(m => `<div class="admin-card"><h3>${m.name} — ${m.email}</h3><p style="color:var(--muted);font-size:.9rem">${m.msg}</p><p style="color:var(--muted);font-size:.75rem;margin-top:.5rem">${m.date}</p></div>`).join('') || `<p style="color:var(--muted);font-size:.9rem">${lang === 'es' ? 'Sin mensajes.' : 'Sem mensagens.'}</p>`;
+}
+
+async function renderAdminClients(clients) {
+  const el = document.getElementById('admin-clients-list');
+  if (!clients.length) { el.innerHTML = `<p style="color:var(--muted)">${lang === 'es' ? 'Sin clientes registrados.' : 'Sem clientes registados.'}</p>`; return; }
+  const rows = await Promise.all(clients.map(async c => {
+    const d = await getClientData(c.email);
+    return `<div class="admin-card">
+      <div class="client-row" style="flex-wrap:wrap;gap:1rem">
+        <div class="client-info">
+          <div class="client-avatar">${c.name.charAt(0)}</div>
+          <div><div class="client-name">${c.name}<span class="tag-pkg">${c.pkg || '—'}</span></div>
+          <div class="client-email">${c.email} · ${lang === 'es' ? 'Desde' : 'Desde'} ${c.joinedAt || '—'}</div>
+          ${c.goal ? `<div class="client-email">${lang === 'es' ? 'Obj:' : 'Obj:'} ${c.goal} · ${c.level || ''}</div>` : ''}
+          </div>
+        </div>
+        <div class="client-actions">
+          <button class="btn-action btn-action-orange" onclick="openAddContent('${c.email}','${c.name}')">+ ${lang === 'es' ? 'Añadir' : 'Adicionar'}</button>
+          <div class="sessions-ctrl">
+            <span style="font-size:.75rem;color:var(--muted)">${lang === 'es' ? 'Sesiones:' : 'Sessões:'}</span>
+            <button onclick="adjSessions('${c.email}',-1)">−</button>
+            <span class="sessions-val" id="sc-${btoa(c.email).replace(/=/g,'')}">${d.sessions_count || 0}</span>
+            <button onclick="adjSessions('${c.email}',1)">+</button>
+          </div>
+        </div>
+      </div>
+    </div>`;
+  }));
+  el.innerHTML = rows.join('');
+}
+
+async function adjSessions(email, delta) {
+  const d = await getClientData(email);
+  d.sessions_count = Math.max(0, (d.sessions_count || 0) + delta);
+  await saveClientData(email, d);
+  const key = btoa(email).replace(/=/g, '');
+  const el = document.getElementById('sc-' + key);
+  if (el) el.textContent = d.sessions_count;
+  if (currentUser && currentUser.email === email) { document.getElementById('dc1-val').textContent = d.sessions_count; }
+}
+
+function openAddContent(email, name) {
+  adminTargetEmail = email;
+  document.getElementById('am-client-name').textContent = name;
+  document.getElementById('am-title-input').value = '';
+  document.getElementById('am-content').value = '';
+  document.getElementById('admin-modal').classList.add('open');
+}
+function closeAdminModal() { document.getElementById('admin-modal').classList.remove('open'); }
+
+async function saveAdminContent() {
+  const type = document.getElementById('am-type').value;
+  const title = document.getElementById('am-title-input').value.trim();
+  const content = document.getElementById('am-content').value.trim();
+  const date = document.getElementById('am-date').value;
+  if (!title || !content) return alert(lang === 'es' ? 'Rellena título y contenido.' : 'Preenche título e conteúdo.');
+  const d = await getClientData(adminTargetEmail);
+  const item = { title, content, type, date: type === 'session' ? date : new Date().toLocaleDateString('pt-PT') };
+  if (type === 'workout') d.programs.push(item);
+  else if (type === 'diet') d.diet.push(item);
+  else if (type === 'doc') d.docs.push(item);
+  else if (type === 'msg') { d.messages.push({ ...item, from: 'admin' }); }
+  else if (type === 'session') d.sessions.push(item);
+  await saveClientData(adminTargetEmail, d);
+  closeAdminModal();
+  alert(lang === 'es' ? '¡Guardado con éxito!' : 'Guardado com sucesso!');
+  if (currentUser && currentUser.email === adminTargetEmail) await renderDashboard();
+}
+
+function showAdmin(s) {
+  document.querySelectorAll('.admin-section').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('.admin-menu li a').forEach(a => a.classList.remove('active'));
+  document.getElementById('as-' + s).classList.add('active');
+  document.querySelectorAll('.admin-menu li a').forEach((a, i) => { if (['overview','clients','newsletter','contact-msgs'][i] === s) a.classList.add('active'); });
+}
+
+async function exportCSV() {
+  const nl = await getSubscribers();
+  const csv = 'Email\n' + nl.join('\n');
+  const a = document.createElement('a'); a.href = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csv);
+  a.download = 'litzyfit-newsletter.csv'; a.click();
+}
+
+// ============ NEWSLETTER ============
+async function subscribeNL() {
+  const email = document.getElementById('nl-email').value.trim();
+  if (!email || !email.includes('@')) return;
+  const nl = await getSubscribers();
+  if (!nl.includes(email)) { nl.push(email); await saveSubscribers(nl); }
+  document.getElementById('nl-email').value = '';
+  document.getElementById('nl-success').style.display = 'block';
+  setTimeout(() => document.getElementById('nl-success').style.display = 'none', 4000);
+  renderNLList(nl);
+}
+async function renderNLList(nl) {
+  if (!nl) nl = await getSubscribers();
+  const wrap = document.getElementById('nl-list-wrap');
+  if (!nl.length) { wrap.style.display = 'none'; return; }
+  wrap.style.display = 'block';
+  document.getElementById('nl-count').textContent = nl.length;
+  document.getElementById('nl-list').innerHTML = nl.map((e, i) => `<div class="email-item"><span>📧 ${e}</span><button class="email-delete" onclick="removeNL(${i})">✕</button></div>`).join('');
+}
+async function removeNL(i) { const nl = await getSubscribers(); nl.splice(i, 1); await saveSubscribers(nl); renderNLList(nl); }
+
+// ============ CONTACT FORM ============
+async function sendContact() {
+  const name = document.getElementById('cf-name').value.trim();
+  const email = document.getElementById('cf-email').value.trim();
+  const msg = document.getElementById('cf-msg').value.trim();
+  if (!name || !email || !msg) return;
+  const contacts = await getContactMsgs();
+  contacts.push({ name, email, msg, date: new Date().toLocaleString('pt-PT') });
+  await saveContactMsgs(contacts);
+  document.getElementById('cf-name').value = ''; document.getElementById('cf-email').value = ''; document.getElementById('cf-msg').value = '';
+  alert(lang === 'es' ? '¡Mensaje enviado! Te responderemos pronto.' : 'Mensagem enviada! Respondemos em breve.');
+}
+
+// ============ CHAT ============
+let chatOpen = false;
+function toggleChat() {
+  chatOpen = !chatOpen;
+  document.getElementById('chat-window').classList.toggle('open', chatOpen);
+  if (chatOpen) { document.getElementById('chat-notif').style.display = 'none'; document.getElementById('chat-input').focus(); }
+}
+function addChatMsg(text, role) {
+  const el = document.createElement('div'); el.className = 'cmsg ' + role; el.textContent = text;
+  const msgs = document.getElementById('chat-msgs'); msgs.appendChild(el); msgs.scrollTop = msgs.scrollHeight;
   return el;
 }
-
-async function sendChat(){
-  const input=document.getElementById('chat-input');
-  const msg=input.value.trim();
-  if(!msg)return;
-  input.value='';
-  addChatMsg(msg,'user');
-
-  const typingEl=document.createElement('div');
-  typingEl.className='chat-msg typing';
-  typingEl.innerHTML='<div class="loading-dots"><span></span><span></span><span></span></div>';
-  document.getElementById('chat-messages').appendChild(typingEl);
-  document.getElementById('chat-messages').scrollTop=9999;
-
-  try{
-    const res=await fetch('/api/chat',{
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({ message:msg, lang:lang })
+async function sendChat() {
+  const input = document.getElementById('chat-input');
+  const msg = input.value.trim(); if (!msg) return;
+  input.value = ''; addChatMsg(msg, 'user');
+  chatHistory.push({ role: 'user', content: msg });
+  const typing = document.createElement('div'); typing.className = 'cmsg typing';
+  typing.innerHTML = '<div class="loading-dots"><span></span><span></span><span></span></div>';
+  document.getElementById('chat-msgs').appendChild(typing); document.getElementById('chat-msgs').scrollTop = 9999;
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514', max_tokens: 1000,
+        system: `És o assistente da LitzyFit Personal Trainer. Respondes em ${lang === 'es' ? 'español' : 'português europeu'}. Ajudas com treino, nutrição e os pacotes. Nunca menciones IA — os programas são criados pela Litzy. Pacotes: Starter €100/5 sessões, Silver €180/10, Gold €360/20, mensais €90-€400, Duo €180-€600. Sê simpático e conciso.`,
+        messages: chatHistory
+      })
     });
-    const data=await res.json();
-    typingEl.remove();
-    addChatMsg(data.reply,'bot');
-  }catch(e){typingEl.remove();addChatMsg('Sem ligação.','bot');}
+    const data = await res.json(); const reply = data.content?.[0]?.text || '...';
+    typing.remove(); addChatMsg(reply, 'bot'); chatHistory.push({ role: 'assistant', content: reply });
+    if (chatHistory.length > 20) chatHistory = chatHistory.slice(-18);
+  } catch { typing.remove(); addChatMsg(lang === 'es' ? 'Sin conexión.' : 'Sem ligação.', 'bot'); }
 }
 
-// ===== FADE IN =====
-const obs=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');}),{threshold:.1});
-document.querySelectorAll('.fade-in').forEach(el=>obs.observe(el));
+// ============ NAVIGATION ============
+function showPage(p) {
+  document.querySelectorAll('.page').forEach(x => x.classList.remove('active'));
+  document.getElementById('page-' + p).classList.add('active');
+  window.scrollTo(0, 0);
+}
+function goHome() { showPage('home'); }
+function scrollTo(id) {
+  showPage('home');
+  setTimeout(() => { const el = document.getElementById(id); if (el) el.scrollIntoView({ behavior: 'smooth' }); }, 60);
+}
+function switchPricing(tab) {
+  document.querySelectorAll('.price-tab').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.plans-grid').forEach(g => g.style.display = 'none');
+  document.querySelectorAll('.price-tab')[['sessions','monthly','duo'].indexOf(tab)].classList.add('active');
+  document.getElementById('pricing-' + tab).style.display = 'grid';
+}
+function showDash(s) {
+  ['overview','programs','diet','messages','sessions','imc'].forEach(id => {
+    const el = document.getElementById('ds-' + id); if (el) el.style.display = id === s ? 'block' : 'none';
+  });
+  document.querySelectorAll('.sidebar-menu li a').forEach(a => a.classList.remove('active'));
+}
+
+// ============ ADMIN URL ROUTE ============
+function checkRoute() {
+  if (window.location.hash === '#/admin' || window.location.search.includes('admin')) {
+    document.getElementById('admin-login-modal').classList.add('open');
+  }
+}
+
+// ============ INIT ============
+const obs = new IntersectionObserver(entries => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }), { threshold: .1 });
+document.querySelectorAll('.fade-in').forEach(el => obs.observe(el));
+document.getElementById('login-modal').addEventListener('click', function(e) { if (e.target === this) closeLogin(); });
+document.getElementById('admin-modal').addEventListener('click', function(e) { if (e.target === this) closeAdminModal(); });
+document.getElementById('admin-login-modal').addEventListener('click', function(e) { if (e.target === this) closeAdminLogin(); });
+window.addEventListener('hashchange', checkRoute);
+checkRoute();
+renderNLList();
 </script>
 </body>
 </html>
